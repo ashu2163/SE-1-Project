@@ -97,6 +97,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    public boolean changePassword(String userid,String npassword){
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("password", npassword);
+        long result = sqLiteDatabase.update("user", contentValues,"userid=?",new String[]{userid});
+        if(result == -1){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
     public Boolean CheckUsername(String uname){
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM user WHERE uname=?", new String[]{uname});
@@ -105,6 +117,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }else{
             return true;
         }
+    }
+
+    public String CheckCemail(String cemail){
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM user WHERE email=?", new String[]{cemail});
+        if(cursor.getCount() > 0){
+            if(cursor.moveToNext()) {
+                if (cursor.getString(6).equals(cemail)) {
+                    return cursor.getString(0);
+                }
+            }
+        } else {
+            return "";
+        }
+        return "";
     }
 
     public Boolean CheckLogin(String uname, String password){

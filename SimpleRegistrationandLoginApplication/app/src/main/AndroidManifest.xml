@@ -21,6 +21,8 @@
         <activity android:name=".ManagerHomeActivity" />
         <activity android:name=".UserHomeActivity" />
         <activity android:name=".OperatorHomeActivity" />
+        <activity android:name=".ConfirmEmailActivity" />
+        <activity android:name=".ForgotPasswordActivity" />
 
         <activity
             android:name=".MainActivity"

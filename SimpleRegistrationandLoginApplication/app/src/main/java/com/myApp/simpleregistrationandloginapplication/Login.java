@@ -19,7 +19,7 @@ import android.util.Log;
 
 
 public class Login extends AppCompatActivity {
-    Button btn_lregister, btn_llogin;
+    Button btn_lregister, btn_llogin, btn_fpassword;
     EditText et_lusername, et_lpassword;
 
     DatabaseHelper databaseHelper;
@@ -36,6 +36,7 @@ public class Login extends AppCompatActivity {
 
         btn_llogin = (Button)findViewById(R.id.btn_llogin);
         btn_lregister = (Button)findViewById(R.id.btn_lregister);
+        btn_fpassword = (Button)findViewById(R.id.btn_fpassword);
 
         btn_lregister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,6 +73,14 @@ public class Login extends AppCompatActivity {
                 }else{
                     Toast.makeText(getApplicationContext(), "Invalid username or password", Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+
+        btn_fpassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Login.this, ConfirmEmailActivity.class);
+                startActivity(intent);
             }
         });
     }
