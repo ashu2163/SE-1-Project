@@ -1,5 +1,4 @@
-//package com.myApp.simpleregistrationandloginapplication;
-package com.razormist.simpleregistrationandloginapplication;
+package com.myApp.simpleregistrationandloginapplication;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
