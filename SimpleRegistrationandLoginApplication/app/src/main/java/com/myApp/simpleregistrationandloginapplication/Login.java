@@ -1,4 +1,13 @@
+//package com.myApp.simpleregistrationandloginapplication;
 package com.razormist.simpleregistrationandloginapplication;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+import android.database.Cursor;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,15 +16,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
-
-import android.content.Intent;
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.Toast;
+import android.util.Log;
 
 
 public class Login extends AppCompatActivity {
@@ -53,7 +54,22 @@ public class Login extends AppCompatActivity {
 
                 Boolean checklogin = databaseHelper.CheckLogin(username, password);
                 if(checklogin == true){
-                    Toast.makeText(getApplicationContext(), "Login Successful", Toast.LENGTH_SHORT).show();
+                    Cursor role=databaseHelper.CheckRole(username,password);
+                    //String r=role.getString(0);
+                    if(role.moveToNext()) {
+                        if (role.getString(0).equals("Student/Staff")) {
+                            Intent intent = new Intent(Login.this, UserHomeActivity.class);
+                            startActivity(intent);
+                        } else if (role.getString(0).equals("Admin")) {
+                            Intent intent = new Intent(Login.this, ManagerHomeActivity.class);
+                            startActivity(intent);
+                        } else if (role.getString(0).equals("Operator")) {
+                            Intent intent = new Intent(Login.this, OperatorHomeActivity.class);
+                            startActivity(intent);
+                        }
+                    }
+                    //System.out.print(role.toString());
+                    Toast.makeText(getApplicationContext(), "Login Successfull"+role.getString(0) , Toast.LENGTH_SHORT).show();
                 }else{
                     Toast.makeText(getApplicationContext(), "Invalid username or password", Toast.LENGTH_SHORT).show();
                 }

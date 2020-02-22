@@ -1,19 +1,21 @@
 package com.razormist.simpleregistrationandloginapplication;
+//package com.myApp.simpleregistrationandloginapplication;
+import android.content.Intent;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.widget.Toast;
 
-
-
-/**
- * Created by Arvin on 3/27/2018.
- */
 
 public class DatabaseHelper extends SQLiteOpenHelper {
-    public static final String DATABASE_NAME = "Squirrel.db";
+    public static final String DATABASE_NAME = "Squirrel1.db";
 
 
     public DatabaseHelper(Context context) {
@@ -22,15 +24,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE user(ID INTEGER PRIMARY KEY AUTOINCREMENT,fname TEXT,lname TEXT, username TEXT, password TEXT,email TEXT, address TEXT)");
+        db.execSQL("CREATE TABLE user(ID INTEGER PRIMARY KEY AUTOINCREMENT,fname TEXT,lname TEXT, username TEXT, password TEXT,email TEXT, address TEXT, role TEXT)");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXIST user");
+        onCreate(db);
+
+        /*if (newVersion > oldVersion) {
+            db.execSQL("ALTER TABLE user ADD COLUMN role TEXT");
+        }*/
     }
 
-    public boolean Insert(String fname,String lname,String username, String password,String email, String address){
+    public boolean Insert(String fname,String lname,String username, String password,String email, String address, String role){
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("fname", fname);
@@ -39,6 +46,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put("password", password);
         contentValues.put("email", email);
         contentValues.put("address", address);
+        contentValues.put("role", role);
+
         long result = sqLiteDatabase.insert("user", null, contentValues);
         if(result == -1){
             return false;
@@ -60,10 +69,33 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public Boolean CheckLogin(String username, String password){
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
         Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM user WHERE username=? AND password=?", new String[]{username, password});
+
         if(cursor.getCount() > 0){
             return true;
         }else{
             return false;
         }
+
+        /*Cursor cursor = sqLiteDatabase.rawQuery("SELECT role FROM user WHERE username=? AND password=?", new String[]{username, password});
+        if(cursor.getCount() > 0){
+            return cursor.getString(0);
+        }else{
+            return false;
+        }*/
     }
+
+    public Cursor CheckRole(String username, String password){
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT role FROM user WHERE username=? AND password=?", new String[]{username, password});
+        if (cursor.getCount() > 0) {
+                return cursor;
+//            } else {
+//                return "";
+//            }
+            }
+            return cursor;
+
+
+    }
+
 }
