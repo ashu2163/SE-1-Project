@@ -172,7 +172,7 @@
             android:id="@+id/et_admin"
             android:layout_width="wrap_content"
             android:layout_height="31dp"
-            android:text="Admin" />
+            android:text="Manager" />
 
     </RadioGroup>
 

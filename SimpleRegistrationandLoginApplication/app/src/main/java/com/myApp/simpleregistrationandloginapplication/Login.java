@@ -56,13 +56,13 @@ public class Login extends AppCompatActivity {
                     Cursor role=databaseHelper.CheckRole(username,password);
                     //String r=role.getString(0);
                     if(role.moveToNext()) {
-                        if (role.getString(0).equals("Student/Staff")) {
+                        if (role.getString(0).equals("other")) {
                             Intent intent = new Intent(Login.this, UserHomeActivity.class);
                             startActivity(intent);
-                        } else if (role.getString(0).equals("Admin")) {
+                        } else if (role.getString(0).equals("manager")) {
                             Intent intent = new Intent(Login.this, ManagerHomeActivity.class);
                             startActivity(intent);
-                        } else if (role.getString(0).equals("Operator")) {
+                        } else if (role.getString(0).equals("operator")) {
                             Intent intent = new Intent(Login.this, OperatorHomeActivity.class);
                             startActivity(intent);
                         }
