@@ -8,28 +8,4 @@
 <!--        <item name="colorAccent">@color/colorAccent</item>-->
     </style>
 
-    <style name="login">
-
-        <item name="android:textSize">
-            32sp
-        </item>
-
-        <item name="android:textColor">
-            #272628
-        </item>
-
-    </style>
-
-    <style name="Register">
-
-        <item name="android:textSize">
-            32sp
-        </item>
-
-        <item name="android:textColor">
-            #272628
-        </item>
-
-    </style>
-
 </resources>
