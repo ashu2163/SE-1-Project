@@ -37,7 +37,9 @@
         android:id="@+id/btn_cemail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
         android:text="Confirm Email"
-        tools:layout_editor_absoluteX="134dp"
-        tools:layout_editor_absoluteY="311dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_cemail" />
 </android.support.constraint.ConstraintLayout>

@@ -24,6 +24,7 @@ public class ConfirmEmailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_c_email);
+        getSupportActionBar().hide();
 
         databaseHelper = new DatabaseHelper(this);
         et_cemail = (EditText)findViewById(R.id.et_cemail);

@@ -1,5 +1,7 @@
 package com.myApp.simpleregistrationandloginapplication;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -21,13 +23,15 @@ import android.util.Log;
 public class Login extends AppCompatActivity {
     Button btn_lregister, btn_llogin, btn_fpassword;
     EditText et_lusername, et_lpassword;
-
+    public static final String MyPREFERENCES = "MyPrefs";
+    SharedPreferences sharedpreferences;
     DatabaseHelper databaseHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        getSupportActionBar().hide();
 
         databaseHelper = new DatabaseHelper(this);
 
@@ -37,6 +41,7 @@ public class Login extends AppCompatActivity {
         btn_llogin = (Button)findViewById(R.id.btn_llogin);
         btn_lregister = (Button)findViewById(R.id.btn_lregister);
         btn_fpassword = (Button)findViewById(R.id.btn_fpassword);
+        sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
 
         btn_lregister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,12 +63,29 @@ public class Login extends AppCompatActivity {
                     //String r=role.getString(0);
                     if(role.moveToNext()) {
                         if (role.getString(0).equals("other")) {
+                            SharedPreferences.Editor editor = sharedpreferences.edit();
+
+                            editor.putString("username",username );
+                            editor.putString("password", password);
+                            editor.putString("role",role.getString(0) );
+                            editor.commit();
                             Intent intent = new Intent(Login.this, UserHomeActivity.class);
                             startActivity(intent);
                         } else if (role.getString(0).equals("manager")) {
+                            SharedPreferences.Editor editor = sharedpreferences.edit();
+                            editor.putString("username",username );
+                            editor.putString("password", password);
+                            editor.putString("role",role.getString(0) );
+                            editor.commit();
                             Intent intent = new Intent(Login.this, ManagerHomeActivity.class);
                             startActivity(intent);
                         } else if (role.getString(0).equals("operator")) {
+                            SharedPreferences.Editor editor = sharedpreferences.edit();
+                            editor.putString("username",username );
+                            editor.putString("password", password);
+                            editor.putString("role",role.getString(0) );
+                            editor.commit();
+                            Toast.makeText(getApplicationContext(), "Login" , Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(Login.this, OperatorHomeActivity.class);
                             startActivity(intent);
                         }

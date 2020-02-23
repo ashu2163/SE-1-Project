@@ -228,7 +228,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }*/
     }
 
-    public boolean Insert(String fname,String lname,String uname, String password,String email, String address, String role){
+    public boolean Insert(String fname,String lname,String uname, String password,String email, String address,
+                          String role,String city, String state, int zipcode, String phone){
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("fname", fname);
@@ -239,7 +240,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Random rand = new Random();
         int num = rand.nextInt(9000000) + 1000000;
         contentValues.put("userid",num);
-        //contentValues.put("address", address);
+        contentValues.put("city", city);
+        contentValues.put("street_address", address);
+        contentValues.put("state", state);
+        contentValues.put("zipcode", zipcode);
+        contentValues.put("phone", phone);
         if(role.equals("Student/Staff"))
             role="other";
         contentValues.put("role", role.toLowerCase());

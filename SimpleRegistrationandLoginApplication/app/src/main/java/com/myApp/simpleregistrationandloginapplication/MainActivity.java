@@ -16,7 +16,7 @@ import android.widget.RadioButton;
 public class MainActivity extends AppCompatActivity {
     DatabaseHelper databaseHelper;
 
-    EditText et_username, et_password, et_cpassword,et_fname,et_lname,et_email,et_address;
+    EditText et_username, et_password, et_cpassword,et_fname,et_lname,et_email,et_address,et_city,et_state,et_zipcode,et_phone;
     Button btn_register, btn_login;
 
     RadioGroup rg;
@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        getSupportActionBar().hide();
 
         databaseHelper = new DatabaseHelper(this);
         et_fname = (EditText)findViewById(R.id.et_fname);
@@ -35,6 +36,10 @@ public class MainActivity extends AppCompatActivity {
         et_cpassword = (EditText)findViewById(R.id.et_cpassword);
         et_email = (EditText)findViewById(R.id.et_email);
         et_address = (EditText)findViewById(R.id.et_address);
+        et_city = (EditText)findViewById(R.id.et_city);
+        et_state = (EditText)findViewById(R.id.et_state);
+        et_zipcode = (EditText)findViewById(R.id.et_zipcode);
+        et_phone = (EditText)findViewById(R.id.et_phone);
         rg = (RadioGroup) findViewById(R.id.et_rgroup);
 
 
@@ -63,6 +68,10 @@ public class MainActivity extends AppCompatActivity {
                 String confirm_password = et_cpassword.getText().toString();
                 String email = et_email.getText().toString();
                 String address = et_address.getText().toString();
+                String city = et_city.getText().toString();
+                String state = et_state.getText().toString();
+                int zipcode = et_zipcode.getInputType();
+                String phone = et_phone.getText().toString();
 
                 if(username.equals("") || password.equals("") || confirm_password.equals("")){
                     //Toast.makeText(getApplicationContext(), role, Toast.LENGTH_SHORT).show();
@@ -72,11 +81,13 @@ public class MainActivity extends AppCompatActivity {
                     if(password.equals(confirm_password)){
                         Boolean checkusername = databaseHelper.CheckUsername(username);
                         if(checkusername == true){
-                            Boolean insert = databaseHelper.Insert(fname,lname,username, password, email, address, role);
+                            Boolean insert = databaseHelper.Insert(fname,lname,username, password, email, address, role,city,state,zipcode,phone);
 
                             if(insert == true){
 
                                 Toast.makeText(getApplicationContext(), "Registered", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(MainActivity.this, Login.class);
+                                startActivity(intent);
                                 et_fname.setText("");
                                 et_lname.setText("");
                                 et_username.setText("");
@@ -84,6 +95,10 @@ public class MainActivity extends AppCompatActivity {
                                 et_cpassword.setText("");
                                 et_email.setText("");
                                 et_address.setText("");
+                                et_city.setText("");
+                                et_state.setText("");
+                                et_zipcode.setText("");
+                                et_phone.setText("");
                             }
                         }else{
                             Toast.makeText(getApplicationContext(), "Username already taken", Toast.LENGTH_SHORT).show();

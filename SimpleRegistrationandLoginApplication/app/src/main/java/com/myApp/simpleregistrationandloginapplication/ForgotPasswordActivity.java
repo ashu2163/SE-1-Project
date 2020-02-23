@@ -24,6 +24,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forgotpassword);
+        getSupportActionBar().hide();
 
         databaseHelper = new DatabaseHelper(this);
         et_ncpassword = (EditText)findViewById(R.id.et_ncpassword);
