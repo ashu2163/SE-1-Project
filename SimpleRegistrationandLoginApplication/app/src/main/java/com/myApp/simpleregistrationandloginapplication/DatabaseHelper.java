@@ -60,6 +60,161 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "(1001100,'Helen','Baker','helenabaker','bQT%cZe$8P8mTW8','other','HelenABaker@uta.mavs.edu','2037962739','3446 Michigan Avenue','Bridgeville','PA',15017),\n" +
                 "(1001200,'George','Sisk','georgecsisk','vf*p!22JqxPCT5','other','GeorgeCSisk@uta.mavs.edu','2034240092','2460 Stratford Park','Bloomington','IN',47408)" +
                 "");
+
+        db.execSQL("" +
+                "CREATE TABLE IF NOT EXISTS location(\n" +
+                "locid varchar PRIMARY KEY,\n" +
+                "locname varchar(20) NOT NULL,\n" +
+                "duration int(1) NOT NULL\n" +
+                ")" +
+                "");
+
+        db.execSQL("" +
+                "INSERT INTO location(locid,locname,duration) VALUES\n" +
+                "('Location 1','Cooper & UTA Blvd',2),\n" +
+                "('Location 2','W Nedderman & Greek Row',1),\n" +
+                "('Location 3','S Davis & W Mitchell',2),\n" +
+                "('Location 4','Cooper & W Mitchell',3),\n" +
+                "('Location 5','S Oak & UTA Blvd',2),\n" +
+                "('Location 6','Spaniolo & W 1st',4),\n" +
+                "('Location 7','Spaniolo & W Mitchell',2),\n" +
+                "('Location 8','S Center & W Mitchell',1)" +
+                "");
+
+        db.execSQL("" +
+                "CREATE TABLE IF NOT EXISTS item(\n" +
+                "itemid int PRIMARY KEY,\n" +
+                "itemtype varchar(20) NOT NULL,\n" +
+                "cost decimal(6,2) NOT NULL\n" +
+                ")" +
+                "");
+
+        db.execSQL("" +
+                "INSERT INTO item(itemid,itemtype,cost) VALUES\n" +
+                "(81,'Drinks',1.50),\n" +
+                "(82,'Sandwiches',5.75),\n" +
+                "(83,'Snacks',1.25)" +
+                "");
+
+        db.execSQL("" +
+                "CREATE TABLE IF NOT EXISTS vehicle(\n" +
+                "vehid int PRIMARY KEY,\n" +
+                "vehname varchar(20) NOT NULL\n" +
+                ")" +
+                "");
+
+        db.execSQL("" +
+                "INSERT INTO vehicle(vehid,vehname) VALUES\n" +
+                "(51,'foodtruck1'),\n" +
+                "(52,'foodtruck2'),\n" +
+                "(53,'stationcart1'),\n" +
+                "(54,'stationcart2'),\n" +
+                "(55,'stationcart3'),\n" +
+                "(56,'stationcart4'),\n" +
+                "(57,'stationcart5')" +
+                "");
+
+        db.execSQL("" +
+                "CREATE TABLE IF NOT EXISTS vehicle_inventory(\n" +
+                "vehid int,\n" +
+                "itemid int,\n" +
+                "quantity int,\n" +
+                "available_date date,\n" +
+                "PRIMARY KEY (vehid,itemid,available_date),\n" +
+                "FOREIGN KEY (vehid) REFERENCES vehicle(vehid),\n" +
+                "FOREIGN KEY (itemid) REFERENCES item(itemid)\n" +
+                ")" +
+                "");
+
+        db.execSQL("" +
+                "INSERT INTO vehicle_inventory(vehid,itemid,quantity,available_date) VALUES\n" +
+                "(51,81,50,date('now')),\n" +
+                "(51,81,50,date('now','+1 day')),\n" +
+                "(51,82,35,date('now')),\n" +
+                "(51,82,35,date('now','+1 day')),\n" +
+                "(51,83,40,date('now')),\n" +
+                "(51,83,40,date('now','+1 day')),\n" +
+                "\n" +
+                "(52,81,50,date('now')),\n" +
+                "(52,82,35,date('now')),\n" +
+                "(52,83,40,date('now')),\n" +
+                "\n" +
+                "(53,81,30,date('now')),\n" +
+                "(53,81,30,date('now','+1 day')),\n" +
+                "(53,82,5,date('now')),\n" +
+                "(53,82,5,date('now','+1 day')),\n" +
+                "(53,83,30,date('now')),\n" +
+                "(53,83,30,date('now','+1 day')),\n" +
+                "\n" +
+                "(54,81,30,date('now')),\n" +
+                "(54,81,30,date('now','+1 day')),\n" +
+                "(54,82,5,date('now')),\n" +
+                "(54,82,5,date('now','+1 day')),\n" +
+                "(54,83,30,date('now')),\n" +
+                "(54,83,30,date('now','+1 day')),\n" +
+                "\n" +
+                "(55,81,30,date('now')),\n" +
+                "(55,81,30,date('now','+1 day')),\n" +
+                "(55,82,5,date('now')),\n" +
+                "(55,82,5,date('now','+1 day')),\n" +
+                "(55,83,30,date('now')),\n" +
+                "(55,83,30,date('now','+1 day')),\n" +
+                "\n" +
+                "(56,81,30,date('now')),\n" +
+                "(56,82,5,date('now')),\n" +
+                "(56,83,30,date('now')),\n" +
+                "\n" +
+                "(57,81,30,date('now')),\n" +
+                "(57,81,30,date('now','+1 day')),\n" +
+                "(57,82,5,date('now')),\n" +
+                "(57,82,5,date('now','+1 day')),\n" +
+                "(57,83,30,date('now')),\n" +
+                "(57,83,30,date('now','+1 day'))" +
+                "");
+
+        db.execSQL("" +
+                "CREATE TABLE IF NOT EXISTS vehicle_schedule(\n" +
+                "vehid int,\n" +
+                "locid int,\n" +
+                "opid int,\n" +
+                "slotbegin int,\n" +
+                "slotend int,\n" +
+                "PRIMARY KEY (vehid,slotbegin,slotend),\n" +
+                "FOREIGN KEY (vehid) REFERENCES vehicle(vehid),\n" +
+                "FOREIGN KEY (locid) REFERENCES location(locid),\n" +
+                "FOREIGN KEY (opid) REFERENCES user(userid)\n" +
+                ")" +
+                "");
+
+        db.execSQL("" +
+                "INSERT INTO vehicle_schedule(vehid,locid,opid,slotbegin,slotend) VALUES\n" +
+                "(51,'Location 1',1007000,8,10),\n" +
+                "(51,'Location 2',1009000,10,11),\n" +
+                "(51,'Location 3',1007000,11,13),\n" +
+                "(53,'Location 4',1009000,8,11),\n" +
+                "(53,'Location 4',1009000,11,14),\n" +
+                "(53,'Location 4',1009000,14,17),\n" +
+                "(57,'Location 7',1007000,15,17)" +
+                "");
+
+        db.execSQL("" +
+                "CREATE TABLE IF NOT EXISTS cart(\n" +
+                "userid int,\n" +
+                "itemid int,\n" +
+                "buy_quantity int,\n" +
+                "PRIMARY KEY (userid,itemid),\n" +
+                "FOREIGN KEY (userid) REFERENCES user(userid),\n" +
+                "FOREIGN KEY (itemid) REFERENCES item(itemid)\n" +
+                ")" +
+                "");
+
+        db.execSQL("" +
+                "INSERT INTO cart(userid,itemid,buy_quantity) VALUES\n" +
+                "(1003000,81,1),\n" +
+                "(1001001,82,10),\n" +
+                "(1003000,83,2)" +
+                "");
+
         Log.d("","DONE");
     }
 
