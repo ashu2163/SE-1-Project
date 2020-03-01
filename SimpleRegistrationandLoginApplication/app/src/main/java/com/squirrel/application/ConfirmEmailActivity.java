@@ -1,4 +1,4 @@
-package com.myApp.simpleregistrationandloginapplication;
+package com.squirrel.application;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +9,9 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
+
+import com.myApp.simpleregistrationandloginapplication.R;
+import com.squirrel.dao.DatabaseHelper;
 
 
 public class ConfirmEmailActivity extends AppCompatActivity {
