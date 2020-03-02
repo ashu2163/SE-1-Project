@@ -51,9 +51,9 @@ public class LoginActivity extends AppCompatActivity {
                 String username = et_lusername.getText().toString();
                 String password = et_lpassword.getText().toString();
 
-                Boolean checklogin = databaseHelper.CheckLogin("abcm", "abcm");
+                Boolean checklogin = databaseHelper.CheckLogin(username, password);
                 if(checklogin == true){
-                    Cursor role=databaseHelper.CheckRole("abcm","abcm");
+                    Cursor role=databaseHelper.CheckRole(username, password);
                     //String r=role.getString(0);
                     if(role.moveToNext()) {
                         if (role.getString(0).equals("other")) {
