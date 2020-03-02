@@ -47,13 +47,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         db.execSQL("" +
                 "INSERT INTO user(userid,fname,lname,uname,password,role,email,phone,street_address,city,state,zipcode) VALUES\n" +
-                "(1001000,'Margaret','Jones','abc','abc','other','MargaretTJones@uta.mavs.edu','9725878858','2959 Worthington Drive','Dallas','TX',75244),\n" +
+                "(1001000,'Margaret','Jones','abcs','abcs','other','MargaretTJones@uta.mavs.edu','9725878858','2959 Worthington Drive','Dallas','TX',75244),\n" +
                 "(1002000,'Donna','Batson','donnagbatson','ubS$_,vxL/hJ<7j','other','DonnaGBatson@uta.mavs.edu','3016851343','1556  Wilson Avenue','Carrollton','TX',75244),\n" +
                 "(1003000,'Sarah','Maxie','sarahwmaxie','wgS2jm\"+Ah=2fd{','other','SarahWMaxie@uta.mavs.edu','9048456024','1880 Ryan Road','Deadwood','SD',57732),\n" +
-                "(1004000,'Edward','Tarleton','edwardhtarleton','9TywUg<v_Y','manager','EdwardHTarleton@uta.edu','7084245246','2851 Beeghley Street','Temple','TX',76501),\n" +
+                "(1004000,'Edward','Tarleton','abcm','abcm','manager','EdwardHTarleton@uta.edu','7084245246','2851 Beeghley Street','Temple','TX',76501),\n" +
                 "(1005000,'Heather','Peterson','heatherapeterson','$y6.jZXe\"?','other','HeatherAPeterson@uta.mavs.edu','7084540101','3660 Joy Lane','Calabasas','CA',91302),\n" +
                 "(1006000,'Thomas','Murphy','thomaslmurphy','uS@*,Vz{9>','other','ThomasLMurphy@uta.mavs.edu','5088263769','1579 Woodbridge Lane','Detroit','MI',48202),\n" +
-                "(1007000,'Gary','Watson','garyewatson','*_5aa%GGUGt_R}:','operator','GaryEWatson@uta.edu','5617391409','3444 Maloy Court','Salina','KS',67401),\n" +
+                "(1007000,'Gary','Watson','abco','abco','operator','GaryEWatson@uta.edu','5617391409','3444 Maloy Court','Salina','KS',67401),\n" +
                 "(1008000,'Gene','Bookman','genembookman','2V/J36=8+b~wA$$','other','GeneMBookman@uta.mavs.edu','9704280507','3291 Coplin Avenue','Phoenix','AZ',85003),\n" +
                 "(1009000,'Eleanor','Peoples','eleanorgpeoples','&zr=#9%hUW9S[KC','operator','EleanorGPeoples@uta.edu','6067911291','4768 Horizon Circle','Federal Way','WA',98003),\n" +
                 "(1001001,'James','West','jamesswest','{=uux8^qZtrbL\\q','other','JamesSWest@uta.mavs.edu','2704997441','1213 Chicago Avenue','Fresno','CA',93721),\n" +
@@ -63,7 +63,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         db.execSQL("" +
                 "CREATE TABLE IF NOT EXISTS location(\n" +
-                "locid varchar PRIMARY KEY,\n" +
+                "locid varchar(10) PRIMARY KEY,\n" +
                 "locname varchar(20) NOT NULL,\n" +
                 "duration int(1) NOT NULL\n" +
                 ")" +
@@ -71,14 +71,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         db.execSQL("" +
                 "INSERT INTO location(locid,locname,duration) VALUES\n" +
-                "('Location 1','Cooper & UTA Blvd',2),\n" +
-                "('Location 2','W Nedderman & Greek Row',1),\n" +
-                "('Location 3','S Davis & W Mitchell',2),\n" +
-                "('Location 4','Cooper & W Mitchell',3),\n" +
-                "('Location 5','S Oak & UTA Blvd',2),\n" +
-                "('Location 6','Spaniolo & W 1st',4),\n" +
-                "('Location 7','Spaniolo & W Mitchell',2),\n" +
-                "('Location 8','S Center & W Mitchell',1)" +
+                "('Loc_1','Cooper & UTA Blvd',2),\n" +
+                "('Loc_2','W Nedderman & Greek Row',1),\n" +
+                "('Loc_3','S Davis & W Mitchell',2),\n" +
+                "('Loc_4','Cooper & W Mitchell',3),\n" +
+                "('Loc_5','S Oak & UTA Blvd',2),\n" +
+                "('Loc_6','Spaniolo & W 1st',4),\n" +
+                "('Loc_7','Spaniolo & W Mitchell',2),\n" +
+                "('Loc_8','S Center & W Mitchell',1)" +
                 "");
 
         db.execSQL("" +
@@ -175,7 +175,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("" +
                 "CREATE TABLE IF NOT EXISTS vehicle_schedule(\n" +
                 "vehid int,\n" +
-                "locid int,\n" +
+                "locid varchar(10),\n" +
                 "opid int,\n" +
                 "slotbegin int,\n" +
                 "slotend int,\n" +
@@ -188,13 +188,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         db.execSQL("" +
                 "INSERT INTO vehicle_schedule(vehid,locid,opid,slotbegin,slotend) VALUES\n" +
-                "(51,'Location 1',1007000,8,10),\n" +
-                "(51,'Location 2',1009000,10,11),\n" +
-                "(51,'Location 3',1007000,11,13),\n" +
-                "(53,'Location 4',1009000,8,11),\n" +
-                "(53,'Location 4',1009000,11,14),\n" +
-                "(53,'Location 4',1009000,14,17),\n" +
-                "(57,'Location 7',1007000,15,17)" +
+                "(51,'Loc_1',1007000,8,10),\n" +
+                "(51,'Loc_2',1009000,10,11),\n" +
+                "(51,'Loc_3',1007000,11,13),\n" +
+                "(53,'Loc_4',1009000,8,11),\n" +
+                "(53,'Loc_4',1009000,11,14),\n" +
+                "(53,'Loc_4',1009000,14,17),\n" +
+                "(57,'Loc_7',1007000,15,17)" +
                 "");
 
         db.execSQL("" +
@@ -316,14 +316,61 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
         Cursor cursor = sqLiteDatabase.rawQuery("SELECT role FROM user WHERE uname=? AND password=?", new String[]{uname, password});
         if (cursor.getCount() > 0) {
-                return cursor;
+            return cursor;
 //            } else {
 //                return "";
 //            }
-            }
-            return cursor;
+        }
+        return cursor;
 
 
     }
 
+
+    public Cursor getVehicleSchedule(){
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM vehicle_schedule",new String[]{});
+        return cursor;
+    }
+
+    public Cursor getAvailableVehcilesForNextDay(){
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT vi.vehid,v.vehname FROM vehicle_inventory vi LEFT JOIN vehicle v on vi.vehid=v.vehid WHERE available_date=date('now','+1 day')",new String[]{});
+        return cursor;
+    }
+
+    public Cursor getLocations(){
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM location",new String[]{});
+        return cursor;
+    }
+
+    public Cursor getOperators(){
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM user WHERE role='operator'",new String[]{});
+        return cursor;
+    }
+
+    public Cursor getMinMaxSlots(String vehid){
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        Cursor cursor = sqLiteDatabase.rawQuery("select min(slotbegin) as minslotbegin,max(slotend) as maxslotend from vehicle_schedule where vehid=?",new String[]{vehid});
+        return cursor;
+    }
+
+    public boolean insertVehicleSchedule(int vehid,String locid,int opid, int slotbegin,int slotend){
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("vehid", vehid);
+        contentValues.put("locid", locid);
+        contentValues.put("opid", opid);
+        contentValues.put("slotbegin", slotbegin);
+        contentValues.put("slotend", slotend);
+
+        long result = sqLiteDatabase.insert("vehicle_schedule", null, contentValues);
+        if(result == -1){
+            return false;
+        }else{
+            return true;
+        }
+    }
 }

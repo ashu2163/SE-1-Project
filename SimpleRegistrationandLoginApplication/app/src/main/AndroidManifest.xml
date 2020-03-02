@@ -23,6 +23,7 @@
         <activity android:name="com.squirrel.application.ManagerHomeActivity"  />
         <activity android:name="com.squirrel.application.UserHomeActivity"  />
         <activity android:name="com.squirrel.application.OperatorHomeActivity"  />
+        <activity android:name="com.squirrel.application.AssignActivity"  />
 
         <activity android:name="com.squirrel.application.ConfirmEmailActivity"
                   />
