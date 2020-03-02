@@ -43,7 +43,7 @@ public class ConfirmEmailActivity extends AppCompatActivity {
                     String userid = databaseHelper.CheckCemail(cemail);
                     if(userid.equals("")){
                         Toast.makeText(getApplicationContext(), "Invalid Email", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(ConfirmEmailActivity.this, Login.class);
+                        Intent intent = new Intent(ConfirmEmailActivity.this, LoginActivity.class);
                         startActivity(intent);
                     } else {
                         Toast.makeText(getApplicationContext(), "VALID Email", Toast.LENGTH_SHORT).show();

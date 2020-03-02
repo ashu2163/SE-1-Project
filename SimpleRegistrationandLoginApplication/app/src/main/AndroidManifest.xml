@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="com.squirrel.application.Login"
+            android:name="com.squirrel.application.LoginActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
             android:theme="@style/NoTitle">
@@ -24,23 +24,9 @@
         <activity android:name="com.squirrel.application.UserHomeActivity"  />
         <activity android:name="com.squirrel.application.OperatorHomeActivity"  />
         <activity android:name="com.squirrel.application.AssignActivity"  />
-
-        <activity android:name="com.squirrel.application.ConfirmEmailActivity"
-                  />
-
-        <activity android:name="com.squirrel.application.ForgotPasswordActivity"
-                  />
-
-        <activity
-            android:name="com.squirrel.application.MainActivity"
-            android:configChanges="orientation"
-            android:label="@string/app_name"
-            >
-            <intent-filter>
-                <action android:name="com.razormist.simpleregistrationandloginapplication.Login" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name="com.squirrel.application.ConfirmEmailActivity" />
+        <activity android:name="com.squirrel.application.ForgotPasswordActivity" />
+        <activity android:name="com.squirrel.application.RegistrationActivity" />
     </application>
 
 </manifest>

@@ -25,19 +25,19 @@ public class OperatorHomeActivity extends AppCompatActivity {
         btn_logout = (Button)findViewById(R.id.logout);
         //username=(TextView)findViewById(R.id.username);
 
-        SharedPreferences sharedpreferences = getSharedPreferences(Login.MyPREFERENCES, Context.MODE_PRIVATE);
+        SharedPreferences sharedpreferences = getSharedPreferences(LoginActivity.MyPREFERENCES, Context.MODE_PRIVATE);
         String uname= sharedpreferences.getString("username","User");
         //username.setText(uname);
 
         btn_logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPreferences sharedpreferences = getSharedPreferences(Login.MyPREFERENCES, Context.MODE_PRIVATE);
+                SharedPreferences sharedpreferences = getSharedPreferences(LoginActivity.MyPREFERENCES, Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedpreferences.edit();
                 editor.clear();
                 editor.commit();
                 Toast.makeText(getApplicationContext(), "Logout Successful", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(OperatorHomeActivity.this, Login.class);
+                Intent intent = new Intent(OperatorHomeActivity.this, LoginActivity.class);
                 startActivity(intent);
             }
         });

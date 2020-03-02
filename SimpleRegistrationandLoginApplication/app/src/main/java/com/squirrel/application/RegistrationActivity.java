@@ -15,7 +15,7 @@ import com.myApp.simpleregistrationandloginapplication.R;
 import com.squirrel.dao.DatabaseHelper;
 
 
-public class MainActivity extends AppCompatActivity {
+public class RegistrationActivity extends AppCompatActivity {
     DatabaseHelper databaseHelper;
 
     EditText et_username, et_password, et_cpassword,et_fname,et_lname,et_email,et_address,et_city,et_state,et_zipcode,et_phone;
@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         btn_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, Login.class);
+                Intent intent = new Intent(RegistrationActivity.this, LoginActivity.class);
                 startActivity(intent);
             }
         });
@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
                             if(insert == true){
 
                                 Toast.makeText(getApplicationContext(), "Registered", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(MainActivity.this, Login.class);
+                                Intent intent = new Intent(RegistrationActivity.this, LoginActivity.class);
                                 startActivity(intent);
                                 et_fname.setText("");
                                 et_lname.setText("");

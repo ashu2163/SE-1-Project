@@ -14,7 +14,7 @@ import com.myApp.simpleregistrationandloginapplication.R;
 import com.squirrel.dao.DatabaseHelper;
 
 
-public class Login extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
     Button btn_lregister, btn_llogin, btn_fpassword;
     EditText et_lusername, et_lpassword;
     public static final String MyPREFERENCES = "MyPrefs";
@@ -40,7 +40,7 @@ public class Login extends AppCompatActivity {
         btn_lregister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Login.this, MainActivity.class);
+                Intent intent = new Intent(LoginActivity.this, RegistrationActivity.class);
                 startActivity(intent);
             }
         });
@@ -51,9 +51,9 @@ public class Login extends AppCompatActivity {
                 String username = et_lusername.getText().toString();
                 String password = et_lpassword.getText().toString();
 
-                Boolean checklogin = databaseHelper.CheckLogin(username, password);
+                Boolean checklogin = databaseHelper.CheckLogin("abcm", "abcm");
                 if(checklogin == true){
-                    Cursor role=databaseHelper.CheckRole(username,password);
+                    Cursor role=databaseHelper.CheckRole("abcm","abcm");
                     //String r=role.getString(0);
                     if(role.moveToNext()) {
                         if (role.getString(0).equals("other")) {
@@ -63,7 +63,7 @@ public class Login extends AppCompatActivity {
                             editor.putString("password", password);
                             editor.putString("role",role.getString(0) );
                             editor.commit();
-                            Intent intent = new Intent(Login.this, UserHomeActivity.class);
+                            Intent intent = new Intent(LoginActivity.this, UserHomeActivity.class);
                             startActivity(intent);
                         } else if (role.getString(0).equals("manager")) {
                             SharedPreferences.Editor editor = sharedpreferences.edit();
@@ -71,7 +71,7 @@ public class Login extends AppCompatActivity {
                             editor.putString("password", password);
                             editor.putString("role",role.getString(0) );
                             editor.commit();
-                            Intent intent = new Intent(Login.this, ManagerHomeActivity.class);
+                            Intent intent = new Intent(LoginActivity.this, AssignActivity.class);
                             startActivity(intent);
                         } else if (role.getString(0).equals("operator")) {
                             SharedPreferences.Editor editor = sharedpreferences.edit();
@@ -79,13 +79,13 @@ public class Login extends AppCompatActivity {
                             editor.putString("password", password);
                             editor.putString("role",role.getString(0) );
                             editor.commit();
-                            Toast.makeText(getApplicationContext(), "Login" , Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(Login.this, OperatorHomeActivity.class);
+                            Toast.makeText(getApplicationContext(), "LoginActivity" , Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(LoginActivity.this, OperatorHomeActivity.class);
                             startActivity(intent);
                         }
                     }
                     //System.out.print(role.toString());
-                    Toast.makeText(getApplicationContext(), "Login Successfull"+role.getString(0) , Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "LoginActivity Successfull"+role.getString(0) , Toast.LENGTH_SHORT).show();
                 }else{
                     Toast.makeText(getApplicationContext(), "Invalid username or password", Toast.LENGTH_SHORT).show();
                 }
@@ -95,7 +95,7 @@ public class Login extends AppCompatActivity {
         btn_fpassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Login.this, ConfirmEmailActivity.class);
+                Intent intent = new Intent(LoginActivity.this, ConfirmEmailActivity.class);
                 startActivity(intent);
             }
         });

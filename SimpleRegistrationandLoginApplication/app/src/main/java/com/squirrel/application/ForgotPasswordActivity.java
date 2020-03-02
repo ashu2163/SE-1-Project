@@ -50,7 +50,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
 
                         if(insert == true){
                             Toast.makeText(getApplicationContext(), "Password changed successfully", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(ForgotPasswordActivity.this, Login.class);
+                            Intent intent = new Intent(ForgotPasswordActivity.this, LoginActivity.class);
                             startActivity(intent);
                         } else {
                             Toast.makeText(getApplicationContext(), "Failed to change password", Toast.LENGTH_SHORT).show();
