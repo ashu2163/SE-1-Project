@@ -19,7 +19,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.myApp.simpleregistrationandloginapplication.R;
+import com.squirrel.app.R;
 import com.squirrel.constants.SquirrelConstants;
 import com.squirrel.dao.DatabaseHelper;
 

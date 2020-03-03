@@ -11,7 +11,7 @@ import android.widget.Toast;
 import android.widget.RadioGroup;
 import android.widget.RadioButton;
 
-import com.myApp.simpleregistrationandloginapplication.R;
+import com.squirrel.app.R;
 import com.squirrel.dao.DatabaseHelper;
 
 

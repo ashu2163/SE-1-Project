@@ -10,7 +10,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 import android.database.Cursor;
 
-import com.myApp.simpleregistrationandloginapplication.R;
+import com.squirrel.app.R;
 import com.squirrel.dao.DatabaseHelper;
 
 

@@ -9,7 +9,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.myApp.simpleregistrationandloginapplication.R;
+import com.squirrel.app.R;
 
 
 public class UserHomeActivity extends AppCompatActivity {

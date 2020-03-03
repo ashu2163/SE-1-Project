@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.myApp.simpleregistrationandloginapplication.R;
+import com.squirrel.app.R;
 
 
 public class ManagerHomeActivity extends AppCompatActivity {
