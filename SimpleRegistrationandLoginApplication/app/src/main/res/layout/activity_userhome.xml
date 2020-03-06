@@ -22,7 +22,7 @@
         app:menu="@menu/bottom_nav_menu" />
 
     <android.support.design.widget.TabLayout
-        android:id="@+id/TabLayout-Student"
+        android:id="@+id/tl_student"
         android:layout_width="409dp"
         android:layout_height="wrap_content"
         android:background="@color/colorCream"
@@ -33,14 +33,16 @@
         app:tabIndicatorColor="@color/colorPrimary">
 
         <android.support.design.widget.TabItem
+            android:id="@+id/et_truck"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Food Truck" />
+            android:text="food_truck"/>
 
         <android.support.design.widget.TabItem
+            android:id="@+id/et_cart"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Food Cart" />
+            android:text="food_cart" />
     </android.support.design.widget.TabLayout>
 
 
@@ -71,4 +73,11 @@
         app:layout_constraintStart_toStartOf="parent">
 
     </ListView>
+
+    <FrameLayout
+        android:id="@+id/simpleFrameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
 </android.support.constraint.ConstraintLayout>

@@ -99,19 +99,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("" +
                 "CREATE TABLE IF NOT EXISTS vehicle(\n" +
                 "vehid int PRIMARY KEY,\n" +
-                "vehname varchar(20) NOT NULL\n" +
+                "vehname varchar(20) NOT NULL,\n" +
+                "vehtype varchar(10) NOT NULL\n" +
                 ")" +
                 "");
 
         db.execSQL("" +
-                "INSERT INTO vehicle(vehid,vehname) VALUES\n" +
-                "(51,'foodtruck1'),\n" +
-                "(52,'foodtruck2'),\n" +
-                "(53,'stationcart1'),\n" +
-                "(54,'stationcart2'),\n" +
-                "(55,'stationcart3'),\n" +
-                "(56,'stationcart4'),\n" +
-                "(57,'stationcart5')" +
+                "INSERT INTO vehicle(vehid,vehname, vehtype) VALUES\n" +
+                "(51,'foodtruck1', 'truck'),\n" +
+                "(52,'foodtruck2','truck'),\n" +
+                "(53,'stationcart1','cart'),\n" +
+                "(54,'stationcart2','cart'),\n" +
+                "(55,'stationcart3','cart'),\n" +
+                "(56,'stationcart4','cart'),\n" +
+                "(57,'stationcart5','cart')" +
                 "");
 
         db.execSQL("" +
@@ -372,5 +373,25 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }else{
             return true;
         }
+
     }
+
+    public Cursor getVehicleName(String vehtype){
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        Cursor cursor= sqLiteDatabase.rawQuery("select distinct a.vehname,c.slotbegin,c.slotend,d.locname from vehicle as a join vehicle_inventory as b on a.vehid==b.vehid join vehicle_schedule as c on a.vehid=c.vehid join location as d on d.locid=c.locid\n" +
+                "where a.vehtype==? and b.available_date==(Select date())\n" +
+                "\n",new String[]{vehtype});
+        return cursor;
+    }
+
+    public Cursor getSelectedVehicleInventory(String vehname){
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        Cursor cursor=sqLiteDatabase.rawQuery("select distinct c.itemtype,a.quantity from vehicle_inventory as a join vehicle as b on a.vehid=b.vehid\n" +
+                "join item as c on c.itemid= a.itemid\n" +
+                "where b.vehname=?", new String[]{vehname});
+
+        return cursor;
+    }
+
+
 }

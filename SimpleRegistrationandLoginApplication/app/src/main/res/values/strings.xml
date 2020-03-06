@@ -2,4 +2,8 @@
     <string name="app_name">Squirrel</string>
     <string name="title_activity_login">Login</string>
     <string name="title_activity_main2">Main2Activity</string>
+    <string name="snacks">Snacks</string>
+    <string name="vehicle_inventory">Vehicle Inventory</string>
+    <string name="ava_sandwich">ava_sandwich</string>
+    <string name="ava_drinks">ava_drinks</string>
 </resources>
