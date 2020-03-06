@@ -71,7 +71,7 @@ public class LoginActivity extends AppCompatActivity {
                             editor.putString("password", password);
                             editor.putString("role",role.getString(0) );
                             editor.commit();
-                            Intent intent = new Intent(LoginActivity.this, AssignActivity.class);
+                            Intent intent = new Intent(LoginActivity.this, ManagerHomeActivity.class);
                             startActivity(intent);
                         } else if (role.getString(0).equals("operator")) {
                             SharedPreferences.Editor editor = sharedpreferences.edit();

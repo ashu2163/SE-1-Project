@@ -13,7 +13,7 @@ import com.squirrel.app.R;
 
 public class ManagerHomeActivity extends AppCompatActivity {
 
-        Button btn_logout;
+        Button btn_logout,btn_assign;
         //TextView username;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +22,7 @@ public class ManagerHomeActivity extends AppCompatActivity {
 
 
         btn_logout = (Button)findViewById(R.id.logout);
+        btn_assign = (Button)findViewById(R.id.btn_assign);
         //username=(TextView)findViewById(R.id.username);
 
         SharedPreferences sharedpreferences = getSharedPreferences(LoginActivity.MyPREFERENCES, Context.MODE_PRIVATE);
@@ -37,6 +38,18 @@ public class ManagerHomeActivity extends AppCompatActivity {
                 editor.commit();
                 Toast.makeText(getApplicationContext(), "Logout Successful", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(ManagerHomeActivity.this, LoginActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        btn_assign.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences sharedpreferences = getSharedPreferences(LoginActivity.MyPREFERENCES, Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.clear();
+                editor.commit();
+                Intent intent = new Intent(ManagerHomeActivity.this, AssignActivity.class);
                 startActivity(intent);
             }
         });
