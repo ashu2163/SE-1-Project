@@ -14,6 +14,11 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.widget.Toast;
 
+import java.sql.Date;
+import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.ZoneId;
 import java.util.Random;
 
 
@@ -182,7 +187,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "opid int,\n" +
                 "slotbegin int,\n" +
                 "slotend int,\n" +
-                "PRIMARY KEY (vehid,slotbegin,slotend),\n" +
+                "scheduled_date date,\n" +
+                "PRIMARY KEY (vehid,slotbegin,slotend,scheduled_date),\n" +
                 "FOREIGN KEY (vehid) REFERENCES vehicle(vehid),\n" +
                 "FOREIGN KEY (locid) REFERENCES location(locid),\n" +
                 "FOREIGN KEY (opid) REFERENCES user(userid)\n" +
@@ -190,14 +196,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "");
 
         db.execSQL("" +
-                "INSERT INTO vehicle_schedule(vehid,locid,opid,slotbegin,slotend) VALUES\n" +
-                "(51,'Loc_1',1007000,8,10),\n" +
-                "(51,'Loc_2',1009000,10,11),\n" +
-                "(51,'Loc_3',1007000,11,13),\n" +
-                "(53,'Loc_4',1009000,8,11),\n" +
-                "(53,'Loc_4',1009000,11,14),\n" +
-                "(53,'Loc_4',1009000,14,17),\n" +
-                "(57,'Loc_7',1007000,15,17)" +
+                "INSERT INTO vehicle_schedule(vehid,locid,opid,slotbegin,slotend,scheduled_date) VALUES\n" +
+                "(51,'Loc_1',1007000,8,10,date('now')),\n" +
+                "(51,'Loc_2',1009000,10,11,date('now')),\n" +
+                "(51,'Loc_3',1007000,11,13,date('now')),\n" +
+                "(53,'Loc_4',1009000,8,11,date('now')),\n" +
+                "(53,'Loc_4',1009000,11,14,date('now')),\n" +
+                "(53,'Loc_4',1009000,14,17,date('now')),\n" +
+                "(57,'Loc_7',1007000,15,17,date('now')),\n" +
+                "(51,'Loc_1',1007000,8,10,date('now','+1 day')),\n" +
+                "(51,'Loc_2',1009000,10,11,date('now','+1 day')),\n" +
+                "(51,'Loc_3',1007000,11,13,date('now','+1 day')),\n" +
+                "(53,'Loc_4',1009000,8,11,date('now','+1 day')),\n" +
+                "(53,'Loc_4',1009000,11,14,date('now','+1 day')),\n" +
+                "(53,'Loc_4',1009000,14,17,date('now','+1 day')),\n" +
+                "(57,'Loc_7',1007000,15,17,date('now','+1 day'))" +
                 "");
 
         db.execSQL("" +
@@ -332,13 +345,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public Cursor getVehicleSchedule(){
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
-        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM vehicle_schedule",new String[]{});
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM vehicle_schedule where scheduled_date=date('now','+1 day')",new String[]{});
         return cursor;
     }
 
     public Cursor getAvailableVehcilesForNextDay(){
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
-        Cursor cursor = sqLiteDatabase.rawQuery("SELECT vi.vehid,v.vehname FROM vehicle_inventory vi LEFT JOIN vehicle v on vi.vehid=v.vehid WHERE available_date=date('now','+1 day')",new String[]{});
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT distinct(vi.vehid),v.vehname FROM vehicle_inventory vi LEFT JOIN vehicle v on vi.vehid=v.vehid WHERE available_date=date('now','+1 day')",new String[]{});
         return cursor;
     }
 
@@ -356,7 +369,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public Cursor getMinMaxSlots(String vehid){
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
-        Cursor cursor = sqLiteDatabase.rawQuery("select min(slotbegin) as minslotbegin,max(slotend) as maxslotend from vehicle_schedule where vehid=?",new String[]{vehid});
+        Cursor cursor = sqLiteDatabase.rawQuery("select min(slotbegin) as minslotbegin,max(slotend) as maxslotend from vehicle_schedule where vehid=? and scheduled_date=date('now','+1 day')",new String[]{vehid});
         return cursor;
     }
 
@@ -368,6 +381,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put("opid", opid);
         contentValues.put("slotbegin", slotbegin);
         contentValues.put("slotend", slotend);
+        contentValues.put("scheduled_date", LocalDate.now(ZoneId.of("UTC")).plusDays(1).toString());
 
         long result = sqLiteDatabase.insert("vehicle_schedule", null, contentValues);
         if(result == -1){
@@ -380,8 +394,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public Cursor getVehicleName(String vehtype){
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
-        Cursor cursor= sqLiteDatabase.rawQuery("select distinct a.vehname,c.slotbegin,c.slotend,d.locname from vehicle as a join vehicle_inventory as b on a.vehid==b.vehid join vehicle_schedule as c on a.vehid=c.vehid join location as d on d.locid=c.locid\n" +
-                "where a.vehtype==? and b.available_date==(Select date())\n" +
+        Cursor cursor= sqLiteDatabase.rawQuery("select distinct v.vehname,vs.slotbegin,vs.slotend,l.locname " +
+                "from vehicle as v \n" +
+                "left join vehicle_schedule as vs on v.vehid=vs.vehid \n" +
+                "left join location as l on vs.locid=l.locid\n" +
+                "where v.vehtype=? and vs.scheduled_date=date('now')" +
                 "\n",new String[]{vehtype});
         return cursor;
     }
