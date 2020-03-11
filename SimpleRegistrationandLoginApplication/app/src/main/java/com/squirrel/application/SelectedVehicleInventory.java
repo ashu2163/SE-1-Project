@@ -1,5 +1,6 @@
 package com.squirrel.application;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -21,7 +22,7 @@ import com.squirrel.dao.DatabaseHelper;
 public class SelectedVehicleInventory extends AppCompatActivity {
     TextView ava_drinks, ava_snacks, ava_sandwiches;
     EditText sel_drinks,sel_snacks,sel_sandwiches;
-    Button btn_addToCart;
+    Button btn_addToCart, btn_logout;
     String MY_PREFS_NAME="MyPrefs";
     BottomNavigationView bottomNavigationView;
     DatabaseHelper db;
@@ -51,9 +52,8 @@ public class SelectedVehicleInventory extends AppCompatActivity {
             }
         });
 
-
         SharedPreferences prefs = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
-        String loadedString = prefs.getString("name", null);
+        String loadedString = prefs.getString("vehname", null);
         SharedPreferences pref = getSharedPreferences(LoginActivity.MyPREFERENCES, MODE_PRIVATE);
         final String username=pref.getString("username",null);
         Toast.makeText(this,username,Toast.LENGTH_LONG).show();
@@ -64,6 +64,7 @@ public class SelectedVehicleInventory extends AppCompatActivity {
         sel_snacks=(EditText)findViewById(R.id.sel_snacks);
         sel_sandwiches=(EditText)findViewById(R.id.sel_sandwiches);
         btn_addToCart=(Button)findViewById(R.id.add_to_cart);
+        btn_logout = (Button) findViewById(R.id.logout);
         db=new DatabaseHelper(this);
         Cursor name_quantity= db.getSelectedVehicleInventory(loadedString);
         if(name_quantity.moveToFirst()){
@@ -134,5 +135,19 @@ public class SelectedVehicleInventory extends AppCompatActivity {
                 }
             }
         });
+
+        btn_logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences sharedpreferences = getSharedPreferences(LoginActivity.MyPREFERENCES, Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.clear();
+                editor.commit();
+                Toast.makeText(getApplicationContext(), "Logout Successful", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(SelectedVehicleInventory.this, LoginActivity.class);
+                startActivity(intent);
+            }
+        });
+
     }
 }

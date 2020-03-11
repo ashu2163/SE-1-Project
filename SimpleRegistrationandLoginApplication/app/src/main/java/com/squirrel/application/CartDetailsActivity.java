@@ -1,5 +1,6 @@
 package com.squirrel.application;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -20,7 +21,7 @@ import com.squirrel.dao.DatabaseHelper;
 public class CartDetailsActivity extends AppCompatActivity {
     EditText qua_drinks,qua_snacks,qua_sandwich;
     TextView et_c_drinks,et_c_snacks,et_c_sandwich,et_cost;
-    Button btn_update;
+    Button btn_update,btn_logout;
     DatabaseHelper db;
     BottomNavigationView bottomNavigationView;
 
@@ -53,7 +54,7 @@ public class CartDetailsActivity extends AppCompatActivity {
         final String username=pref.getString("username",null);
 
         db = new DatabaseHelper(this);
-
+        btn_logout = (Button) findViewById(R.id.logout);
         qua_drinks=(EditText)findViewById(R.id.qua_drinks);
         qua_snacks=(EditText)findViewById(R.id.qua_snacks);
         qua_sandwich=(EditText)findViewById(R.id.qua_sandwich);
@@ -181,6 +182,18 @@ public class CartDetailsActivity extends AppCompatActivity {
 
         });
 
+        btn_logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences sharedpreferences = getSharedPreferences(LoginActivity.MyPREFERENCES, Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.clear();
+                editor.commit();
+                Toast.makeText(getApplicationContext(), "Logout Successful", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(CartDetailsActivity.this, LoginActivity.class);
+                startActivity(intent);
+            }
+        });
 
 
     }
