@@ -24,11 +24,13 @@
         app:layout_constraintVertical_bias="1.0"
         app:menu="@menu/bottom_nav_menu" />
 
+    <!-- TODO: Update blank fragment layout -->
+
     <ListView
         android:id="@+id/listView"
         android:layout_width="0dp"
         android:layout_height="443dp"
-        android:layout_marginTop="150dp"
+        android:layout_marginTop="80dp"
         android:layout_marginBottom="72dp"
         app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
         app:layout_constraintEnd_toEndOf="parent"
