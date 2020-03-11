@@ -1,9 +1,11 @@
 package com.squirrel.dao;
 import android.content.Intent;
+import android.database.SQLException;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -393,5 +395,59 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
+    public int getUserId(String username){
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        Cursor cursor= sqLiteDatabase.rawQuery("select userid from user where uname=?", new String[]{username});
 
+        if(cursor.getCount() > 0) {
+            if (cursor.moveToNext()) {
+                return cursor.getInt(0);
+            }
+        }
+        return -1;
+    }
+
+    private static Context mContext;
+    public boolean insertToCart(int userId, int itemId , int quantity){
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+
+        long result=0;
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("userid", userId);
+        contentValues.put("itemid", itemId);
+        contentValues.put("buy_quantity",quantity);
+        Cursor cursor=sqLiteDatabase.rawQuery("select userid,itemid from cart where userid=?", new String[]{String.valueOf(userId)});
+        if(cursor.getCount()>0){
+            while (cursor.moveToNext()) {
+                if(cursor.getInt(1)==itemId){
+                    return false;
+                }
+            }
+        }
+        if(sqLiteDatabase.insert("cart", null, contentValues)!=-1){
+            return true;
+        }
+        else{
+            return false;
+        }
+
+    }
+
+
+    public Cursor getCartDetails(int userId){
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        Cursor cursor= sqLiteDatabase.rawQuery("select * from cart where userid=?", new String[]{String.valueOf(userId)});
+        return cursor;
+    }
+
+    public float getCost(int itemId){
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        Cursor cursor= sqLiteDatabase.rawQuery("select cost from item where itemid=?", new String[]{String.valueOf(itemId)});
+        if(cursor.getCount()>0){
+            if(cursor.moveToNext()){
+                return cursor.getFloat(0);
+            }
+        }
+        return -1;
+    }
 }

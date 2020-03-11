@@ -59,7 +59,7 @@ public class FoodCartFragment extends Fragment {
                 String slotend=vname.getString(vname.getColumnIndex("slotend"));
                 String locname=vname.getString(vname.getColumnIndex("locname"));
                 String con="Name: "+vehname+"  Time: "+slotbegin+" to "+slotend+"\nLocation: "+locname;
-                //list.add(vehname);
+
                 list.add(con);
 
                 listView.setAdapter(adplist);
