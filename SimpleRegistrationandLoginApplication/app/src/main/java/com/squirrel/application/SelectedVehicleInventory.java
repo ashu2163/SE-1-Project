@@ -66,7 +66,7 @@ public class SelectedVehicleInventory extends AppCompatActivity {
                 int userId = db.getUserId(username);
                 if (userId != -1) {
                     if (drinks != 0 ) {
-                        if(drinks>Integer.parseInt(ava_drinks.toString())){
+                        if(drinks>Integer.parseInt(String.valueOf(ava_drinks.getText()))){
                             str+=" Please add drinks less than available quantity ";
                         }
                         else if (db.insertToCart(userId, 81, drinks)) {
@@ -78,7 +78,7 @@ public class SelectedVehicleInventory extends AppCompatActivity {
                         }
                     }
                     if (snacks != 0) {
-                        if(snacks>Integer.parseInt(ava_snacks.toString())){
+                        if(snacks>Integer.parseInt(String.valueOf(ava_snacks.getText()))){
                             str+=" Please add snacks less than available quantity ";
                         }
                         else if (db.insertToCart(userId, 83, snacks)) {
@@ -91,7 +91,7 @@ public class SelectedVehicleInventory extends AppCompatActivity {
                         }
                     }
                     if (sandwiches != 0) {
-                        if(sandwiches>Integer.parseInt(ava_sandwiches.toString())){
+                        if(sandwiches>Integer.parseInt(String.valueOf(ava_sandwiches.getText()))){
                             str+=" Please add sandwiches less than available quantity ";
                         }
                         if (db.insertToCart(userId, 82, sandwiches)) {
