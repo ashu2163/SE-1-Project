@@ -14,6 +14,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.widget.Toast;
 
+import com.squirrel.models.User;
+
 import java.sql.Date;
 import java.sql.Time;
 import java.time.LocalDate;
@@ -466,5 +468,58 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             }
         }
         return -1;
+    }
+
+    public int getVehId(String vehname){
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        Cursor c=sqLiteDatabase.rawQuery("select vehid from vehicle where vehname=?", new String[]{vehname});
+        if(c.getCount()>0){
+            if(c.moveToNext()){
+                return c.getInt(0);
+            }
+        }
+        return -1;
+    }
+
+    public float getItemQuantity(int vehId, int itemId){
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        Cursor c=sqLiteDatabase.rawQuery("select quantity from vehicle_inventory where vehid=? and itemid=?",
+                new String[]{String.valueOf(vehId), String.valueOf(itemId)});
+
+        if(c.getCount()>0){
+            if(c.moveToNext()){
+                return c.getInt(0);
+            }
+        }
+        return -1;
+    }
+
+    public boolean findItemInCart(int userId, int itemId)
+    {
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        Cursor c= sqLiteDatabase.rawQuery("select * from cart where userid=? and itemid=?",
+                new String[]{String.valueOf(userId), String.valueOf(itemId)});
+
+        if(c.getCount()>0){
+            return true;
+        }
+        return false;
+    }
+
+    public boolean updateCart(int userId, int itemId, float qua){
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        ContentValues cv=new ContentValues();
+        cv.put("buy_quantity",qua);
+        cv.put("userid",userId);
+        cv.put("itemid",itemId);
+        //long r=sqLiteDatabase.replace("cart",null,cv);
+        long r=sqLiteDatabase.update("cart",cv, "userid=? and  itemid=?",new String[]{String.valueOf(userId), String.valueOf(itemId)});
+
+        if(r == -1){
+            return false;
+        }else{
+            return true;
+        }
+
     }
 }
