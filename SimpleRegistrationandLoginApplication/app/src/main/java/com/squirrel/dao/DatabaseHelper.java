@@ -233,6 +233,45 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "(1003000,83,2)" +
                 "");
 
+        db.execSQL("" +
+                "CREATE TABLE IF NOT EXISTS paymentoptions(\n" +
+                "userid int,\n" +
+                "cc varchar(16),\n" +
+                "expiry varchar(6),\n" +
+                "cvv varchar(3),\n" +
+                "cardtype varchar(3),\n" +
+                "PRIMARY KEY (cc),\n" +
+                "FOREIGN KEY (userid) REFERENCES user(userid)\n" +
+                ")" +
+                "");
+
+        db.execSQL("" +
+                "INSERT INTO paymentoptions(userid,cc,expiry,cvv,cardtype) VALUES\n" +
+                "(1001000,'1234123445674567','052024','123','Visa'),\n" +
+                "(1003000,'4567456712341234','052025','456','Master')" +
+                "");
+
+        db.execSQL("" +
+                "CREATE TABLE IF NOT EXISTS payments(\n" +
+                "payid int,\n" +
+                "userid int,\n" +
+                "vehid int,\n" +
+                "payment_date date,\n" +
+                "total_cost decimal(10,2) NOT NULL,\n" +
+                "PRIMARY KEY (payid),\n" +
+                "FOREIGN KEY (userid) REFERENCES user(userid),\n" +
+                "FOREIGN KEY (vehid) REFERENCES vehicle(vehid)\n" +
+                ")" +
+                "");
+
+        db.execSQL("" +
+                "INSERT INTO payments(payid,userid,vehid,payment_date,total_cost) VALUES\n" +
+                "(9901000,1001000,51,date('now'),1523.26),\n" +
+                "(9903000,1003000,53,date('now'),2028.10),\n" +
+                "(9905000,1001000,57,date('now'),1222.50),\n" +
+                "(9907000,1001000,57,date('now','-1 day'),1750.80)" +
+                "");
+
         Log.d("","DONE");
     }
 
