@@ -233,6 +233,45 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "(1003000,83,2)" +
                 "");
 
+        db.execSQL("" +
+                "CREATE TABLE IF NOT EXISTS paymentoptions(\n" +
+                "userid int,\n" +
+                "cc varchar(16),\n" +
+                "expiry varchar(6),\n" +
+                "cvv varchar(3),\n" +
+                "cardtype varchar(3),\n" +
+                "PRIMARY KEY (cc),\n" +
+                "FOREIGN KEY (userid) REFERENCES user(userid)\n" +
+                ")" +
+                "");
+
+        db.execSQL("" +
+                "INSERT INTO paymentoptions(userid,cc,expiry,cvv,cardtype) VALUES\n" +
+                "(1001000,'1234123445674567','052024','123','Visa'),\n" +
+                "(1003000,'4567456712341234','052025','456','Master')" +
+                "");
+
+        db.execSQL("" +
+                "CREATE TABLE IF NOT EXISTS payments(\n" +
+                "payid int,\n" +
+                "userid int,\n" +
+                "vehid int,\n" +
+                "payment_date date,\n" +
+                "total_cost decimal(10,2) NOT NULL,\n" +
+                "PRIMARY KEY (payid),\n" +
+                "FOREIGN KEY (userid) REFERENCES user(userid),\n" +
+                "FOREIGN KEY (vehid) REFERENCES vehicle(vehid)\n" +
+                ")" +
+                "");
+
+        db.execSQL("" +
+                "INSERT INTO payments(payid,userid,vehid,payment_date,total_cost) VALUES\n" +
+                "(9901000,1001000,51,date('now'),1523.26),\n" +
+                "(9903000,1003000,53,date('now'),2028.10),\n" +
+                "(9905000,1001000,57,date('now'),1222.50),\n" +
+                "(9907000,1001000,57,date('now','-1 day'),1750.80)" +
+                "");
+
         Log.d("","DONE");
     }
 
@@ -514,6 +553,66 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cv.put("itemid",itemId);
         //long r=sqLiteDatabase.replace("cart",null,cv);
         long r=sqLiteDatabase.update("cart",cv, "userid=? and  itemid=?",new String[]{String.valueOf(userId), String.valueOf(itemId)});
+
+        if(r == -1){
+            return false;
+        }else{
+            return true;
+        }
+
+    }
+
+    public Cursor getOperatorVehicle(String uname){
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        Cursor cursor = sqLiteDatabase.rawQuery("select vehicle.vehname,vehicle.vehtype,location.locname,vehicle_schedule.slotbegin,vehicle_schedule.slotend,user.fname,user.lname\n" +
+                "from vehicle,location,vehicle_schedule,user where vehicle.vehid=vehicle_schedule.vehid and location.locid=vehicle_schedule.locid and \n" +
+                "user.userid=vehicle_schedule.opid and vehicle_schedule.scheduled_date=date('now') and user.uname=?",new String[]{uname});
+        return cursor;
+    }
+
+    public Cursor getVehicleList(){
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        Cursor cursor = sqLiteDatabase.rawQuery("select vehicle.vehid,vehicle.vehname,vehicle.vehtype,location.locname,vehicle_schedule.slotbegin,vehicle_schedule.slotend,user.fname,user.lname,vehicle_schedule.scheduled_date from vehicle,location,vehicle_schedule,user \n" +
+                "where vehicle.vehid = vehicle_schedule.vehid and location.locid = vehicle_schedule.locid and user.userid=vehicle_schedule.opid",new String[]{});
+        return cursor;
+    }
+
+    public Cursor getVehicleInventory(String vehname){
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        Cursor cursor=sqLiteDatabase.rawQuery("select item.itemtype, vehicle_inventory.quantity, item.cost from item, vehicle_inventory, vehicle \n" +
+                "where item.itemid=vehicle_inventory.itemid and vehicle.vehid=vehicle_inventory.vehid and available_date=date('now') and vehicle.vehname=?", new String[]{vehname});
+
+        return cursor;
+    }
+    public Cursor getInventoryDetails(int vehid){
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        Cursor cursor=sqLiteDatabase.rawQuery("Select * from vehicle_inventory where vehid=? and available_date=date('now')", new String[]{String.valueOf(vehid)});
+
+        return cursor;
+    }
+
+    public boolean updateQuantity(int vehId, int itemId, float qua){
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        ContentValues cv=new ContentValues();
+        cv.put("quantity",qua);
+        cv.put("vehid",vehId);
+        cv.put("itemid",itemId);
+        long r=sqLiteDatabase.update("vehicle_inventory",cv, "vehid=? and  itemid=? and available_date=date('now')",new String[]{String.valueOf(vehId), String.valueOf(itemId)});
+
+        if(r == -1){
+            return false;
+        }else{
+            return true;
+        }
+
+    }
+
+    public boolean updateCost(int itemId, float cost){
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        ContentValues cv=new ContentValues();
+        cv.put("cost",cost);
+        cv.put("itemid",itemId);
+        long r=sqLiteDatabase.update("item",cv, "itemid=?",new String[]{String.valueOf(itemId)});
 
         if(r == -1){
             return false;

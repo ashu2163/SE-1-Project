@@ -1,4 +1,5 @@
 package com.squirrel.application;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -19,33 +20,32 @@ import com.squirrel.app.R;
 import com.squirrel.dao.DatabaseHelper;
 import java.util.ArrayList;
 
-
-public class OperatorHomeActivity extends AppCompatActivity {
+public class ViewManagerVehicle extends AppCompatActivity {
     private ListView listView;
+    Button btn_logout;
     private ArrayList<String> stringArrayList;
     ArrayList<String> list;
     DatabaseHelper db;
-    Button btn_logout;
     BottomNavigationView bottomNavigationView;
     public static final String MyPREFERENCES = "MyPrefs";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_operatorhome);
+        setContentView(R.layout.activity_manager_vehicle);
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.action_cart:
-                        Intent intent1=new Intent( OperatorHomeActivity.this, CartDetailsActivity.class);
+                        Intent intent1=new Intent( ViewManagerVehicle.this, CartDetailsActivity.class);
                         startActivity(intent1);
                         break;
                     case R.id.action_profile:
                         break;
                     case R.id.action_home:
-                        Intent intent3=new Intent( OperatorHomeActivity.this, OperatorHomeActivity.class);
+                        Intent intent3=new Intent( ViewManagerVehicle.this, ManagerHomeActivity.class);
                         startActivity(intent3);
                         break;
                 }
@@ -54,30 +54,26 @@ public class OperatorHomeActivity extends AppCompatActivity {
             }
         });
         btn_logout = (Button) findViewById(R.id.btn_logout);
-        SharedPreferences sharedpreferences = getSharedPreferences(LoginActivity.MyPREFERENCES, Context.MODE_PRIVATE);
-        String uname= sharedpreferences.getString("username","User");
-        Toast.makeText(this,uname,Toast.LENGTH_LONG).show();
-
-
         listView = (ListView) findViewById(R.id.listView);
         list=new ArrayList<String>();
 
         db = new DatabaseHelper(this);
-        Cursor c=db.getOperatorVehicle(uname);
+        Cursor c=db.getVehicleList();
 
         ArrayAdapter<String> adplist=new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,list);
         listView.setAdapter(adplist);
-
         if(c.moveToFirst()){
             do{
+                //String vehid=c.getString(c.getColumnIndex("vehid"));
                 String vehname=c.getString(c.getColumnIndex("vehname"));
-                String vehType=c.getString(c.getColumnIndex("vehtype"));
+                String vehtype=c.getString(c.getColumnIndex("vehtype"));
+                String operatorfname=c.getString(c.getColumnIndex("fname"));
+                String operatorlname=c.getString(c.getColumnIndex("lname"));
                 String locname=c.getString(c.getColumnIndex("locname"));
+                String date=c.getString(c.getColumnIndex("scheduled_date"));
                 String slotbegin=c.getString(c.getColumnIndex("slotbegin"));
                 String slotend=c.getString(c.getColumnIndex("slotend"));
-                String fname=c.getString(c.getColumnIndex("fname"));
-                String lname=c.getString(c.getColumnIndex("lname"));
-                String con="Name: "+vehname+ " \nVehicleType: "+vehType+"\nFirst Name: "+fname+"\nLast Name: "+lname+"\nTime: "+slotbegin+" to "+slotend+"\nLocation: "+locname;
+                String con="Name: "+vehname+" Type:"+vehtype+"\nDate :"+date+" Time: "+slotbegin+" to "+slotend+"\nOperator Name: "+operatorfname+" "+operatorlname+"\nLocation: "+locname;
                 list.add(con);
                 listView.setAdapter(adplist);
             }while(c.moveToNext());
@@ -91,7 +87,7 @@ public class OperatorHomeActivity extends AppCompatActivity {
                         SharedPreferences.Editor sharedPref=getApplicationContext().getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE).edit();
                         sharedPref.putString("name",name[1]);
                         sharedPref.apply();
-                        Intent intent= new Intent(getApplicationContext(), ViewOperatorInventory.class);
+                        Intent intent= new Intent(getApplicationContext(), ViewManagerInventory.class);
                         startActivity(intent);
                     }
                 }
@@ -104,7 +100,7 @@ public class OperatorHomeActivity extends AppCompatActivity {
                 editor.clear();
                 editor.commit();
                 Toast.makeText(getApplicationContext(), "Logout Successful", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(OperatorHomeActivity.this, LoginActivity.class);
+                Intent intent = new Intent(ViewManagerVehicle.this, LoginActivity.class);
                 startActivity(intent);
             }
         });
