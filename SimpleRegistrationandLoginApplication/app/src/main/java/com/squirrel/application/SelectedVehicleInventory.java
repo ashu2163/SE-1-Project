@@ -26,12 +26,14 @@ public class SelectedVehicleInventory extends AppCompatActivity {
     String MY_PREFS_NAME="MyPrefs";
     BottomNavigationView bottomNavigationView;
     DatabaseHelper db;
+    //SharedPreferences sharedpreferences;
+    public static final String MyPREFERENCES = "MyPrefs";
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_selectedvehicle_inventory);
         getSupportActionBar().hide();
-
+        //sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -55,9 +57,19 @@ public class SelectedVehicleInventory extends AppCompatActivity {
 
         SharedPreferences prefs = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
         String loadedString = prefs.getString("vehname", null);
+        db=new DatabaseHelper(this);
+
+        //Set operatorID ---------------------------------
+        int opid=db.getOperatorId(loadedString);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("opid",String.valueOf(opid));
+        editor.apply();
+        Toast.makeText(this,String.valueOf(opid),Toast.LENGTH_LONG).show();
+
+
         SharedPreferences pref = getSharedPreferences(LoginActivity.MyPREFERENCES, MODE_PRIVATE);
         final String username=pref.getString("username",null);
-        Toast.makeText(this,username,Toast.LENGTH_LONG).show();
+        //Toast.makeText(this,username,Toast.LENGTH_LONG).show();
         ava_drinks=(TextView)findViewById(R.id.ava_drinks);
         ava_snacks=(TextView)findViewById(R.id.ava_snacks);
         ava_sandwiches=(TextView)findViewById(R.id.ava_sandwich);

@@ -119,9 +119,9 @@ public class CartDetailsActivity extends AppCompatActivity {
                 if(drinks>quan){
                     str+=" Please add drinks less than available quantity ";
                 }
-                else if(db.findItemInCart(userId,81)){
-                    if(db.updateCart(userId,81,drinks)){
-                        str+="Quantity of Drinks updated successfully";
+                else if(db.findItemInCart(userId,81)) {
+                    if (db.updateCart(userId, 81, drinks)) {
+                        str += "Quantity of Drinks updated successfully";
                     }
                 }
 

@@ -607,18 +607,32 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
-    public boolean updateCost(int itemId, float cost){
+    public boolean updateCost(int itemId, float cost) {
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
-        ContentValues cv=new ContentValues();
-        cv.put("cost",cost);
-        cv.put("itemid",itemId);
-        long r=sqLiteDatabase.update("item",cv, "itemid=?",new String[]{String.valueOf(itemId)});
+        ContentValues cv = new ContentValues();
+        cv.put("cost", cost);
+        cv.put("itemid", itemId);
+        long r = sqLiteDatabase.update("item", cv, "itemid=?", new String[]{String.valueOf(itemId)});
 
-        if(r == -1){
+        if (r == -1) {
             return false;
-        }else{
+        } else {
             return true;
         }
+    }
+
+    public int getOperatorId(String vehname){
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        Cursor cursor=sqLiteDatabase.rawQuery("select distinct a.opid from vehicle_schedule as a join vehicle as b on a.vehid=b.vehid \n" +
+                "where b.vehname=? and a.scheduled_date= date('now')  ", new String[]{vehname});
+
+        if(cursor.getCount()>0){
+            if(cursor.moveToNext()){
+                return cursor.getInt(0);
+            }
+        }
+        return -1;
 
     }
+
 }
