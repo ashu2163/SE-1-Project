@@ -1,9 +1,11 @@
 package com.squirrel.dao;
 import android.content.Intent;
+import android.database.SQLException;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -12,6 +14,13 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.widget.Toast;
 
+import com.squirrel.models.User;
+
+import java.sql.Date;
+import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.ZoneId;
 import java.util.Random;
 
 
@@ -180,7 +189,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "opid int,\n" +
                 "slotbegin int,\n" +
                 "slotend int,\n" +
-                "PRIMARY KEY (vehid,slotbegin,slotend),\n" +
+                "scheduled_date date,\n" +
+                "PRIMARY KEY (vehid,slotbegin,slotend,scheduled_date),\n" +
                 "FOREIGN KEY (vehid) REFERENCES vehicle(vehid),\n" +
                 "FOREIGN KEY (locid) REFERENCES location(locid),\n" +
                 "FOREIGN KEY (opid) REFERENCES user(userid)\n" +
@@ -188,14 +198,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "");
 
         db.execSQL("" +
-                "INSERT INTO vehicle_schedule(vehid,locid,opid,slotbegin,slotend) VALUES\n" +
-                "(51,'Loc_1',1007000,8,10),\n" +
-                "(51,'Loc_2',1009000,10,11),\n" +
-                "(51,'Loc_3',1007000,11,13),\n" +
-                "(53,'Loc_4',1009000,8,11),\n" +
-                "(53,'Loc_4',1009000,11,14),\n" +
-                "(53,'Loc_4',1009000,14,17),\n" +
-                "(57,'Loc_7',1007000,15,17)" +
+                "INSERT INTO vehicle_schedule(vehid,locid,opid,slotbegin,slotend,scheduled_date) VALUES\n" +
+                "(51,'Loc_1',1007000,8,10,date('now')),\n" +
+                "(51,'Loc_2',1009000,10,11,date('now')),\n" +
+                "(51,'Loc_3',1007000,11,13,date('now')),\n" +
+                "(53,'Loc_4',1009000,8,11,date('now')),\n" +
+                "(53,'Loc_4',1009000,11,14,date('now')),\n" +
+                "(53,'Loc_4',1009000,14,17,date('now')),\n" +
+                "(57,'Loc_7',1007000,15,17,date('now')),\n" +
+                "(51,'Loc_1',1007000,8,10,date('now','+1 day')),\n" +
+                "(51,'Loc_2',1009000,10,11,date('now','+1 day')),\n" +
+                "(51,'Loc_3',1007000,11,13,date('now','+1 day')),\n" +
+                "(53,'Loc_4',1009000,8,11,date('now','+1 day')),\n" +
+                "(53,'Loc_4',1009000,11,14,date('now','+1 day')),\n" +
+                "(53,'Loc_4',1009000,14,17,date('now','+1 day')),\n" +
+                "(57,'Loc_7',1007000,15,17,date('now','+1 day'))" +
                 "");
 
         db.execSQL("" +
@@ -214,6 +231,45 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "(1003000,81,1),\n" +
                 "(1001001,82,10),\n" +
                 "(1003000,83,2)" +
+                "");
+
+        db.execSQL("" +
+                "CREATE TABLE IF NOT EXISTS paymentoptions(\n" +
+                "userid int,\n" +
+                "cc varchar(16),\n" +
+                "expiry varchar(6),\n" +
+                "cvv varchar(3),\n" +
+                "cardtype varchar(3),\n" +
+                "PRIMARY KEY (cc),\n" +
+                "FOREIGN KEY (userid) REFERENCES user(userid)\n" +
+                ")" +
+                "");
+
+        db.execSQL("" +
+                "INSERT INTO paymentoptions(userid,cc,expiry,cvv,cardtype) VALUES\n" +
+                "(1001000,'1234123445674567','052024','123','Visa'),\n" +
+                "(1003000,'4567456712341234','052025','456','Master')" +
+                "");
+
+        db.execSQL("" +
+                "CREATE TABLE IF NOT EXISTS payments(\n" +
+                "payid int,\n" +
+                "userid int,\n" +
+                "vehid int,\n" +
+                "payment_date date,\n" +
+                "total_cost decimal(10,2) NOT NULL,\n" +
+                "PRIMARY KEY (payid),\n" +
+                "FOREIGN KEY (userid) REFERENCES user(userid),\n" +
+                "FOREIGN KEY (vehid) REFERENCES vehicle(vehid)\n" +
+                ")" +
+                "");
+
+        db.execSQL("" +
+                "INSERT INTO payments(payid,userid,vehid,payment_date,total_cost) VALUES\n" +
+                "(9901000,1001000,51,date('now'),1523.26),\n" +
+                "(9903000,1003000,53,date('now'),2028.10),\n" +
+                "(9905000,1001000,57,date('now'),1222.50),\n" +
+                "(9907000,1001000,57,date('now','-1 day'),1750.80)" +
                 "");
 
         Log.d("","DONE");
@@ -330,13 +386,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public Cursor getVehicleSchedule(){
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
-        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM vehicle_schedule",new String[]{});
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM vehicle_schedule where scheduled_date=date('now','+1 day')",new String[]{});
         return cursor;
     }
 
     public Cursor getAvailableVehcilesForNextDay(){
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
-        Cursor cursor = sqLiteDatabase.rawQuery("SELECT vi.vehid,v.vehname FROM vehicle_inventory vi LEFT JOIN vehicle v on vi.vehid=v.vehid WHERE available_date=date('now','+1 day')",new String[]{});
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT distinct(vi.vehid),v.vehname FROM vehicle_inventory vi LEFT JOIN vehicle v on vi.vehid=v.vehid WHERE available_date=date('now','+1 day')",new String[]{});
         return cursor;
     }
 
@@ -354,7 +410,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public Cursor getMinMaxSlots(String vehid){
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
-        Cursor cursor = sqLiteDatabase.rawQuery("select min(slotbegin) as minslotbegin,max(slotend) as maxslotend from vehicle_schedule where vehid=?",new String[]{vehid});
+        Cursor cursor = sqLiteDatabase.rawQuery("select min(slotbegin) as minslotbegin,max(slotend) as maxslotend from vehicle_schedule where vehid=? and scheduled_date=date('now','+1 day')",new String[]{vehid});
         return cursor;
     }
 
@@ -366,6 +422,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put("opid", opid);
         contentValues.put("slotbegin", slotbegin);
         contentValues.put("slotend", slotend);
+        contentValues.put("scheduled_date", LocalDate.now(ZoneId.of("UTC")).plusDays(1).toString());
 
         long result = sqLiteDatabase.insert("vehicle_schedule", null, contentValues);
         if(result == -1){
@@ -378,8 +435,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public Cursor getVehicleName(String vehtype){
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
-        Cursor cursor= sqLiteDatabase.rawQuery("select distinct a.vehname,c.slotbegin,c.slotend,d.locname from vehicle as a join vehicle_inventory as b on a.vehid==b.vehid join vehicle_schedule as c on a.vehid=c.vehid join location as d on d.locid=c.locid\n" +
-                "where a.vehtype==? and b.available_date==(Select date())\n" +
+        Cursor cursor= sqLiteDatabase.rawQuery("select distinct v.vehname,vs.slotbegin,vs.slotend,l.locname " +
+                "from vehicle as v \n" +
+                "left join vehicle_schedule as vs on v.vehid=vs.vehid \n" +
+                "left join location as l on vs.locid=l.locid\n" +
+                "where v.vehtype=? and vs.scheduled_date=date('now')" +
                 "\n",new String[]{vehtype});
         return cursor;
     }
@@ -393,5 +453,186 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
+    public int getUserId(String username){
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        Cursor cursor= sqLiteDatabase.rawQuery("select userid from user where uname=?", new String[]{username});
+
+        if(cursor.getCount() > 0) {
+            if (cursor.moveToNext()) {
+                return cursor.getInt(0);
+            }
+        }
+        return -1;
+    }
+
+    private static Context mContext;
+    public boolean insertToCart(int userId, int itemId , int quantity){
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+
+        long result=0;
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("userid", userId);
+        contentValues.put("itemid", itemId);
+        contentValues.put("buy_quantity",quantity);
+        Cursor cursor=sqLiteDatabase.rawQuery("select userid,itemid from cart where userid=?", new String[]{String.valueOf(userId)});
+        if(cursor.getCount()>0){
+            while (cursor.moveToNext()) {
+                if(cursor.getInt(1)==itemId){
+                    return false;
+                }
+            }
+        }
+        if(sqLiteDatabase.insert("cart", null, contentValues)!=-1){
+            return true;
+        }
+        else{
+            return false;
+        }
+
+    }
+
+
+    public Cursor getCartDetails(int userId){
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        Cursor cursor= sqLiteDatabase.rawQuery("select * from cart where userid=?", new String[]{String.valueOf(userId)});
+        return cursor;
+    }
+
+    public float getCost(int itemId){
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        Cursor cursor= sqLiteDatabase.rawQuery("select cost from item where itemid=?", new String[]{String.valueOf(itemId)});
+        if(cursor.getCount()>0){
+            if(cursor.moveToNext()){
+                return cursor.getFloat(0);
+            }
+        }
+        return -1;
+    }
+
+    public int getVehId(String vehname){
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        Cursor c=sqLiteDatabase.rawQuery("select vehid from vehicle where vehname=?", new String[]{vehname});
+        if(c.getCount()>0){
+            if(c.moveToNext()){
+                return c.getInt(0);
+            }
+        }
+        return -1;
+    }
+
+    public float getItemQuantity(int vehId, int itemId){
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        Cursor c=sqLiteDatabase.rawQuery("select quantity from vehicle_inventory where vehid=? and itemid=?",
+                new String[]{String.valueOf(vehId), String.valueOf(itemId)});
+
+        if(c.getCount()>0){
+            if(c.moveToNext()){
+                return c.getInt(0);
+            }
+        }
+        return -1;
+    }
+
+    public boolean findItemInCart(int userId, int itemId)
+    {
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        Cursor c= sqLiteDatabase.rawQuery("select * from cart where userid=? and itemid=?",
+                new String[]{String.valueOf(userId), String.valueOf(itemId)});
+
+        if(c.getCount()>0){
+            return true;
+        }
+        return false;
+    }
+
+    public boolean updateCart(int userId, int itemId, float qua){
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        ContentValues cv=new ContentValues();
+        cv.put("buy_quantity",qua);
+        cv.put("userid",userId);
+        cv.put("itemid",itemId);
+        //long r=sqLiteDatabase.replace("cart",null,cv);
+        long r=sqLiteDatabase.update("cart",cv, "userid=? and  itemid=?",new String[]{String.valueOf(userId), String.valueOf(itemId)});
+
+        if(r == -1){
+            return false;
+        }else{
+            return true;
+        }
+
+    }
+
+    public Cursor getOperatorVehicle(String uname){
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        Cursor cursor = sqLiteDatabase.rawQuery("select vehicle.vehname,vehicle.vehtype,location.locname,vehicle_schedule.slotbegin,vehicle_schedule.slotend,user.fname,user.lname\n" +
+                "from vehicle,location,vehicle_schedule,user where vehicle.vehid=vehicle_schedule.vehid and location.locid=vehicle_schedule.locid and \n" +
+                "user.userid=vehicle_schedule.opid and vehicle_schedule.scheduled_date=date('now') and user.uname=?",new String[]{uname});
+        return cursor;
+    }
+
+    public Cursor getVehicleList(){
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        Cursor cursor = sqLiteDatabase.rawQuery("select vehicle.vehid,vehicle.vehname,vehicle.vehtype,location.locname,vehicle_schedule.slotbegin,vehicle_schedule.slotend,user.fname,user.lname,vehicle_schedule.scheduled_date from vehicle,location,vehicle_schedule,user \n" +
+                "where vehicle.vehid = vehicle_schedule.vehid and location.locid = vehicle_schedule.locid and user.userid=vehicle_schedule.opid",new String[]{});
+        return cursor;
+    }
+
+    public Cursor getVehicleInventory(String vehname){
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        Cursor cursor=sqLiteDatabase.rawQuery("select item.itemtype, vehicle_inventory.quantity, item.cost from item, vehicle_inventory, vehicle \n" +
+                "where item.itemid=vehicle_inventory.itemid and vehicle.vehid=vehicle_inventory.vehid and available_date=date('now') and vehicle.vehname=?", new String[]{vehname});
+
+        return cursor;
+    }
+    public Cursor getInventoryDetails(int vehid){
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        Cursor cursor=sqLiteDatabase.rawQuery("Select * from vehicle_inventory where vehid=? and available_date=date('now')", new String[]{String.valueOf(vehid)});
+
+        return cursor;
+    }
+
+    public boolean updateQuantity(int vehId, int itemId, float qua){
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        ContentValues cv=new ContentValues();
+        cv.put("quantity",qua);
+        cv.put("vehid",vehId);
+        cv.put("itemid",itemId);
+        long r=sqLiteDatabase.update("vehicle_inventory",cv, "vehid=? and  itemid=? and available_date=date('now')",new String[]{String.valueOf(vehId), String.valueOf(itemId)});
+
+        if(r == -1){
+            return false;
+        }else{
+            return true;
+        }
+
+    }
+
+    public boolean updateCost(int itemId, float cost) {
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put("cost", cost);
+        cv.put("itemid", itemId);
+        long r = sqLiteDatabase.update("item", cv, "itemid=?", new String[]{String.valueOf(itemId)});
+
+        if (r == -1) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public int getOperatorId(String vehname){
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        Cursor cursor=sqLiteDatabase.rawQuery("select distinct a.opid from vehicle_schedule as a join vehicle as b on a.vehid=b.vehid \n" +
+                "where b.vehname=? and a.scheduled_date= date('now')  ", new String[]{vehname});
+
+        if(cursor.getCount()>0){
+            if(cursor.moveToNext()){
+                return cursor.getInt(0);
+            }
+        }
+        return -1;
+
+    }
 
 }
