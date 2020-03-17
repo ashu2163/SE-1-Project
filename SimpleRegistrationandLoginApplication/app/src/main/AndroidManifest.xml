@@ -28,6 +28,10 @@
         <activity android:name="com.squirrel.application.ForgotPasswordActivity" />
         <activity android:name="com.squirrel.application.RegistrationActivity" />
         <activity android:name="com.squirrel.application.SelectedVehicleInventory" />
+        <activity android:name="com.squirrel.application.CartDetailsActivity" />
+        <activity android:name="com.squirrel.application.ViewOperatorInventory" />
+        <activity android:name="com.squirrel.application.ViewManagerInventory" />
+        <activity android:name="com.squirrel.application.ViewManagerVehicle" />
     </application>
 
 </manifest>

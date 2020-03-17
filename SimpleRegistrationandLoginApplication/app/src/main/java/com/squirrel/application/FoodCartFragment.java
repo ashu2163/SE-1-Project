@@ -59,7 +59,7 @@ public class FoodCartFragment extends Fragment {
                 String slotend=vname.getString(vname.getColumnIndex("slotend"));
                 String locname=vname.getString(vname.getColumnIndex("locname"));
                 String con="Name: "+vehname+"  Time: "+slotbegin+" to "+slotend+"\nLocation: "+locname;
-                //list.add(vehname);
+
                 list.add(con);
 
                 listView.setAdapter(adplist);
@@ -73,7 +73,7 @@ public class FoodCartFragment extends Fragment {
                         String[] name=selected.split(" ");
                         //Toast.makeText(getContext(),selected,Toast.LENGTH_LONG).show();
                         SharedPreferences.Editor sharedPref=getContext().getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE).edit();
-                        sharedPref.putString("name",name[1]);
+                        sharedPref.putString("vehname",name[1]);
                         sharedPref.apply();
                         Intent intent= new Intent(getContext(), SelectedVehicleInventory.class);
                         startActivity(intent);
