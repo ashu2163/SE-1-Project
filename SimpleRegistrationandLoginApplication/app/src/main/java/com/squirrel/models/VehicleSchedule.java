@@ -1,14 +1,11 @@
 package com.squirrel.models;
 
-import java.sql.Date;
-
 public class VehicleSchedule {
     int vehid;
     String locid;
     int opid;
     int slotbegin;
     int slotend;
-    Date scheduled_date;
 
     public VehicleSchedule(int vehid, String locid, int opid, int slotbegin, int slotend) {
         this.vehid = vehid;
@@ -56,13 +53,5 @@ public class VehicleSchedule {
 
     public void setSlotend(int slotend) {
         this.slotend = slotend;
-    }
-
-    public Date getScheduled_date() {
-        return scheduled_date;
-    }
-
-    public void setScheduled_date(Date scheduled_date) {
-        this.scheduled_date = scheduled_date;
     }
 }

@@ -13,7 +13,7 @@ import com.squirrel.app.R;
 
 public class ManagerHomeActivity extends AppCompatActivity {
 
-        Button btn_logout,btn_assign,btn_vehicle;
+        Button btn_logout,btn_assign;
         //TextView username;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,7 +23,6 @@ public class ManagerHomeActivity extends AppCompatActivity {
 
         btn_logout = (Button)findViewById(R.id.logout);
         btn_assign = (Button)findViewById(R.id.btn_assign);
-        btn_vehicle=(Button)findViewById(R.id.btn_vehicle);
         //username=(TextView)findViewById(R.id.username);
 
         SharedPreferences sharedpreferences = getSharedPreferences(LoginActivity.MyPREFERENCES, Context.MODE_PRIVATE);
@@ -54,18 +53,6 @@ public class ManagerHomeActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-        btn_vehicle.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                SharedPreferences sharedpreferences = getSharedPreferences(LoginActivity.MyPREFERENCES, Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.clear();
-                editor.commit();
-                Intent intent = new Intent(ManagerHomeActivity.this, ViewManagerVehicle.class);
-                startActivity(intent);
-            }
-        });
-
 
     }
 }
