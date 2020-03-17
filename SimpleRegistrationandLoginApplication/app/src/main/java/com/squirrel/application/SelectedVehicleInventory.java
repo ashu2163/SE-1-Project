@@ -31,6 +31,7 @@ public class SelectedVehicleInventory extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_selectedvehicle_inventory);
         getSupportActionBar().hide();
+
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override

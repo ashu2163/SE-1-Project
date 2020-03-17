@@ -71,7 +71,7 @@ public class CartDetailsActivity extends AppCompatActivity {
             do{
                 int itemid=c.getInt(c.getColumnIndex("itemid"));
                 float cost=db.getCost(itemid);
-                float buy_quantity=c.getInt(c.getColumnIndex("buy_quantity"));
+                int buy_quantity=c.getInt(c.getColumnIndex("buy_quantity"));
                 if(itemid==81){
                     qua_drinks.setText(String.valueOf(buy_quantity));
                     cost = cost * buy_quantity;
@@ -105,9 +105,9 @@ public class CartDetailsActivity extends AppCompatActivity {
                 qua_snacks=(EditText)findViewById(R.id.qua_snacks);
                 qua_sandwich=(EditText)findViewById(R.id.qua_sandwich);
 
-                float drinks = Float.parseFloat(qua_drinks.getText().toString());
-                float snacks = Float.parseFloat(qua_snacks.getText().toString());
-                float sandwiches = Float.parseFloat(qua_sandwich.getText().toString());
+                int drinks = Integer.parseInt(qua_drinks.getText().toString());
+                int snacks = Integer.parseInt(qua_snacks.getText().toString());
+                int sandwiches = Integer.parseInt(qua_sandwich.getText().toString());
 
                 SharedPreferences prefs = getSharedPreferences(FoodCartFragment.MyPREFERENCES, MODE_PRIVATE);
                 String loadedString = prefs.getString("vehname", null);
@@ -152,7 +152,7 @@ public class CartDetailsActivity extends AppCompatActivity {
                     do{
                         int itemid=c.getInt(c.getColumnIndex("itemid"));
                         float cost=db.getCost(itemid);
-                        float buy_quantity=c.getInt(c.getColumnIndex("buy_quantity"));
+                        int buy_quantity=c.getInt(c.getColumnIndex("buy_quantity"));
                         if(itemid==81){
                             qua_drinks.setText(String.valueOf(buy_quantity));
                             cost = cost * buy_quantity;
