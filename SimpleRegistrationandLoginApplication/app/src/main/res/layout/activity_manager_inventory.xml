@@ -162,7 +162,7 @@
         app:layout_constraintVertical_bias="0.355" />
 
     <TextView
-        android:id="@+id/Cost"
+        android:id="@+id/tx_c_drinks"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Cost"

@@ -20,7 +20,7 @@ import com.squirrel.app.R;
 import com.squirrel.dao.DatabaseHelper;
 
 public class SelectedVehicleInventory extends AppCompatActivity {
-    TextView ava_drinks, ava_snacks, ava_sandwiches;
+    TextView ava_drinks, ava_snacks, ava_sandwiches,c_drinks,c_snacks,c_sandwiches;
     EditText sel_drinks,sel_snacks,sel_sandwiches;
     Button btn_addToCart, btn_logout;
     String MY_PREFS_NAME="MyPrefs";
@@ -33,7 +33,7 @@ public class SelectedVehicleInventory extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_selectedvehicle_inventory);
         getSupportActionBar().hide();
-        //sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -67,6 +67,7 @@ public class SelectedVehicleInventory extends AppCompatActivity {
         Toast.makeText(this,String.valueOf(opid),Toast.LENGTH_LONG).show();
 
 
+
         SharedPreferences pref = getSharedPreferences(LoginActivity.MyPREFERENCES, MODE_PRIVATE);
         final String username=pref.getString("username",null);
         //Toast.makeText(this,username,Toast.LENGTH_LONG).show();
@@ -78,24 +79,35 @@ public class SelectedVehicleInventory extends AppCompatActivity {
         sel_sandwiches=(EditText)findViewById(R.id.sel_sandwiches);
         btn_addToCart=(Button)findViewById(R.id.add_to_cart);
         btn_logout = (Button) findViewById(R.id.logout);
+        c_drinks=(TextView)findViewById(R.id.c_drinks);
+        c_snacks=(TextView)findViewById(R.id.c_snacks);
+        c_sandwiches=(TextView)findViewById(R.id.c_sandwiches);
         db=new DatabaseHelper(this);
         Cursor name_quantity= db.getSelectedVehicleInventory(loadedString);
-        if(name_quantity.moveToFirst()){
+        if(name_quantity.moveToFirst())
+        {
             do{
                 String itemType=name_quantity.getString(name_quantity.getColumnIndex("itemtype"));
                 String quantity=name_quantity.getString(name_quantity.getColumnIndex("quantity"));
                 if(itemType.equals("Drinks")){
                     ava_drinks.setText(quantity);
+                    float c_d=db.getCost(81);
+                    c_drinks.setText(String.valueOf(c_d));
                 }
                 else if(itemType.equals("Sandwiches")){
                     ava_sandwiches.setText(quantity);
+                    float c_san=db.getCost(82);
+                    c_sandwiches.setText(String.valueOf(c_san));
                 }
                 else if(itemType.equals("Snacks")){
                     ava_snacks.setText(quantity);
+                    float c_s=db.getCost(83);
+                    c_snacks.setText(String.valueOf(c_s));
                 }
-
             }while(name_quantity.moveToNext());
         }
+
+
 
         btn_addToCart.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -127,7 +139,6 @@ public class SelectedVehicleInventory extends AppCompatActivity {
                             str+=" Snacks successfully added ";
                         }
                         else{
-
                             str+=" Snacks already added ";
                         }
                     }
@@ -139,7 +150,6 @@ public class SelectedVehicleInventory extends AppCompatActivity {
                             str+=" Sandwiches successfully added ";
                         }
                         else{
-
                             str+=" Sandwiches already added ";
                         }
                     }
