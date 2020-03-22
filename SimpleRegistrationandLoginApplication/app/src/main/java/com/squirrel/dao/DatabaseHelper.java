@@ -561,6 +561,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
 
     }
+    public int getUserID(String uname){
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        Cursor cursor = sqLiteDatabase.rawQuery("select userid from user where uname= ?",new String[]{uname});
+
+        if(cursor.getCount()>0){
+            if(cursor.moveToNext()){
+                return cursor.getInt(0);
+            }
+        }
+        return -1;
+
+    }
+    public Cursor getUserDetails(String uname){
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        Cursor cursor = sqLiteDatabase.rawQuery("select * from user where uname= ?",new String[]{uname});
+        return cursor;
+    }
 
     public Cursor getOperatorVehicle(String uname){
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
@@ -607,6 +624,47 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
+    public boolean updateProfile(int userid,String fname, String lname, String uname, String password, String email, String phone, String street, String city,String state, String zipcode) {
+        int zip=Integer.valueOf(zipcode);
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put("fname", fname);
+        cv.put("lname", lname);
+        cv.put("uname", uname);
+        cv.put("password", password);
+        cv.put("email", email);
+        cv.put("phone", phone);
+        cv.put("street_address", street);
+        cv.put("city", city);
+        cv.put("state", state);
+        cv.put("zipcode", zip);
+
+        long r = sqLiteDatabase.update("user", cv, "userid=?", new String[]{String.valueOf(userid)});
+
+        if (r == -1) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public boolean updateCardDetails(int userid, String cc,String cvv, String cardType, String expdate){
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put("cc", cc);
+        cv.put("cvv", cvv);
+        cv.put("cardtype",cardType);
+        cv.put("expiry",expdate);
+        long r = sqLiteDatabase.update("paymentoptions", cv, "userid=?", new String[]{String.valueOf(userid)});
+
+        if (r == -1) {
+            return false;
+        } else {
+            return true;
+        }
+
+    }
+
     public boolean updateCost(int itemId, float cost) {
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
         ContentValues cv = new ContentValues();
@@ -632,6 +690,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             }
         }
         return -1;
+
+    }
+
+    public Cursor getCardDetails(final int userid){
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        Cursor cursor=sqLiteDatabase.rawQuery("select * from paymentoptions where userid = ?", new String[]{String.valueOf(userid)});
+
+        return cursor;
 
     }
 
