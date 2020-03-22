@@ -597,13 +597,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public Cursor getVehicleInventory(String vehname){
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
         Cursor cursor=sqLiteDatabase.rawQuery("select item.itemtype, vehicle_inventory.quantity, item.cost from item, vehicle_inventory, vehicle \n" +
-                "where item.itemid=vehicle_inventory.itemid and vehicle.vehid=vehicle_inventory.vehid and available_date=date('now') and vehicle.vehname=?", new String[]{vehname});
+                "where item.itemid=vehicle_inventory.itemid and vehicle.vehid=vehicle_inventory.vehid and vehicle.vehname=?", new String[]{vehname});
 
         return cursor;
     }
     public Cursor getInventoryDetails(int vehid){
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
-        Cursor cursor=sqLiteDatabase.rawQuery("Select * from vehicle_inventory where vehid=? and available_date=date('now')", new String[]{String.valueOf(vehid)});
+        Cursor cursor=sqLiteDatabase.rawQuery("Select * from vehicle_inventory where vehid=?", new String[]{String.valueOf(vehid)});
 
         return cursor;
     }
@@ -614,7 +614,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cv.put("quantity",qua);
         cv.put("vehid",vehId);
         cv.put("itemid",itemId);
-        long r=sqLiteDatabase.update("vehicle_inventory",cv, "vehid=? and  itemid=? and available_date=date('now')",new String[]{String.valueOf(vehId), String.valueOf(itemId)});
+        long r=sqLiteDatabase.update("vehicle_inventory",cv, "vehid=? and  itemid=?",new String[]{String.valueOf(vehId), String.valueOf(itemId)});
 
         if(r == -1){
             return false;
