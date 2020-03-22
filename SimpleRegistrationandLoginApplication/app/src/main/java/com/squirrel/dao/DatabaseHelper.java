@@ -14,6 +14,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.widget.Toast;
 
+import com.squirrel.models.Location;
 import com.squirrel.models.User;
 
 import java.sql.Date;
@@ -21,6 +22,7 @@ import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Random;
 
 
@@ -699,6 +701,60 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         return cursor;
 
+    }
+
+    public ArrayList<Location> getAllData(){
+        ArrayList<Location> arrayListl = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM location",null);
+
+        while (cursor.moveToNext()){
+            String id = cursor.getString(0);
+            String name = cursor.getString(1);
+            int duration = cursor.getInt(2);
+            Location location = new Location(id,name,duration);
+            arrayListl.add(location);
+
+        }
+        return arrayListl;
+    }
+
+    public boolean deleteleLocation(String lid){
+
+
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        //long result = sqLiteDatabase.delete("user", userid+"="+userid, null);
+        Cursor cursor = sqLiteDatabase.rawQuery("DELETE FROM location WHERE locid =?",new String[]{lid});
+        if(cursor.getCount() > 0){
+            return false;
+        }else{
+            return true;
+        }
+
+//        if(result == -1){
+//            return false;
+//        }else{
+//            return true;
+//        }
+    }
+
+    public boolean editLocation(String locid,String locname,String duration){
+
+        SQLiteDatabase sqLiteDatabase1 = this.getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("locid",locid);
+        contentValues.put("locname",locname);
+        contentValues.put("duration",duration);
+
+        // long result =sqLiteDatabase1.update("location",contentValues,"locid = ?",new String[] {locid});
+        long result = sqLiteDatabase1.update("location",contentValues,"locid=?",new String[]{locid});
+
+        if(result == -1){
+            return false;
+        }else{
+            return true;
+        }
     }
 
 

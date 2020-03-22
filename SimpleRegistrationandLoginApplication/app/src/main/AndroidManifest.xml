@@ -33,6 +33,8 @@
         <activity android:name="com.squirrel.application.ViewOperatorInventory" />
         <activity android:name="com.squirrel.application.ViewManagerInventory" />
         <activity android:name="com.squirrel.application.ViewManagerVehicle" />
+        <activity android:name="com.squirrel.application.ViewManagerLocation" />
+        <activity android:name="com.squirrel.application.EditlocationActivity" />
     </application>
 
 </manifest>
