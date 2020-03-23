@@ -611,7 +611,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         return cursor;
     }
+    public Cursor getRevenue(){
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        Cursor cursor=sqLiteDatabase.rawQuery("select vehicle.vehname,user.fname,user.lname,payments.payment_date,sum(payments.total_cost) as total from vehicle,user,payments where vehicle.vehid=payments.vehid\n" +
+                "and user.userid=payments.opid and payment_date=date('now') group by payments.vehid", new String[]{});
 
+        return cursor;
+    }
     public boolean updateQuantity(int vehId, int itemId, float qua){
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
         ContentValues cv=new ContentValues();

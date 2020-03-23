@@ -16,7 +16,7 @@ import com.squirrel.app.R;
 
 public class ManagerHomeActivity extends AppCompatActivity {
 
-        Button btn_logout,btn_assign,btn_vehicle,btn_location;
+        Button btn_logout,btn_assign,btn_vehicle,btn_location,btn_revenue;
     BottomNavigationView bottomNavigationView;
     public static final String MyPREFERENCES = "MyPrefs";
     SharedPreferences sharedpreference;
@@ -31,6 +31,7 @@ public class ManagerHomeActivity extends AppCompatActivity {
         btn_assign = (Button)findViewById(R.id.btn_assign);
         btn_vehicle=(Button)findViewById(R.id.btn_vehicle);
         btn_location=(Button)findViewById(R.id.Location);
+        btn_revenue=(Button)findViewById(R.id.Revenue);
         //username=(TextView)findViewById(R.id.username);
 
         sharedpreference = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
@@ -115,6 +116,16 @@ public class ManagerHomeActivity extends AppCompatActivity {
             }
         });
 
-
+        btn_revenue.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences sharedpreferences = getSharedPreferences(LoginActivity.MyPREFERENCES, Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.clear();
+                editor.commit();
+                Intent intent = new Intent(ManagerHomeActivity.this, ViewManagerRevenue.class);
+                startActivity(intent);
+            }
+        });
     }
 }
