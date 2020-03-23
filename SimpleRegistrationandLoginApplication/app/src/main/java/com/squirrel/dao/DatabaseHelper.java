@@ -258,20 +258,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "payid int,\n" +
                 "userid int,\n" +
                 "vehid int,\n" +
+                "opid int,\n" +
                 "payment_date date,\n" +
                 "total_cost decimal(10,2) NOT NULL,\n" +
                 "PRIMARY KEY (payid),\n" +
                 "FOREIGN KEY (userid) REFERENCES user(userid),\n" +
+                "FOREIGN KEY (opid) REFERENCES user(userid),\n" +
                 "FOREIGN KEY (vehid) REFERENCES vehicle(vehid)\n" +
                 ")" +
                 "");
 
         db.execSQL("" +
-                "INSERT INTO payments(payid,userid,vehid,payment_date,total_cost) VALUES\n" +
-                "(9901000,1001000,51,date('now'),1523.26),\n" +
-                "(9903000,1003000,53,date('now'),2028.10),\n" +
-                "(9905000,1001000,57,date('now'),1222.50),\n" +
-                "(9907000,1001000,57,date('now','-1 day'),1750.80)" +
+                "INSERT INTO payments(payid,userid,opid,vehid,payment_date,total_cost) VALUES\n" +
+                "(9901000,1001000,1007000,51,date('now'),1523.26),\n" +
+                "(9903000,1003000,1009000,53,date('now'),2028.10),\n" +
+                "(9905000,1001000,1007000,57,date('now'),1222.50),\n" +
+                "(9907000,1001000,1007000,57,date('now','-1 day'),1750.80)" +
                 "");
 
         Log.d("","DONE");
