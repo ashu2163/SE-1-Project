@@ -35,9 +35,9 @@ public class EditlocationActivity extends AppCompatActivity {
 
         for (int i = 0; i < MyAdapterlocation.arrayList.size(); i++){
             if(MyAdapterlocation.arrayList.get(i).getSelected()) {
-                id.setText(id.getText() + " " + MyAdapterlocation.arrayList.get(i).getLocid());
-                name.setText(name.getText() + " " + MyAdapterlocation.arrayList.get(i).getLocname());
-                dur.setText(dur.getText() + " "+ MyAdapterlocation.arrayList.get(i).getDuration());
+                id.setText(id.getText() + MyAdapterlocation.arrayList.get(i).getLocid());
+                name.setText(name.getText()  + MyAdapterlocation.arrayList.get(i).getLocname());
+                dur.setText(String.valueOf(dur.getText()) + MyAdapterlocation.arrayList.get(i).getDuration());
 
             }
         }
