@@ -14,6 +14,7 @@ import com.squirrel.app.R;
 public class ManagerHomeActivity extends AppCompatActivity {
 
         Button btn_logout,btn_assign,btn_vehicle;
+        Button btn_operator;
         //TextView username;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +64,17 @@ public class ManagerHomeActivity extends AppCompatActivity {
                 editor.commit();
                 Intent intent = new Intent(ManagerHomeActivity.this, ViewManagerVehicle.class);
                 startActivity(intent);
+            }
+        });
+
+        btn_operator=(Button)findViewById(R.id.Operator);
+
+        btn_operator.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ManagerHomeActivity.this, OperatorActivity.class);
+                startActivity(intent);
+
             }
         });
 

@@ -13,6 +13,7 @@ public class User {
     String city;
     String state;
     int zipcode;
+    private  boolean isSelected;
 
     public User(int userid, String fname, String lname, String uname, String password, String role, String email, String phone, String street_address, String city, String state, int zipcode) {
         this.userid = userid;
@@ -123,5 +124,13 @@ public class User {
 
     public void setZipcode(int zipcode) {
         this.zipcode = zipcode;
+    }
+
+    public boolean getSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
     }
 }

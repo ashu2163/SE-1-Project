@@ -21,8 +21,10 @@ import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Random;
-
+import java.time.format.DateTimeFormatter;
+import java.time.LocalDateTime;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "Squirrel.db";
@@ -635,5 +637,92 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
+    public int getOpId(String fname, String lname){
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        Cursor c=sqLiteDatabase.rawQuery("select userid from user where fname=? and lname=?",new String[]{fname,lname});
+        if(c.getCount()>0){
+            if(c.moveToNext()){
+                return c.getInt(0);
+            }
+        }
+        return -1;
+    }
+
+    public String getLocationId(String locname){
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        Cursor c=sqLiteDatabase.rawQuery("select locid from location where locname=?", new String[]{locname});
+        if(c.getCount()>0){
+            if(c.moveToNext()){
+                return c.getString(0);
+            }
+        }
+        return "";
+    }
+
+    public int getSlotBegin(int opid, String locid){
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        Cursor c=sqLiteDatabase.rawQuery("select slotbegin from vehicle_schedule where opid=? and locid=? and scheduled_date=date('now')",new String[]{String.valueOf(opid), locid});
+        if(c.getCount()>0){
+            if(c.moveToNext()){
+                return c.getInt(0);
+            }
+        }
+        return -1;
+    }
+
+    public Cursor getuserData(){
+        ArrayList<User> arrayList = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("select distinct b.fname,b.lname,b.uname,c.vehname,d.locname, a.slotend \n" +
+                "from vehicle_schedule as a join user as b on a.opid==b.userid \n" +
+                "join vehicle as c on c.vehid==a.vehid join location as d on d.locid==a.locid  \n" +
+                "where scheduled_date=date('now') "+
+                "order by b.fname ASC,a.slotend ",null);
+
+        return cursor;
+
+
+    }
+
+    public boolean deleteOperator(String userid) {
+
+
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        //long result = sqLiteDatabase.delete("user", userid+"="+userid, null);
+        Cursor cursor = sqLiteDatabase.rawQuery("DELETE FROM user WHERE userid =?", new String[]{userid});
+        if (cursor.getCount() > 0) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+
+
+    public Cursor getVehicleNames(){
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        Cursor cursor = sqLiteDatabase.rawQuery("Select vehname from vehicle",null);
+        return cursor;
+    }
+
+    public boolean updateVehname(int vehid,int opid){
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put("vehid",vehid);
+        long result = sqLiteDatabase.update("vehicle_schedule",cv,"opid=? and scheduled_date=date('now')",new String[]{String.valueOf(opid)});
+        if(result==-1){
+            return false;
+        }
+        return true;
+    }
+
+    public boolean deleteSchedule(int opid, int vehid, String slotend){
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        Cursor cursor = sqLiteDatabase.rawQuery("delete from vehicle_schedule where vehid=? and opid=? and slotend=?",new String[]{String.valueOf(vehid),String.valueOf(opid),slotend});
+        if(cursor.getCount()>0){
+            return false;
+        }
+        return true;
+    }
 
 }

@@ -26,6 +26,7 @@ public class OperatorHomeActivity extends AppCompatActivity {
     ArrayList<String> list;
     DatabaseHelper db;
     Button btn_logout;
+
     BottomNavigationView bottomNavigationView;
     public static final String MyPREFERENCES = "MyPrefs";
 
@@ -108,5 +109,8 @@ public class OperatorHomeActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+
+
     }
 }
