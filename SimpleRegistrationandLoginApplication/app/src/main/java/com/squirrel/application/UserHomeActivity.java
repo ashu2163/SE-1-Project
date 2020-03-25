@@ -28,19 +28,11 @@ public class UserHomeActivity extends AppCompatActivity {
     TabItem foodTruck;
     TabItem foodCart;
     BottomNavigationView bottomNavigationView;
-    public static final String MyPREFERENCES = "MyPrefs";
-    SharedPreferences sharedpreference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_userhome);
-        sharedpreference = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
-        SharedPreferences sharedpreferences = getSharedPreferences(LoginActivity.MyPREFERENCES, Context.MODE_PRIVATE);
-        final String uname= sharedpreferences.getString("username","User");
-        final String role= sharedpreferences.getString("role","User");
-        final String pass=sharedpreferences.getString("password","User");
-
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -51,14 +43,6 @@ public class UserHomeActivity extends AppCompatActivity {
                         startActivity(intent1);
                         break;
                     case R.id.action_profile:
-                        SharedPreferences.Editor editor = sharedpreference.edit();
-
-                        editor.putString("username",uname );
-                        editor.putString("password", pass);
-                        editor.putString("role",role );
-                        editor.commit();
-                        Intent intent2=new Intent(UserHomeActivity.this,UpdateProfileActivity.class);
-                        startActivity(intent2);
                         break;
                     case R.id.action_home:
                         Intent intent3=new Intent( UserHomeActivity.this, UserHomeActivity.class);
@@ -117,7 +101,9 @@ public class UserHomeActivity extends AppCompatActivity {
             }
         });
 
-
+        SharedPreferences sharedpreferences = getSharedPreferences(LoginActivity.MyPREFERENCES, Context.MODE_PRIVATE);
+        String uname = sharedpreferences.getString("username", "User");
+        //username.setText(uname);
 
         btn_logout.setOnClickListener(new View.OnClickListener() {
             @Override

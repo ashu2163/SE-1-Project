@@ -14,7 +14,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.widget.Toast;
 
-import com.squirrel.models.Location;
 import com.squirrel.models.User;
 
 import java.sql.Date;
@@ -259,22 +258,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "payid int,\n" +
                 "userid int,\n" +
                 "vehid int,\n" +
-                "opid int,\n" +
                 "payment_date date,\n" +
                 "total_cost decimal(10,2) NOT NULL,\n" +
                 "PRIMARY KEY (payid),\n" +
                 "FOREIGN KEY (userid) REFERENCES user(userid),\n" +
-                "FOREIGN KEY (opid) REFERENCES user(userid),\n" +
                 "FOREIGN KEY (vehid) REFERENCES vehicle(vehid)\n" +
                 ")" +
                 "");
 
         db.execSQL("" +
-                "INSERT INTO payments(payid,userid,opid,vehid,payment_date,total_cost) VALUES\n" +
-                "(9901000,1001000,1007000,51,date('now'),1523.26),\n" +
-                "(9903000,1003000,1009000,53,date('now'),2028.10),\n" +
-                "(9905000,1001000,1007000,57,date('now'),1222.50),\n" +
-                "(9907000,1001000,1007000,57,date('now','-1 day'),1750.80)" +
+                "INSERT INTO payments(payid,userid,vehid,payment_date,total_cost) VALUES\n" +
+                "(9901000,1001000,51,date('now'),1523.26),\n" +
+                "(9903000,1003000,53,date('now'),2028.10),\n" +
+                "(9905000,1001000,57,date('now'),1222.50),\n" +
+                "(9907000,1001000,57,date('now','-1 day'),1750.80)" +
                 "");
 
         Log.d("","DONE");
@@ -566,23 +563,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
 
     }
-    public int getUserID(String uname){
-        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
-        Cursor cursor = sqLiteDatabase.rawQuery("select userid from user where uname= ?",new String[]{uname});
-
-        if(cursor.getCount()>0){
-            if(cursor.moveToNext()){
-                return cursor.getInt(0);
-            }
-        }
-        return -1;
-
-    }
-    public Cursor getUserDetails(String uname){
-        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
-        Cursor cursor = sqLiteDatabase.rawQuery("select * from user where uname= ?",new String[]{uname});
-        return cursor;
-    }
 
     public Cursor getOperatorVehicle(String uname){
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
@@ -602,75 +582,28 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public Cursor getVehicleInventory(String vehname){
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
         Cursor cursor=sqLiteDatabase.rawQuery("select item.itemtype, vehicle_inventory.quantity, item.cost from item, vehicle_inventory, vehicle \n" +
-                "where item.itemid=vehicle_inventory.itemid and vehicle.vehid=vehicle_inventory.vehid and vehicle.vehname=?", new String[]{vehname});
+                "where item.itemid=vehicle_inventory.itemid and vehicle.vehid=vehicle_inventory.vehid and available_date=date('now') and vehicle.vehname=?", new String[]{vehname});
 
         return cursor;
     }
     public Cursor getInventoryDetails(int vehid){
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
-        Cursor cursor=sqLiteDatabase.rawQuery("Select * from vehicle_inventory where vehid=?", new String[]{String.valueOf(vehid)});
+        Cursor cursor=sqLiteDatabase.rawQuery("Select * from vehicle_inventory where vehid=? and available_date=date('now')", new String[]{String.valueOf(vehid)});
 
         return cursor;
     }
-    public Cursor getRevenue(){
-        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
-        Cursor cursor=sqLiteDatabase.rawQuery("select vehicle.vehname,user.fname,user.lname,payments.payment_date,sum(payments.total_cost) as total from vehicle,user,payments where vehicle.vehid=payments.vehid\n" +
-                "and user.userid=payments.opid and payment_date=date('now') group by payments.vehid", new String[]{});
 
-        return cursor;
-    }
     public boolean updateQuantity(int vehId, int itemId, float qua){
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
         ContentValues cv=new ContentValues();
         cv.put("quantity",qua);
         cv.put("vehid",vehId);
         cv.put("itemid",itemId);
-        long r=sqLiteDatabase.update("vehicle_inventory",cv, "vehid=? and  itemid=?",new String[]{String.valueOf(vehId), String.valueOf(itemId)});
+        long r=sqLiteDatabase.update("vehicle_inventory",cv, "vehid=? and  itemid=? and available_date=date('now')",new String[]{String.valueOf(vehId), String.valueOf(itemId)});
 
         if(r == -1){
             return false;
         }else{
-            return true;
-        }
-
-    }
-
-    public boolean updateProfile(int userid,String fname, String lname, String uname, String password, String email, String phone, String street, String city,String state, String zipcode) {
-        int zip=Integer.valueOf(zipcode);
-        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
-        ContentValues cv = new ContentValues();
-        cv.put("fname", fname);
-        cv.put("lname", lname);
-        cv.put("uname", uname);
-        cv.put("password", password);
-        cv.put("email", email);
-        cv.put("phone", phone);
-        cv.put("street_address", street);
-        cv.put("city", city);
-        cv.put("state", state);
-        cv.put("zipcode", zip);
-
-        long r = sqLiteDatabase.update("user", cv, "userid=?", new String[]{String.valueOf(userid)});
-
-        if (r == -1) {
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-    public boolean updateCardDetails(int userid, String cc,String cvv, String cardType, String expdate){
-        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
-        ContentValues cv = new ContentValues();
-        cv.put("cc", cc);
-        cv.put("cvv", cvv);
-        cv.put("cardtype",cardType);
-        cv.put("expiry",expdate);
-        long r = sqLiteDatabase.update("paymentoptions", cv, "userid=?", new String[]{String.valueOf(userid)});
-
-        if (r == -1) {
-            return false;
-        } else {
             return true;
         }
 
@@ -752,31 +685,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public boolean deleteOperator(String userid) {
-    public Cursor getCardDetails(final int userid){
-        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
-        Cursor cursor=sqLiteDatabase.rawQuery("select * from paymentoptions where userid = ?", new String[]{String.valueOf(userid)});
-
-        return cursor;
-
-    }
-
-    public ArrayList<Location> getAllData(){
-        ArrayList<Location> arrayListl = new ArrayList<>();
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM location",null);
-
-        while (cursor.moveToNext()){
-            String id = cursor.getString(0);
-            String name = cursor.getString(1);
-            int duration = cursor.getInt(2);
-            Location location = new Location(id,name,duration);
-            arrayListl.add(location);
-
-        }
-        return arrayListl;
-    }
-
-    public boolean deleteleLocation(String lid){
 
 
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
@@ -816,38 +724,5 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         return true;
     }
-        Cursor cursor = sqLiteDatabase.rawQuery("DELETE FROM location WHERE locid =?",new String[]{lid});
-        if(cursor.getCount() > 0){
-            return false;
-        }else{
-            return true;
-        }
-
-//        if(result == -1){
-//            return false;
-//        }else{
-//            return true;
-//        }
-    }
-
-    public boolean editLocation(String locid,String locname,String duration){
-
-        SQLiteDatabase sqLiteDatabase1 = this.getWritableDatabase();
-
-        ContentValues contentValues = new ContentValues();
-        contentValues.put("locid",locid);
-        contentValues.put("locname",locname);
-        contentValues.put("duration",duration);
-
-        // long result =sqLiteDatabase1.update("location",contentValues,"locid = ?",new String[] {locid});
-        long result = sqLiteDatabase1.update("location",contentValues,"locid=?",new String[]{locid});
-
-        if(result == -1){
-            return false;
-        }else{
-            return true;
-        }
-    }
-
 
 }
