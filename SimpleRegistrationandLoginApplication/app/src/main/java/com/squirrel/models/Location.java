@@ -4,6 +4,7 @@ public class Location {
     String locid;
     String locname;
     int duration;
+    private boolean isSelected;
 
     public Location(String locid, String locname, int duration) {
         this.locid = locid;
@@ -33,5 +34,12 @@ public class Location {
 
     public void setDuration(int duration) {
         this.duration = duration;
+    }
+    public boolean getSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        isSelected = selected;
     }
 }

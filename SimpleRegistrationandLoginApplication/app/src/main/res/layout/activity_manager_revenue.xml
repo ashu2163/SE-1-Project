@@ -6,15 +6,6 @@
     android:layout_height="match_parent"
     tools:context="com.squirrel.application.OperatorHomeActivity">
 
-
-    <ListView
-        android:layout_width="412dp"
-        android:layout_height="434dp"
-        android:layout_marginBottom="144dp"
-        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent" />
     <!-- TODO: Update blank fragment layout -->
 
     <android.support.design.widget.BottomNavigationView
@@ -33,16 +24,19 @@
         app:layout_constraintVertical_bias="1.0"
         app:menu="@menu/bottom_nav_menu" />
 
+    <!-- TODO: Update blank fragment layout -->
+
     <ListView
         android:id="@+id/listView"
         android:layout_width="0dp"
         android:layout_height="443dp"
-        android:layout_marginTop="150dp"
         android:layout_marginBottom="72dp"
         app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.418">
 
     </ListView>
 
@@ -59,6 +53,30 @@
         app:layout_constraintHorizontal_bias="0.872"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.876" />
+        app:layout_constraintVertical_bias="0.882" />
+
+    <TextView
+        android:id="@+id/total_revenue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Total_Revenue"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.201"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.803" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.568"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.803" />
 
 </android.support.constraint.ConstraintLayout>
