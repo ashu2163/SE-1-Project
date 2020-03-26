@@ -1,20 +1,49 @@
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/frameLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.squirrel.application.OperatorHomeActivity">
+    android:layout_height="match_parent">
 
-
-    <ListView
-        android:layout_width="412dp"
-        android:layout_height="434dp"
-        android:layout_marginBottom="144dp"
-        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tabLayout_operator"
+        android:layout_width="409dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="552dp"
+        android:background="@color/colorCream"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        app:tabIndicatorColor="@color/colorPrimary">
+
+
+
+        <android.support.design.widget.TabItem
+            android:id="@+id/et_vehicle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:longClickable="true"
+            android:onClick="refreshData"
+            android:text="Vehicle" />
+
+
+        <android.support.design.widget.TabItem
+            android:id="@+id/et_inventory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:longClickable="true"
+            android:onClick="refreshData"
+            android:text="Inventory" />
+    </android.support.design.widget.TabLayout>
+
+
     <!-- TODO: Update blank fragment layout -->
 
     <android.support.design.widget.BottomNavigationView
@@ -31,21 +60,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0"
-        android:background="@color/colorPrimaryDark"
-        app:menu="@menu/bottom_nav_operator_manager" />
+        app:menu="@menu/bottom_nav_menu" />
 
-    <ListView
-        android:id="@+id/listView"
-        android:layout_width="0dp"
-        android:layout_height="443dp"
-        android:layout_marginTop="150dp"
-        android:layout_marginBottom="72dp"
-        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-    </ListView>
 
     <Button
         android:id="@+id/btn_logout"
@@ -61,5 +77,21 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.876" />
+
+    <ListView
+        android:layout_width="412dp"
+        android:layout_height="434dp"
+        android:layout_marginBottom="144dp"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent">
+    </ListView>
+
+    <FrameLayout
+        android:id="@+id/simpleFrameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
