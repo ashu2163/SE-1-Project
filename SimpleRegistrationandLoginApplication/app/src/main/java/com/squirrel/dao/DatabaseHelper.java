@@ -24,8 +24,7 @@ import java.time.LocalTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Random;
-import java.time.format.DateTimeFormatter;
-import java.time.LocalDateTime;
+
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "Squirrel.db";
@@ -704,6 +703,68 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
+    public Cursor getCardDetails(final int userid){
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        Cursor cursor=sqLiteDatabase.rawQuery("select * from paymentoptions where userid = ?", new String[]{String.valueOf(userid)});
+
+        return cursor;
+
+    }
+
+    public ArrayList<Location> getAllData(){
+        ArrayList<Location> arrayListl = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM location",null);
+
+        while (cursor.moveToNext()){
+            String id = cursor.getString(0);
+            String name = cursor.getString(1);
+            int duration = cursor.getInt(2);
+            Location location = new Location(id,name,duration);
+            arrayListl.add(location);
+
+        }
+        return arrayListl;
+    }
+
+    public boolean deleteleLocation(String lid){
+
+
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        //long result = sqLiteDatabase.delete("user", userid+"="+userid, null);
+        Cursor cursor = sqLiteDatabase.rawQuery("DELETE FROM location WHERE locid =?",new String[]{lid});
+        if(cursor.getCount() > 0){
+            return false;
+        }else{
+            return true;
+        }
+
+//        if(result == -1){
+//            return false;
+//        }else{
+//            return true;
+//        }
+    }
+
+    public boolean editLocation(String locid,String locname,String duration){
+
+        SQLiteDatabase sqLiteDatabase1 = this.getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("locid",locid);
+        contentValues.put("locname",locname);
+        contentValues.put("duration",duration);
+
+        // long result =sqLiteDatabase1.update("location",contentValues,"locid = ?",new String[] {locid});
+        long result = sqLiteDatabase1.update("location",contentValues,"locid=?",new String[]{locid});
+
+        if(result == -1){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
     public int getOpId(String fname, String lname){
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
         Cursor c=sqLiteDatabase.rawQuery("select userid from user where fname=? and lname=?",new String[]{fname,lname});
@@ -752,31 +813,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public boolean deleteOperator(String userid) {
-    public Cursor getCardDetails(final int userid){
-        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
-        Cursor cursor=sqLiteDatabase.rawQuery("select * from paymentoptions where userid = ?", new String[]{String.valueOf(userid)});
-
-        return cursor;
-
-    }
-
-    public ArrayList<Location> getAllData(){
-        ArrayList<Location> arrayListl = new ArrayList<>();
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELECT * FROM location",null);
-
-        while (cursor.moveToNext()){
-            String id = cursor.getString(0);
-            String name = cursor.getString(1);
-            int duration = cursor.getInt(2);
-            Location location = new Location(id,name,duration);
-            arrayListl.add(location);
-
-        }
-        return arrayListl;
-    }
-
-    public boolean deleteleLocation(String lid){
 
 
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
@@ -816,38 +852,4 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         return true;
     }
-        Cursor cursor = sqLiteDatabase.rawQuery("DELETE FROM location WHERE locid =?",new String[]{lid});
-        if(cursor.getCount() > 0){
-            return false;
-        }else{
-            return true;
-        }
-
-//        if(result == -1){
-//            return false;
-//        }else{
-//            return true;
-//        }
-    }
-
-    public boolean editLocation(String locid,String locname,String duration){
-
-        SQLiteDatabase sqLiteDatabase1 = this.getWritableDatabase();
-
-        ContentValues contentValues = new ContentValues();
-        contentValues.put("locid",locid);
-        contentValues.put("locname",locname);
-        contentValues.put("duration",duration);
-
-        // long result =sqLiteDatabase1.update("location",contentValues,"locid = ?",new String[] {locid});
-        long result = sqLiteDatabase1.update("location",contentValues,"locid=?",new String[]{locid});
-
-        if(result == -1){
-            return false;
-        }else{
-            return true;
-        }
-    }
-
-
 }
