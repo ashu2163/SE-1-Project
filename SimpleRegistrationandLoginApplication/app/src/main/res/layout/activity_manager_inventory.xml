@@ -222,6 +222,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:background="@color/colorPrimaryDark"
         app:itemBackground="@color/colorPrimaryDark"
         app:itemIconTint="@android:color/white"
         app:itemTextColor="@android:color/white"
@@ -231,6 +232,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0"
-        app:menu="@menu/bottom_nav_menu" />
+        app:menu="@menu/bottom_nav_operator_manager" />
 
 </android.support.constraint.ConstraintLayout>

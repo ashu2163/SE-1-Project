@@ -31,7 +31,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0"
-        app:menu="@menu/bottom_nav_menu" />
+        android:background="@color/colorPrimaryDark"
+        app:menu="@menu/bottom_nav_operator_manager" />
 
     <ListView
         android:id="@+id/listView"
