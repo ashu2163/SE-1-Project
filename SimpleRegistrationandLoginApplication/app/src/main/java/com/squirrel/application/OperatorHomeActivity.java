@@ -6,14 +6,20 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.TabItem;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
-import android.view.View;
+
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
+import android.view.View;
 
 import com.squirrel.app.R;
 import com.squirrel.dao.DatabaseHelper;
@@ -26,7 +32,9 @@ public class OperatorHomeActivity extends AppCompatActivity {
     ArrayList<String> list;
     DatabaseHelper db;
     Button btn_logout;
-
+    TabLayout tabLayout;
+    TabItem Vehicle;
+    TabItem Inventory;
     BottomNavigationView bottomNavigationView;
     public static final String MyPREFERENCES = "MyPrefs";
     SharedPreferences sharedpreference;
@@ -68,62 +76,54 @@ public class OperatorHomeActivity extends AppCompatActivity {
                 return false;
             }
         });
-        btn_logout = (Button) findViewById(R.id.btn_logout);
+        btn_logout = (Button) findViewById(R.id.logout);
+        //username=(TextView)findViewById(R.id.username);
 
-        Toast.makeText(this,uname,Toast.LENGTH_LONG).show();
+        tabLayout = findViewById(R.id.tabLayout_operator);
+        Vehicle = findViewById(R.id.et_vehicle);
+        Inventory = findViewById(R.id.et_inventory);
+
+        Fragment fragment = new OperatorVehicleFragment();
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction ft = fm.beginTransaction();
+        ft.replace(R.id.simpleFrameLayout, fragment);
+        ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        ft.commit();
 
 
-        listView = (ListView) findViewById(R.id.listView);
-        list=new ArrayList<String>();
-
-        db = new DatabaseHelper(this);
-        Cursor c=db.getOperatorVehicle(uname);
-
-        ArrayAdapter<String> adplist=new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,list);
-        listView.setAdapter(adplist);
-
-        if(c.moveToFirst()){
-            do{
-                String vehname=c.getString(c.getColumnIndex("vehname"));
-                String vehType=c.getString(c.getColumnIndex("vehtype"));
-                String locname=c.getString(c.getColumnIndex("locname"));
-                String slotbegin=c.getString(c.getColumnIndex("slotbegin"));
-                String slotend=c.getString(c.getColumnIndex("slotend"));
-                String fname=c.getString(c.getColumnIndex("fname"));
-                String lname=c.getString(c.getColumnIndex("lname"));
-                String con="Name: "+vehname+ " \nVehicleType: "+vehType+"\nFirst Name: "+fname+"\nLast Name: "+lname+"\nTime: "+slotbegin+" to "+slotend+"\nLocation: "+locname;
-                list.add(con);
-                listView.setAdapter(adplist);
-            }while(c.moveToNext());
-        }
-        listView.setOnItemClickListener(
-                new AdapterView.OnItemClickListener(){
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id){
-                        String selected=String.valueOf(parent.getItemAtPosition(position));
-                        String[] name=selected.split(" ");
-                        //Toast.makeText(getContext(),selected,Toast.LENGTH_LONG).show();
-                        SharedPreferences.Editor sharedPref=getApplicationContext().getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE).edit();
-                        sharedPref.putString("name",name[1]);
-                        sharedPref.apply();
-                        Intent intent= new Intent(getApplicationContext(), ViewOperatorInventory.class);
-                        startActivity(intent);
-                    }
-                }
-        );
-        btn_logout.setOnClickListener(new View.OnClickListener() {
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
-            public void onClick(View v) {
-                SharedPreferences sharedpreferences = getSharedPreferences(LoginActivity.MyPREFERENCES, Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.clear();
-                editor.commit();
-                Toast.makeText(getApplicationContext(), "Logout Successful", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(OperatorHomeActivity.this, LoginActivity.class);
-                startActivity(intent);
+            public void onTabSelected(TabLayout.Tab tab) {
+                Fragment fragment = new OperatorVehicleFragment();
+                switch (tab.getPosition()) {
+                    case 0:
+                        fragment = new OperatorVehicleFragment();
+                        break;
+                   case 1:
+                        fragment = new OperatorInventoryFragment();
+                        break;
+                    default:
+                        fragment = null;
+
+                }
+                FragmentManager fm = getSupportFragmentManager();
+                FragmentTransaction ft = fm.beginTransaction();
+                ft.replace(R.id.simpleFrameLayout, fragment);
+                ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+                ft.commit();
+
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
             }
         });
-
-
 
     }
 }
