@@ -76,7 +76,7 @@ public class OperatorHomeActivity extends AppCompatActivity {
                 return false;
             }
         });
-        btn_logout = (Button) findViewById(R.id.logout);
+        btn_logout = (Button) findViewById(R.id.btn_logout);
         //username=(TextView)findViewById(R.id.username);
 
         tabLayout = findViewById(R.id.tabLayout_operator);
@@ -122,6 +122,18 @@ public class OperatorHomeActivity extends AppCompatActivity {
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
 
+            }
+        });
+        btn_logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences sharedpreferences = getSharedPreferences(LoginActivity.MyPREFERENCES, Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.clear();
+                editor.commit();
+                Toast.makeText(getApplicationContext(), "Logout Successful", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(OperatorHomeActivity.this, LoginActivity.class);
+                startActivity(intent);
             }
         });
 
