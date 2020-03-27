@@ -7,8 +7,11 @@ import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -38,6 +41,7 @@ public class AssignActivity extends AppCompatActivity {
     DatabaseHelper databaseHelper;
     ArrayList<String> spSlotBeginList;
     ArrayAdapter<String> adapterSlotBegin;
+    BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +49,7 @@ public class AssignActivity extends AppCompatActivity {
         setContentView(R.layout.activity_assign);
         getSupportActionBar().hide();
         databaseHelper = new DatabaseHelper(this);
+
         gv_assigned = (GridView)findViewById(R.id.gv_assigned);
         sp_vehicle = (Spinner)findViewById(R.id.sp_vehicle);
         sp_location = (Spinner)findViewById(R.id.sp_location);
@@ -159,7 +164,30 @@ public class AssignActivity extends AppCompatActivity {
             public void onNothingSelected(AdapterView<?> parent) {
 
             }
+
+
+
+
         });
+
+        bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+
+                    case R.id.action_profile:
+                        break;
+                    case R.id.action_recents:
+                        Intent intent3=new Intent( AssignActivity.this, ManagerHomeActivity.class);
+                        startActivity(intent3);
+                        break;
+                }
+
+                return false;
+            }
+        });
+
 
         sp_location.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override

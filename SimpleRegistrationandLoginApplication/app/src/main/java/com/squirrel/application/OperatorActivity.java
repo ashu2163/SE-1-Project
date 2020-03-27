@@ -6,7 +6,10 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -30,8 +33,10 @@ public class OperatorActivity extends   AppCompatActivity{
     SharedPreferences sharedPreferences;
     public String uid;
     Button btnop;
-    Button btnop_del;
+    Button btnop_del, btnlogout;
     ArrayList<String> al=new ArrayList<>();
+    BottomNavigationView bottomNavigationView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +45,38 @@ public class OperatorActivity extends   AppCompatActivity{
         databaseHelper = new DatabaseHelper(this);
         listView = (ListView) findViewById(R.id.listView);
         Cursor c = databaseHelper.getuserData();
+
+        bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+
+                    case R.id.action_profile:
+                        break;
+                    case R.id.action_recents:
+                        Intent intent3=new Intent( OperatorActivity.this, ManagerHomeActivity.class);
+                        startActivity(intent3);
+                        break;
+                }
+
+                return false;
+            }
+        });
+
+        btnlogout = (Button)findViewById(R.id.btnlogout);
+        btnlogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences sharedpreferences = getSharedPreferences(LoginActivity.MyPREFERENCES, Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.clear();
+                editor.commit();
+                Toast.makeText(getApplicationContext(), "Logout Successful", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(OperatorActivity.this, LoginActivity.class);
+                startActivity(intent);
+            }
+        });
 
         list=new ArrayList<String>();
         ArrayAdapter<String> adplist=new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,list);

@@ -46,6 +46,8 @@ public class ManagerHomeActivity extends AppCompatActivity {
                 switch (item.getItemId()) {
                     case R.id.action_recents:
                         //CODE THIS
+                        Intent intent3=new Intent( ManagerHomeActivity.this, ManagerHomeActivity.class);
+                        startActivity(intent3);
                         break;
                     case R.id.Profile:
                         SharedPreferences.Editor editor = sharedpreference.edit();
@@ -57,11 +59,8 @@ public class ManagerHomeActivity extends AppCompatActivity {
                         Intent intent2=new Intent(ManagerHomeActivity.this,UpdateProfileActivity.class);
                         startActivity(intent2);
                         break;
-//                    case R.id.Search:
-//                        //CHANGE THIS
-//                        Intent intent3=new Intent( ManagerHomeActivity.this, ManagerHomeActivity.class);
-//                        startActivity(intent3);
-//                        break;
+
+//
                 }
 
                 return false;

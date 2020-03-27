@@ -47,7 +47,7 @@ public class ViewManagerRevenue extends AppCompatActivity {
                         break;
                     case R.id.action_profile:
                         break;
-                    case R.id.action_home:
+                    case R.id.action_recents:
                         Intent intent3=new Intent( ViewManagerRevenue.this, ManagerHomeActivity.class);
                         startActivity(intent3);
                         break;

@@ -20,13 +20,15 @@ import java.util.ArrayList;
 
 public class ViewManagerLocation extends AppCompatActivity {
     ListView l1;
-
+    BottomNavigationView bottomNavigationView;
+    public static final String MyPREFERENCES = "MyPrefs";
+    SharedPreferences sharedpreference;
     DatabaseHelper databaseHelper;
     ArrayList<Location> arrayList;
     MyAdapterlocation myAdapter;
     public String lid;
     Button btnedit;
-    Button btnop_del;
+    Button btnop_del,log_out;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,6 +43,53 @@ public class ViewManagerLocation extends AppCompatActivity {
 
         btnedit = (Button) findViewById(R.id.btn);
         btnop_del = (Button) findViewById(R.id.delete);
+        sharedpreference = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+
+
+
+        bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.action_recents:
+                        Intent intent3=new Intent( ViewManagerLocation.this, ManagerHomeActivity.class);
+                        startActivity(intent3);
+                        break;
+//                    case R.id.Profile:
+//                        SharedPreferences.Editor editor = sharedpreference.edit();
+//
+//                        editor.putString("username",uname );
+//                        editor.putString("password", pass);
+//                        editor.putString("role",role );
+//                        editor.commit();
+//                        Intent intent2=new Intent(ViewManagerLocation.this,UpdateProfileActivity.class);
+//                        startActivity(intent2);
+//                        break;
+//                    case R.id.Search:
+//                        //CHANGE THIS
+//                        Intent intent3=new Intent( ManagerHomeActivity.this, ManagerHomeActivity.class);
+//                        startActivity(intent3);
+//                        break;
+                }
+
+                return false;
+            }
+        });
+
+        log_out = (Button)findViewById(R.id.log_out);
+        log_out.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences sharedpreferences = getSharedPreferences(LoginActivity.MyPREFERENCES, Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.clear();
+                editor.commit();
+                Toast.makeText(getApplicationContext(), "Logout Successful", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(ViewManagerLocation.this, LoginActivity.class);
+                startActivity(intent);
+            }
+        });
 
 
         btnedit.setOnClickListener(new View.OnClickListener() {
