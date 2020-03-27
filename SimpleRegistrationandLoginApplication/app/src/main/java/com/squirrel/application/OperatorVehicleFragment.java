@@ -59,7 +59,7 @@ public class OperatorVehicleFragment extends Fragment {
         ArrayAdapter<String> adplist=new ArrayAdapter<>(getActivity(),android.R.layout.simple_list_item_1,list);
         listView.setAdapter(adplist);
 
-          if(c.moveToFirst()){
+        if(c.moveToFirst()){
             do{
                 String vehname=c.getString(c.getColumnIndex("vehname"));
                 String vehType=c.getString(c.getColumnIndex("vehtype"));
@@ -76,9 +76,9 @@ public class OperatorVehicleFragment extends Fragment {
 
         }
 
-        SharedPreferences.Editor sharedPref=getContext().getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE).edit();
-        sharedPref.putString("vehname","Vehicle");
-        sharedPref.apply();
+//        SharedPreferences.Editor sharedPref=getContext().getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE).edit();
+//        sharedPref.putString("vehname","Vehicle");
+//        sharedPref.apply();
 
         return view;
     }

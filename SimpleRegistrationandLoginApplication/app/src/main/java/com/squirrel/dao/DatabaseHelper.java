@@ -202,19 +202,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("" +
                 "INSERT INTO vehicle_schedule(vehid,locid,opid,slotbegin,slotend,scheduled_date) VALUES\n" +
                 "(51,'Loc_1',1007000,8,10,date('now')),\n" +
-                "(51,'Loc_2',1009000,10,11,date('now')),\n" +
                 "(51,'Loc_3',1007000,11,13,date('now')),\n" +
                 "(53,'Loc_4',1009000,8,11,date('now')),\n" +
                 "(53,'Loc_4',1009000,11,14,date('now')),\n" +
                 "(53,'Loc_4',1009000,14,17,date('now')),\n" +
-                "(57,'Loc_7',1007000,15,17,date('now')),\n" +
                 "(51,'Loc_1',1007000,8,10,date('now','+1 day')),\n" +
-                "(51,'Loc_2',1009000,10,11,date('now','+1 day')),\n" +
                 "(51,'Loc_3',1007000,11,13,date('now','+1 day')),\n" +
                 "(53,'Loc_4',1009000,8,11,date('now','+1 day')),\n" +
                 "(53,'Loc_4',1009000,11,14,date('now','+1 day')),\n" +
-                "(53,'Loc_4',1009000,14,17,date('now','+1 day')),\n" +
-                "(57,'Loc_7',1007000,15,17,date('now','+1 day'))" +
+                "(53,'Loc_4',1009000,14,17,date('now','+1 day'))" +
                 "");
 
         db.execSQL("" +
@@ -513,9 +509,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return -1;
     }
 
-    public int getVehId(String vehname){
+    public int getVehId(String uname){
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
-        Cursor c=sqLiteDatabase.rawQuery("select vehid from vehicle where vehname=?", new String[]{vehname});
+        Cursor c=sqLiteDatabase.rawQuery("select distinct vehicle_schedule.vehid \n" +
+                "from user, vehicle_schedule\n" +
+                "where user.userid = vehicle_schedule.opid\n" +
+                "and vehicle_schedule.scheduled_date= date ('now')\n" +
+                "and user.uname = ?", new String[]{uname});
         if(c.getCount()>0){
             if(c.moveToNext()){
                 return c.getInt(0);
@@ -591,12 +591,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
+
+
+
     public Cursor getVehicleList(){
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
         Cursor cursor = sqLiteDatabase.rawQuery("select vehicle.vehid,vehicle.vehname,vehicle.vehtype,location.locname,vehicle_schedule.slotbegin,vehicle_schedule.slotend,user.fname,user.lname,vehicle_schedule.scheduled_date from vehicle,location,vehicle_schedule,user \n" +
                 "where vehicle.vehid = vehicle_schedule.vehid and location.locid = vehicle_schedule.locid and user.userid=vehicle_schedule.opid",new String[]{});
         return cursor;
     }
+
+
 
     public Cursor getVehicleInventory(String vehname){
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
@@ -605,6 +610,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         return cursor;
     }
+
+
+    public Cursor getVehicleInventory_operator(int vehid){
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        Cursor cursor=sqLiteDatabase.rawQuery("select distinct item.itemtype, vehicle_inventory.quantity, \n" +
+                "item.cost from item, vehicle_inventory, vehicle \n" +
+                "where item.itemid=vehicle_inventory.itemid and \n" +
+                "vehicle.vehid=vehicle_inventory.vehid and available_date = date('now') and vehicle.vehid=?", new String[]{String.valueOf(vehid)});
+
+        return cursor;
+    }
+
     public Cursor getInventoryDetails(int vehid){
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
         Cursor cursor=sqLiteDatabase.rawQuery("Select * from vehicle_inventory where vehid=?", new String[]{String.valueOf(vehid)});

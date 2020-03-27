@@ -51,9 +51,12 @@ public class OperatorInventoryFragment extends Fragment {
 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_operator_inventory, container, false);
+
         SharedPreferences prefs = getContext().getSharedPreferences(MY_PREFS_NAME, Context.MODE_PRIVATE);
         SharedPreferences sharedpreferences = getContext().getSharedPreferences(OperatorVehicleFragment.MyPREFERENCES, Context.MODE_PRIVATE);
-        final String vehname = prefs.getString("vehname", "Vehicle");
+        final String uname = prefs.getString("username", "User");
+
+        Toast.makeText(getContext(), uname, Toast.LENGTH_LONG).show();
 
 
         ava_drinks = (EditText) view.findViewById(R.id.ava_drinks);
@@ -66,9 +69,9 @@ public class OperatorInventoryFragment extends Fragment {
         bt_update=(Button) view.findViewById(R.id.btn_update);
 
         db = new DatabaseHelper(getActivity());
-        final int vehId = db.getVehId(vehname);
+        final int vehId = db.getVehId(uname);
 
-        Cursor c = db.getVehicleInventory(vehname);
+        Cursor c = db.getVehicleInventory_operator(vehId);
 
         if (c.moveToFirst()) {
             do {
@@ -118,8 +121,13 @@ public class OperatorInventoryFragment extends Fragment {
 
             }
         });
+
+
         return view;
+
+
     }
+
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
