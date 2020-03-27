@@ -53,11 +53,8 @@ public class OperatorHomeActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
-                    case R.id.action_cart:
-                        Intent intent1=new Intent( OperatorHomeActivity.this, CartDetailsActivity.class);
-                        startActivity(intent1);
-                        break;
-                    case R.id.action_profile:
+
+                    case R.id.Profile:
                         SharedPreferences.Editor editor = sharedpreference.edit();
 
                         editor.putString("username",uname );
@@ -67,7 +64,7 @@ public class OperatorHomeActivity extends AppCompatActivity {
                         Intent intent2=new Intent(OperatorHomeActivity.this,UpdateProfileActivity.class);
                         startActivity(intent2);
                         break;
-                    case R.id.action_home:
+                    case R.id.action_recents:
                         Intent intent3=new Intent( OperatorHomeActivity.this, OperatorHomeActivity.class);
                         startActivity(intent3);
                         break;

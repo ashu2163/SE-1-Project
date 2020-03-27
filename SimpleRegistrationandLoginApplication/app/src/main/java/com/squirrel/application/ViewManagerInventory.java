@@ -120,8 +120,8 @@ public class ViewManagerInventory extends AppCompatActivity {
 
 
                 Toast.makeText(getBaseContext(), "Updated Successfully", Toast.LENGTH_LONG).show();
-                Intent intent = new Intent(ViewManagerInventory.this, ViewManagerVehicle.class);
-                startActivity(intent);
+//                Intent intent = new Intent(ViewManagerInventory.this, ViewManagerVehicle.class);
+//                startActivity(intent);
 
             }
         });

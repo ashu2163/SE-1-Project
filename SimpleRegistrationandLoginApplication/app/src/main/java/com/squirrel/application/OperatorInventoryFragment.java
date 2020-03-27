@@ -116,8 +116,8 @@ public class OperatorInventoryFragment extends Fragment {
 
 
                 Toast.makeText(getContext(), "Quantity Updated Successfully", Toast.LENGTH_LONG).show();
-                Intent intent= new Intent(getContext(), OperatorHomeActivity.class);
-                startActivity(intent);
+//                Intent intent= new Intent(getContext(), OperatorInventoryFragment.class);
+//                startActivity(intent);
 
             }
         });

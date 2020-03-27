@@ -28,12 +28,12 @@
         android:id="@+id/listView"
         android:layout_width="407dp"
         android:layout_height="339dp"
-        android:layout_marginTop="150dp"
-        android:layout_marginBottom="72dp"
+        android:layout_marginTop="40dp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.27" />
+        app:layout_constraintVertical_bias="0.022" />
 
     <TextView
         android:id="@+id/Total_Revenue"
