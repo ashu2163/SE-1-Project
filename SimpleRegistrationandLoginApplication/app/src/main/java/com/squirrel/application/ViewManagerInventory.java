@@ -64,7 +64,7 @@ public class ViewManagerInventory extends AppCompatActivity {
         cost_sandwich=(EditText)findViewById(R.id.cost_sandwich);
 
         db = new DatabaseHelper(this);
-        final int vehId = db.getVehId(loadedString);
+        final int vehId = db.getVehIdManager(loadedString);
 
         Cursor c= db.getVehicleInventory(loadedString);
         if(c.moveToFirst()){

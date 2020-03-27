@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.squirrel.app.R;
@@ -28,6 +29,7 @@ public class OperatorVehicleFragment extends Fragment {
     DatabaseHelper db;
     public static final String MyPREFERENCES = "MyPrefs";
     SharedPreferences sharedpreference;
+    TextView Total_Revenue;
 
     View view;
     ArrayList<String> list;
@@ -48,9 +50,10 @@ public class OperatorVehicleFragment extends Fragment {
         sharedpreference = getContext().getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
         SharedPreferences sharedpreferences = getContext().getSharedPreferences(LoginActivity.MyPREFERENCES, Context.MODE_PRIVATE);
         final String uname= sharedpreferences.getString("username","User");
-
+        Float total_revenue = 0.0f;
         listView = (ListView) view.findViewById(R.id.listView);
         list=new ArrayList<String>();
+        Total_Revenue=(TextView) view.findViewById(R.id.textView5);
 
         db=new DatabaseHelper(getActivity());
 
@@ -73,16 +76,20 @@ public class OperatorVehicleFragment extends Fragment {
                 listView.setAdapter(adplist);
                 Toast.makeText(getContext(),vehname, Toast.LENGTH_LONG).show();
             }while(c.moveToNext());
-
+//
         }
-
-//        SharedPreferences.Editor sharedPref=getContext().getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE).edit();
-//        sharedPref.putString("vehname","Vehicle");
-//        sharedPref.apply();
+        c=db.getRevenueOperator(uname);
+        if(c.moveToFirst()){
+            do{
+                String revenue = c.getString(c.getColumnIndex("total_cost"));
+                total_revenue = total_revenue+ Float.parseFloat(revenue);
+            }while(c.moveToNext());
+            Total_Revenue.setText(total_revenue.toString());
+        }
 
         return view;
     }
-
+//
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
