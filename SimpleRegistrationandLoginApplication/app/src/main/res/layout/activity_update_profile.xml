@@ -38,17 +38,17 @@
 
     <Button
         android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Logout"
+        android:layout_width="91dp"
+        android:layout_height="51dp"
         android:background="@color/colorPrimary"
+        android:text="Logout"
         android:textColor="@android:color/background_light"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.9"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.897" />
+        app:layout_constraintVertical_bias="0.902" />
 
     <TextView
         android:id="@+id/textView"
@@ -316,9 +316,10 @@
     </RadioGroup>
 
     <android.support.design.widget.BottomNavigationView
-        android:id="@+id/bottom_navigation"
+        android:id="@+id/bottom_navigation1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="invisible"
         android:layout_alignParentBottom="true"
         app:itemBackground="@color/colorPrimaryDark"
         app:itemIconTint="@android:color/white"
@@ -329,6 +330,24 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0"
-        app:menu="@menu/bottom_nav_update" />
+        app:menu="@menu/bottom_nav_menu" />
+
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:visibility="invisible"
+        android:background="@color/colorPrimaryDark"
+        app:itemBackground="@color/colorPrimaryDark"
+        app:itemIconTint="@android:color/white"
+        app:itemTextColor="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        app:menu="@menu/bottom_nav_operator_manager" />
 
 </android.support.constraint.ConstraintLayout>

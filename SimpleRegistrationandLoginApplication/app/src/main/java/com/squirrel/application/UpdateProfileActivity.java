@@ -31,7 +31,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
     RadioGroup rg;
     RadioButton rb;
     DatabaseHelper db;
-    BottomNavigationView bottomNavigationView;
+    BottomNavigationView bottomNavigationView, bottomView_others;
     //public static final String MyPREFERENCES = "MyPrefs";
     SharedPreferences sharedpreference;
 
@@ -70,7 +70,20 @@ public class UpdateProfileActivity extends AppCompatActivity {
         final String role= sharedpreferences.getString("role","User");
        final  String pass=sharedpreferences.getString("password","User");
 
-        bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
+
+        bottomView_others = (BottomNavigationView) findViewById(R.id.bottom_navigation1);
+        bottomNavigationView=(BottomNavigationView)findViewById(R.id.bottom_navigation);
+        if(role.equals("other")){
+            bottomView_others.setVisibility(View.VISIBLE);
+            cardtype.setVisibility(View.VISIBLE);
+            cardno.setVisibility(View.VISIBLE);
+            cvv.setVisibility(View.VISIBLE);
+            expdate.setVisibility(View.VISIBLE);
+        }
+        else{
+            bottomNavigationView.setVisibility(View.VISIBLE);
+        }
+
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -79,7 +92,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
                         // Intent intent1=new Intent( UserHomeActivity.this, CartDetailsActivity.class);
                         //startActivity(intent1);
                         //break;
-                    case R.id.action_profile:
+                    case R.id.Profile:
                         SharedPreferences.Editor editor = sharedpreference.edit();
 
                         editor.putString("username",uname );
@@ -89,7 +102,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
                         Intent intent2=new Intent(UpdateProfileActivity.this,UpdateProfileActivity.class);
                         startActivity(intent2);
                         break;
-                    case R.id.action_home:
+                    case R.id.action_recents:
                         if(role.equals("operator")){
                             Intent intent = new Intent(UpdateProfileActivity.this, OperatorHomeActivity.class);
                             startActivity(intent);
@@ -103,6 +116,34 @@ public class UpdateProfileActivity extends AppCompatActivity {
                             Intent intent = new Intent(UpdateProfileActivity.this, UserHomeActivity.class);
                             startActivity(intent);
                         }
+                        break;
+                }
+
+                return false;
+            }
+        });
+
+        bottomView_others.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.action_cart:
+                        Intent intent1=new Intent( UpdateProfileActivity.this, CartDetailsActivity.class);
+                        startActivity(intent1);
+                        break;
+                    case R.id.action_profile:
+                        SharedPreferences.Editor editor = sharedpreference.edit();
+
+                        editor.putString("username",uname );
+                        editor.putString("password", pass);
+                        editor.putString("role",role );
+                        editor.commit();
+                        Intent intent2=new Intent(UpdateProfileActivity.this,UpdateProfileActivity.class);
+                        startActivity(intent2);
+                        break;
+                    case R.id.action_home:
+                        Intent intent3=new Intent( UpdateProfileActivity.this, UserHomeActivity.class);
+                        startActivity(intent3);
                         break;
                 }
 
