@@ -31,6 +31,7 @@ import java.util.ArrayList;
 
 public class AssignActivity extends AppCompatActivity {
     public static final String MyPREFERENCES = "MyPrefs";
+    String vehtype="";
     GridView gv_assigned;
     Button btn_assign;
     Spinner sp_vehicle,sp_location,sp_operator,sp_slotbegin;
@@ -163,6 +164,10 @@ public class AssignActivity extends AppCompatActivity {
                     sp_location.setEnabled(true);
                     String temp=parent.getItemAtPosition(position).toString();
                     vehid=Integer.valueOf(temp.split(":")[0]);
+                    if(temp.toLowerCase().contains("cart"))
+                        vehtype="cart";
+                    else
+                        vehtype="truck";
                 }
             }
 
@@ -231,8 +236,12 @@ public class AssignActivity extends AppCompatActivity {
                     spSlotBeginList.add("select start time");
                     sp_slotbegin.setAdapter(adapterSlotBegin);
                     //for(int i=SquirrelConstants.shiftBegin;i<=SquirrelConstants.shiftEnd-duration;i=i+duration){
-                    for(int i=SquirrelConstants.shiftBegin;i<=SquirrelConstants.shiftEnd-duration;i=i+1){
-                        spSlotBeginList.add(String.valueOf(i));
+                    if(vehtype.equals("cart")){
+                        spSlotBeginList.add(String.valueOf(SquirrelConstants.shiftBegin));
+                    } else {
+                        for (int i = SquirrelConstants.shiftBegin; i <= SquirrelConstants.shiftEnd - duration; i = i + 1) {
+                            spSlotBeginList.add(String.valueOf(i));
+                        }
                     }
                     sp_slotbegin.setAdapter(adapterSlotBegin);
                 }
@@ -249,7 +258,11 @@ public class AssignActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if(position!=0){
                     slotbegin=Integer.valueOf(parent.getItemAtPosition(position).toString());
-                    slotend=slotbegin+duration;
+                    if(vehtype.equals("cart")){
+                        slotend=SquirrelConstants.shiftEnd;
+                    } else {
+                        slotend=slotbegin+duration;
+                    }
                     tv_slotend.setText("end time:"+slotend);
                     btn_assign.setEnabled(true);
                     btn_assign.setTextColor(getResources().getColor(R.color.colorCream));
@@ -274,7 +287,7 @@ public class AssignActivity extends AppCompatActivity {
                     if(c.moveToFirst()){
                         int minslotbegin=c.getInt(c.getColumnIndex("minslotbegin"));
                         int maxslotend=c.getInt(c.getColumnIndex("maxslotend"));
-                        if(minslotbegin<slotbegin && maxslotend>slotbegin)    {
+                        if( (minslotbegin<slotbegin && maxslotend>slotbegin) || (minslotbegin<slotend && maxslotend>slotend) || (minslotbegin>=slotbegin &&  maxslotend<=slotend))    {
                             Toast.makeText(getApplicationContext(), "Invalid slot", Toast.LENGTH_SHORT).show();
                             startActivity(getIntent());
                         } else {
