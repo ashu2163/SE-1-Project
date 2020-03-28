@@ -288,26 +288,25 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }*/
     }
 
-    public boolean Insert(String fname,String lname,String uname, String password,String email, String address,
-                          String role,String city, String state, int zipcode, String phone){
+    public boolean Insert(User u){
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put("fname", fname);
-        contentValues.put("lname", lname);
-        contentValues.put("uname", uname);
-        contentValues.put("password", password);
-        contentValues.put("email", email);
+        contentValues.put("fname", u.getFname());
+        contentValues.put("lname", u.getLname());
+        contentValues.put("uname", u.getUname());
+        contentValues.put("password", u.getPassword());
+        contentValues.put("email", u.getEmail());
         Random rand = new Random();
         int num = rand.nextInt(9000000) + 1000000;
         contentValues.put("userid",num);
-        contentValues.put("city", city);
-        contentValues.put("street_address", address);
-        contentValues.put("state", state);
-        contentValues.put("zipcode", zipcode);
-        contentValues.put("phone", phone);
-        if(role.equals("Student/Staff"))
-            role="other";
-        contentValues.put("role", role.toLowerCase());
+        contentValues.put("city", u.getCity());
+        contentValues.put("street_address", u.getStreet_address());
+        contentValues.put("state", u.getState());
+        contentValues.put("zipcode", u.getZipcode());
+        contentValues.put("phone", u.getPhone());
+        if(u.getRole().contains("Student"))
+            u.setRole("other");
+        contentValues.put("role", u.getRole().toLowerCase());
 
         long result = sqLiteDatabase.insert("user", null, contentValues);
         if(result == -1){
@@ -888,5 +887,29 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             return false;
         }
         return true;
+    }
+
+    public User getUser(String emailid){
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        User u=null;
+        Cursor cursor = sqLiteDatabase.rawQuery("select * from user where email= ?",new String[]{emailid});
+        if (cursor.moveToFirst()) {
+            String fname = cursor.getString(cursor.getColumnIndex("fname"));
+            String lname = cursor.getString(cursor.getColumnIndex("lname"));
+            String uname = cursor.getString(cursor.getColumnIndex("uname"));
+            String password = cursor.getString(cursor.getColumnIndex("password"));
+            String role = cursor.getString(cursor.getColumnIndex("role"));
+            String email = cursor.getString(cursor.getColumnIndex("email"));
+            int userid = cursor.getInt(cursor.getColumnIndex("userid"));
+            String city = cursor.getString(cursor.getColumnIndex("city"));
+            String street_address = cursor.getString(cursor.getColumnIndex("street_address"));
+            String state = cursor.getString(cursor.getColumnIndex("state"));
+            int zipcode = cursor.getInt(cursor.getColumnIndex("zipcode"));
+            String phone = cursor.getString(cursor.getColumnIndex("phone"));
+            u = new User(userid,fname,lname,uname,password,role,email,phone,street_address,city,state,zipcode);
+        } else {
+            //user not found
+        }
+        return u;
     }
 }

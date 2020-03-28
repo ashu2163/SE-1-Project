@@ -133,4 +133,12 @@ public class User {
     public void setSelected(boolean selected) {
         isSelected = selected;
     }
+
+    public Boolean verifyUsername(String uname){
+        Boolean check=false;
+        if(this.uname.equals(uname)){
+            check=true;
+        }
+        return check;
+    }
 }

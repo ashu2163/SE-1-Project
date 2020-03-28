@@ -13,6 +13,7 @@ import android.widget.RadioButton;
 
 import com.squirrel.app.R;
 import com.squirrel.dao.DatabaseHelper;
+import com.squirrel.models.User;
 
 
 public class RegistrationActivity extends AppCompatActivity {
@@ -81,9 +82,16 @@ public class RegistrationActivity extends AppCompatActivity {
                 }else{
                     //Toast.makeText(getApplicationContext(), role, Toast.LENGTH_SHORT).show();
                     if(password.equals(confirm_password)){
-                        Boolean checkusername = databaseHelper.CheckUsername(username);
-                        if(checkusername == true){
-                            Boolean insert = databaseHelper.Insert(fname,lname,username, password, email, address, role,city,state,zipcode,phone);
+                        User temp = databaseHelper.getUser(email);
+                        Boolean userexists=false;
+                        if(temp==null){
+                            userexists = false;
+                        } else {
+                            userexists = temp.verifyUsername(username);
+                        }
+                        if(userexists == false){
+                            User u = new User(0,fname,lname,username,password,role,email,phone,address,city,state,zipcode);
+                            Boolean insert = databaseHelper.Insert(u);
 
                             if(insert == true){
 
