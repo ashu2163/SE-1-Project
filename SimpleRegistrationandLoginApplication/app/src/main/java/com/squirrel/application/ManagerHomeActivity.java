@@ -58,12 +58,12 @@ public class ManagerHomeActivity extends AppCompatActivity {
                         startActivity(intent3);
                         break;
                     case R.id.Profile:
-                        SharedPreferences.Editor editor = sharedpreference.edit();
-
-                        editor.putString("username",uname );
-                        editor.putString("password", pass);
-                        editor.putString("role",role );
-                        editor.commit();
+//                        SharedPreferences.Editor editor = sharedpreference.edit();
+//
+//                        editor.putString("username",uname );
+//                        editor.putString("password", pass);
+//                        editor.putString("role",role );
+//                        editor.commit();
                         Intent intent2=new Intent(ManagerHomeActivity.this,UpdateProfileActivity.class);
                         startActivity(intent2);
                         break;
@@ -91,10 +91,10 @@ public class ManagerHomeActivity extends AppCompatActivity {
         btn_assign.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPreferences sharedpreferences = getSharedPreferences(LoginActivity.MyPREFERENCES, Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.clear();
-                editor.commit();
+//                SharedPreferences sharedpreferences = getSharedPreferences(LoginActivity.MyPREFERENCES, Context.MODE_PRIVATE);
+//                SharedPreferences.Editor editor = sharedpreferences.edit();
+//                editor.clear();
+//                editor.commit();
                 Intent intent = new Intent(ManagerHomeActivity.this, AssignActivity.class);
                 startActivity(intent);
             }
@@ -125,10 +125,10 @@ public class ManagerHomeActivity extends AppCompatActivity {
         btn_location.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPreferences sharedpreferences = getSharedPreferences(LoginActivity.MyPREFERENCES, Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.clear();
-                editor.commit();
+//                SharedPreferences sharedpreferences = getSharedPreferences(LoginActivity.MyPREFERENCES, Context.MODE_PRIVATE);
+//                SharedPreferences.Editor editor = sharedpreferences.edit();
+//                editor.clear();
+//                editor.commit();
                 Intent intent = new Intent(ManagerHomeActivity.this, ViewManagerLocation.class);
                 startActivity(intent);
             }
@@ -137,10 +137,10 @@ public class ManagerHomeActivity extends AppCompatActivity {
         btn_revenue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPreferences sharedpreferences = getSharedPreferences(LoginActivity.MyPREFERENCES, Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.clear();
-                editor.commit();
+//                SharedPreferences sharedpreferences = getSharedPreferences(LoginActivity.MyPREFERENCES, Context.MODE_PRIVATE);
+//                SharedPreferences.Editor editor = sharedpreferences.edit();
+//                editor.clear();
+//                editor.commit();
                 Intent intent = new Intent(ManagerHomeActivity.this, ViewManagerRevenue.class);
                 startActivity(intent);
             }

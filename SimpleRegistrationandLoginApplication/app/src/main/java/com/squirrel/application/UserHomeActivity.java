@@ -51,12 +51,12 @@ public class UserHomeActivity extends AppCompatActivity {
                         startActivity(intent1);
                         break;
                     case R.id.action_profile:
-                        SharedPreferences.Editor editor = sharedpreference.edit();
-
-                        editor.putString("username",uname );
-                        editor.putString("password", pass);
-                        editor.putString("role",role );
-                        editor.commit();
+//                        SharedPreferences.Editor editor = sharedpreference.edit();
+//
+//                        editor.putString("username",uname );
+//                        editor.putString("password", pass);
+//                        editor.putString("role",role );
+//                        editor.commit();
                         Intent intent2=new Intent(UserHomeActivity.this,UpdateProfileActivity.class);
                         startActivity(intent2);
                         break;

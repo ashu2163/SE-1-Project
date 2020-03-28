@@ -52,8 +52,11 @@ public class OperatorActivity extends   AppCompatActivity{
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
 
-                    case R.id.action_profile:
+                    case R.id.Profile:
+                        Intent intent2=new Intent(OperatorActivity.this,UpdateProfileActivity.class);
+                        startActivity(intent2);
                         break;
+
                     case R.id.action_recents:
                         Intent intent3=new Intent( OperatorActivity.this, ManagerHomeActivity.class);
                         startActivity(intent3);

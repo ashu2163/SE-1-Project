@@ -39,6 +39,8 @@ public class CartDetailsActivity extends AppCompatActivity {
                         startActivity(intent1);
                         break;
                     case R.id.action_profile:
+                        Intent intent2=new Intent(CartDetailsActivity.this,UpdateProfileActivity.class);
+                        startActivity(intent2);
                         break;
                     case R.id.action_home:
                         Intent intent3=new Intent( CartDetailsActivity.this, UserHomeActivity.class);
@@ -111,7 +113,7 @@ public class CartDetailsActivity extends AppCompatActivity {
 
                 SharedPreferences prefs = getSharedPreferences(FoodCartFragment.MyPREFERENCES, MODE_PRIVATE);
                 String loadedString = prefs.getString("vehname", null);
-                int vehId=db.getVehId(loadedString);
+                int vehId=db.getVehIdUser(loadedString);
 
                 String str=" ";
 

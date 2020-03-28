@@ -69,8 +69,11 @@ public class EditlocationActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
 
-                    case R.id.action_profile:
+                    case R.id.Profile:
+                        Intent intent2=new Intent(EditlocationActivity.this,UpdateProfileActivity.class);
+                        startActivity(intent2);
                         break;
+
                     case R.id.action_recents:
                         Intent intent3=new Intent( EditlocationActivity.this, ManagerHomeActivity.class);
                         startActivity(intent3);

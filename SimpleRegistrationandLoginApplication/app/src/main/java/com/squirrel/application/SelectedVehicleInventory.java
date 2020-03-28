@@ -44,6 +44,8 @@ public class SelectedVehicleInventory extends AppCompatActivity {
                         startActivity(intent1);
                         break;
                     case R.id.action_profile:
+                        Intent intent2=new Intent(SelectedVehicleInventory.this,UpdateProfileActivity.class);
+                        startActivity(intent2);
                         break;
                     case R.id.action_home:
                         Intent intent3=new Intent( SelectedVehicleInventory.this, UserHomeActivity.class);

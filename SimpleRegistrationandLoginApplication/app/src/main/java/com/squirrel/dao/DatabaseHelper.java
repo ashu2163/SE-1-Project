@@ -912,4 +912,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         return u;
     }
+
+    public int getVehIdUser(String vehname){
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        Cursor c=sqLiteDatabase.rawQuery("select vehid from vehicle where vehname=?", new String[]{vehname});
+        if(c.getCount()>0){
+            if(c.moveToNext()){
+                return c.getInt(0);
+            }
+        }
+        return -1;
+    }
 }

@@ -188,12 +188,6 @@ public class AssignActivity extends AppCompatActivity {
                 switch (item.getItemId()) {
 
                     case R.id.Profile:
-                        SharedPreferences.Editor editor = sharedpreference.edit();
-
-                        editor.putString("username",uname );
-                        editor.putString("password", pass);
-                        editor.putString("role",role );
-                        editor.commit();
                         Intent intent2=new Intent(AssignActivity.this,UpdateProfileActivity.class);
                         startActivity(intent2);
                         break;
