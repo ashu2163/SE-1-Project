@@ -28,10 +28,18 @@ public class ViewManagerVehicle extends AppCompatActivity {
     DatabaseHelper db;
     BottomNavigationView bottomNavigationView;
     public static final String MyPREFERENCES = "MyPrefs";
+    SharedPreferences sharedpreference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        sharedpreference = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+        SharedPreferences sharedpreferences = getSharedPreferences(LoginActivity.MyPREFERENCES, Context.MODE_PRIVATE);
+        final String uname= sharedpreferences.getString("username","User");
+        Toast.makeText(getApplicationContext(), "fname" + uname, Toast.LENGTH_SHORT).show();
+        final String role= sharedpreferences.getString("role","User");
+        final String pass=sharedpreferences.getString("password","User");
+
         setContentView(R.layout.activity_manager_vehicle);
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -42,7 +50,16 @@ public class ViewManagerVehicle extends AppCompatActivity {
                         Intent intent1=new Intent( ViewManagerVehicle.this, CartDetailsActivity.class);
                         startActivity(intent1);
                         break;
-                    case R.id.action_profile:
+                    case R.id.Profile:
+
+                        SharedPreferences.Editor editor = sharedpreference.edit();
+
+                        editor.putString("username",uname );
+                        editor.putString("password", pass);
+                        editor.putString("role",role );
+                        editor.commit();
+                        Intent intent2=new Intent(ViewManagerVehicle.this,UpdateProfileActivity.class);
+                        startActivity(intent2);
                         break;
                     case R.id.action_recents:
                         Intent intent3=new Intent( ViewManagerVehicle.this, ManagerHomeActivity.class);

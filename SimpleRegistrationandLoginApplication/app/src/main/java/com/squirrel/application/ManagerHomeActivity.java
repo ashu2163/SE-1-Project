@@ -37,8 +37,16 @@ public class ManagerHomeActivity extends AppCompatActivity {
         sharedpreference = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
         SharedPreferences sharedpreferences = getSharedPreferences(LoginActivity.MyPREFERENCES, Context.MODE_PRIVATE);
         final String uname= sharedpreferences.getString("username","User");
+
         final String role= sharedpreferences.getString("role","User");
         final String pass=sharedpreferences.getString("password","User");
+
+        SharedPreferences.Editor editor = sharedpreferences.edit();
+
+        editor.putString("username",uname );
+        editor.putString("password", pass);
+        editor.putString("role",role );
+        editor.commit();
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override

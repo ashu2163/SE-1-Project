@@ -37,7 +37,7 @@ public class AssignActivity extends AppCompatActivity {
     TextView tv_slotend;
     int vehid,userid,duration,slotbegin,slotend=0;
     String locationid="";
-    SharedPreferences sharedpreferences;
+    SharedPreferences sharedpreference;
     DatabaseHelper databaseHelper;
     ArrayList<String> spSlotBeginList;
     ArrayAdapter<String> adapterSlotBegin;
@@ -48,6 +48,12 @@ public class AssignActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_assign);
         getSupportActionBar().hide();
+        sharedpreference = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+
+        SharedPreferences sharedpreferences = getSharedPreferences(ManagerHomeActivity.MyPREFERENCES, Context.MODE_PRIVATE);
+        final String uname= sharedpreferences.getString("username","User");
+        final String role= sharedpreferences.getString("role","User");
+        final String pass=sharedpreferences.getString("password","User");
         databaseHelper = new DatabaseHelper(this);
 
         gv_assigned = (GridView)findViewById(R.id.gv_assigned);
@@ -176,7 +182,15 @@ public class AssignActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
 
-                    case R.id.action_profile:
+                    case R.id.Profile:
+                        SharedPreferences.Editor editor = sharedpreference.edit();
+
+                        editor.putString("username",uname );
+                        editor.putString("password", pass);
+                        editor.putString("role",role );
+                        editor.commit();
+                        Intent intent2=new Intent(AssignActivity.this,UpdateProfileActivity.class);
+                        startActivity(intent2);
                         break;
                     case R.id.action_recents:
                         Intent intent3=new Intent( AssignActivity.this, ManagerHomeActivity.class);

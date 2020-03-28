@@ -45,6 +45,11 @@ public class ViewManagerLocation extends AppCompatActivity {
         btnop_del = (Button) findViewById(R.id.delete);
         sharedpreference = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
 
+        //sharedpreference = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+        SharedPreferences sharedpreferences = getSharedPreferences(ManagerHomeActivity.MyPREFERENCES, Context.MODE_PRIVATE);
+        final String uname= sharedpreferences.getString("username","User");
+        final String role= sharedpreferences.getString("role","User");
+        final String pass=sharedpreferences.getString("password","User");
 
 
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
@@ -56,7 +61,15 @@ public class ViewManagerLocation extends AppCompatActivity {
                         Intent intent3=new Intent( ViewManagerLocation.this, ManagerHomeActivity.class);
                         startActivity(intent3);
                         break;
-//                    case R.id.Profile:
+                    case R.id.Profile:
+                        SharedPreferences.Editor editor = sharedpreference.edit();
+
+                        editor.putString("username",uname );
+                        editor.putString("password", pass);
+                        editor.putString("role",role );
+                        editor.commit();
+                        Intent intent2=new Intent(ViewManagerLocation.this,UpdateProfileActivity.class);
+                        startActivity(intent2);
 //                        SharedPreferences.Editor editor = sharedpreference.edit();
 //
 //                        editor.putString("username",uname );

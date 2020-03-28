@@ -670,14 +670,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
-    public boolean updateProfile(int userid,String fname, String lname, String uname, String password, String email, String phone, String street, String city,String state, String zipcode) {
+    public boolean updateProfile(int userid,String fname, String lname, String uname, String email, String phone, String street, String city,String state, String zipcode) {
         int zip=Integer.valueOf(zipcode);
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
         ContentValues cv = new ContentValues();
         cv.put("fname", fname);
         cv.put("lname", lname);
         cv.put("uname", uname);
-        cv.put("password", password);
+        //cv.put("password", password);
         cv.put("email", email);
         cv.put("phone", phone);
         cv.put("street_address", street);

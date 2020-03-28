@@ -24,9 +24,17 @@ public class ViewManagerInventory extends AppCompatActivity {
     BottomNavigationView bottomNavigationView;
     Button btn_logout,btn_update;
     DatabaseHelper db;
+    SharedPreferences sharedpreference;
+    public static final String MyPREFERENCES = "MyPrefs";
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manager_inventory);
+        sharedpreference = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+        SharedPreferences sharedpreferences = getSharedPreferences(ManagerHomeActivity.MyPREFERENCES, Context.MODE_PRIVATE);
+        final String uname= sharedpreferences.getString("username","User");
+        final String role= sharedpreferences.getString("role","User");
+        final String pass=sharedpreferences.getString("password","User");
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -36,7 +44,15 @@ public class ViewManagerInventory extends AppCompatActivity {
                         Intent intent1=new Intent( ViewManagerInventory.this, CartDetailsActivity.class);
                         startActivity(intent1);
                         break;
-                    case R.id.action_profile:
+                    case R.id.Profile:
+                        SharedPreferences.Editor editor = sharedpreference.edit();
+
+                        editor.putString("username",uname );
+                        editor.putString("password", pass);
+                        editor.putString("role",role );
+                        editor.commit();
+                        Intent intent2=new Intent(ViewManagerInventory.this,UpdateProfileActivity.class);
+                        startActivity(intent2);
                         break;
                     case R.id.action_recents:
                         Intent intent3=new Intent( ViewManagerInventory.this, ManagerHomeActivity.class);
