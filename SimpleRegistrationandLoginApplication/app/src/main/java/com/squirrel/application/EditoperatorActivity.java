@@ -115,6 +115,25 @@ public class EditoperatorActivity  extends AppCompatActivity{
             }
         });
 
+        bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+
+                    case R.id.Profile:
+                        Intent intent2=new Intent(EditoperatorActivity.this,UpdateProfileActivity.class);
+                        startActivity(intent2);
+                        break;
+                    case R.id.action_recents:
+                        Intent intent3=new Intent( EditoperatorActivity.this, ManagerHomeActivity.class);
+                        startActivity(intent3);
+                        break;
+                }
+
+                return false;
+            }
+        });
         btn_vehupdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
