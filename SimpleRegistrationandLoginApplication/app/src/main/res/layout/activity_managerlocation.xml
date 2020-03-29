@@ -70,10 +70,10 @@
 
     <Button
         android:id="@+id/btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="edit"
+        android:layout_width="83dp"
+        android:layout_height="49dp"
         android:background="@color/colorPrimary"
+        android:text="edit"
         android:textColor="@android:color/background_light"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
@@ -81,7 +81,7 @@
         app:layout_constraintHorizontal_bias="0.173"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/LocationId"
-        app:layout_constraintVertical_bias="0.933" />
+        app:layout_constraintVertical_bias="0.918" />
 
     <ListView
         android:id="@+id/listview2"

@@ -18,7 +18,7 @@ public class ConfirmEmailActivity extends AppCompatActivity {
     DatabaseHelper databaseHelper;
 
     EditText et_cemail;
-    Button btn_cemail;
+    Button btn_cemail,back;
 
     RadioGroup rg;
     RadioButton rb;
@@ -32,6 +32,7 @@ public class ConfirmEmailActivity extends AppCompatActivity {
         databaseHelper = new DatabaseHelper(this);
         et_cemail = (EditText)findViewById(R.id.et_cemail);
         btn_cemail = (Button)findViewById(R.id.btn_cemail);
+        back=(Button)findViewById(R.id.back);
 
         btn_cemail.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,6 +55,14 @@ public class ConfirmEmailActivity extends AppCompatActivity {
                 }
 
 
+            }
+        });
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ConfirmEmailActivity.this, LoginActivity.class);
+                startActivity(intent);
             }
         });
     }

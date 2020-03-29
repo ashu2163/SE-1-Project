@@ -18,7 +18,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
     DatabaseHelper databaseHelper;
 
     EditText et_ncpassword,et_npassword;
-    Button btn_changepass;
+    Button btn_changepass, back;
 
     RadioGroup rg;
     RadioButton rb;
@@ -33,6 +33,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         et_ncpassword = (EditText)findViewById(R.id.et_ncpassword);
         et_npassword = (EditText)findViewById(R.id.et_npassword);
         btn_changepass = (Button)findViewById(R.id.btn_changepass);
+        back=(Button)findViewById(R.id.button2);
 
         btn_changepass.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,6 +61,15 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                     }
 
                 }
+
+            }
+        });
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ForgotPasswordActivity.this, LoginActivity.class);
+                startActivity(intent);
 
             }
         });

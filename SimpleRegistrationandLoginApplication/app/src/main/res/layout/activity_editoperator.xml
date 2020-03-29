@@ -176,26 +176,32 @@
 
     <Button
         android:id="@+id/btn_vehicleupdate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="151dp"
+        android:layout_height="56dp"
         android:layout_marginStart="49dp"
         android:layout_marginEnd="150dp"
-        android:layout_marginBottom="250dp"
+        android:layout_marginBottom="228dp"
+        android:background="@color/colorPrimary"
         android:text="Update vehicle Name"
+        android:textColor="@android:color/background_light"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.426"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/btn_delete"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="151dp"
+        android:layout_height="66dp"
         android:layout_marginStart="50dp"
         android:layout_marginEnd="150dp"
-        android:layout_marginBottom="150dp"
+        android:layout_marginBottom="132dp"
+        android:background="@color/colorPrimary"
         android:text="Delete Schedule"
+        android:textColor="@android:color/background_light"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.391"
         app:layout_constraintStart_toStartOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
