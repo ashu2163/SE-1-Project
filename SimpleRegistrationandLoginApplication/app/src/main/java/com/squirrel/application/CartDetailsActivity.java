@@ -25,6 +25,9 @@ public class CartDetailsActivity extends AppCompatActivity {
     DatabaseHelper db;
     BottomNavigationView bottomNavigationView;
 
+    Button btn_checkout;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -196,6 +199,21 @@ public class CartDetailsActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        btn_checkout =(Button) findViewById(R.id.btn_checkout);
+
+        btn_checkout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Toast.makeText(getApplicationContext(), "Going to Checkout", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(CartDetailsActivity.this, CheckOutActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
+
 
 
     }
