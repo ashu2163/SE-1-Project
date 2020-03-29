@@ -155,7 +155,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
         final int userid=db.getUserID(uname);
         Cursor userD=db.getUserDetails(uname);
         Cursor cardD=db.getCardDetails(userid);
-        Toast.makeText(getApplicationContext(), "UserId"+userid , Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getApplicationContext(), "UserId"+userid , Toast.LENGTH_SHORT).show();
         if(role.equals("other")){
             cardtype.setVisibility(View.VISIBLE);
             cardno.setVisibility(View.VISIBLE);

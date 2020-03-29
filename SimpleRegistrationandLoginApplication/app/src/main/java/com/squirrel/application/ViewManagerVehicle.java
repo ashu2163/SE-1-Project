@@ -36,7 +36,7 @@ public class ViewManagerVehicle extends AppCompatActivity {
         sharedpreference = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
         SharedPreferences sharedpreferences = getSharedPreferences(LoginActivity.MyPREFERENCES, Context.MODE_PRIVATE);
         final String uname= sharedpreferences.getString("username","User");
-        Toast.makeText(getApplicationContext(), "fname" + uname, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getApplicationContext(), "fname" + uname, Toast.LENGTH_SHORT).show();
         final String role= sharedpreferences.getString("role","User");
         final String pass=sharedpreferences.getString("password","User");
 

@@ -74,7 +74,7 @@ public class OperatorVehicleFragment extends Fragment {
                 String con="Name: "+vehname+ " \nVehicleType: "+vehType+"\nFirst Name: "+fname+"\nLast Name: "+lname+"\nTime: "+slotbegin+" to "+slotend+"\nLocation: "+locname;
                 list.add(con);
                 listView.setAdapter(adplist);
-                Toast.makeText(getContext(),vehname, Toast.LENGTH_LONG).show();
+//                Toast.makeText(getContext(),vehname, Toast.LENGTH_LONG).show();
             }while(c.moveToNext());
 //
         }

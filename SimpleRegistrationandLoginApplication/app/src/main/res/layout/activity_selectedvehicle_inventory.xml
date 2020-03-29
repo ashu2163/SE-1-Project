@@ -53,11 +53,12 @@
         android:id="@+id/drinks"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="130dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="128dp"
         android:layout_marginEnd="310dp"
         android:text="Drinks"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.027"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -65,11 +66,12 @@
         android:id="@+id/snacks"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="170dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="168dp"
         android:layout_marginEnd="310dp"
         android:text="@string/snacks"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.032"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -77,11 +79,12 @@
         android:id="@+id/sandwiches"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="220dp"
         android:layout_marginEnd="310dp"
         android:text="Sandwiches"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -113,12 +116,12 @@
         android:id="@+id/ava_drinks"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="110dp"
+        android:layout_marginStart="100dp"
         android:layout_marginTop="128dp"
         android:layout_marginEnd="210dp"
         android:text="@string/ava_drinks"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.393"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -127,10 +130,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="100dp"
-        android:layout_marginTop="170dp"
+        android:layout_marginTop="168dp"
         android:layout_marginEnd="220dp"
         android:text="ava_snacks"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.764"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -138,9 +142,9 @@
         android:id="@+id/ava_sandwich"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="110dp"
+        android:layout_marginStart="100dp"
         android:layout_marginTop="220dp"
-        android:layout_marginEnd="220dp"
+        android:layout_marginEnd="196dp"
         android:text="@string/ava_sandwich"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

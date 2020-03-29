@@ -56,7 +56,7 @@ public class OperatorInventoryFragment extends Fragment {
         SharedPreferences sharedpreferences = getContext().getSharedPreferences(OperatorVehicleFragment.MyPREFERENCES, Context.MODE_PRIVATE);
         final String uname = prefs.getString("username", "User");
 
-        Toast.makeText(getContext(), uname, Toast.LENGTH_LONG).show();
+//        Toast.makeText(getContext(), uname, Toast.LENGTH_LONG).show();
 
 
         ava_drinks = (EditText) view.findViewById(R.id.ava_drinks);
