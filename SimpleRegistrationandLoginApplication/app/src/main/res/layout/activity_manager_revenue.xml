@@ -4,7 +4,7 @@
     android:id="@+id/frameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.squirrel.application.OperatorHomeActivity">
+    tools:context="com.squirrel.application.ViewManagerRevenue">
 
     <!-- TODO: Update blank fragment layout -->
 
@@ -31,13 +31,14 @@
         android:id="@+id/listView"
         android:layout_width="0dp"
         android:layout_height="443dp"
+        android:layout_marginTop="80dp"
         android:layout_marginBottom="72dp"
         app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.418">
+        app:layout_constraintVertical_bias="0.0">
 
     </ListView>
 
@@ -56,19 +57,21 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.882" />
 
-   
 
     <TextView
         android:id="@+id/total_revenue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="44dp"
         android:text="Total_Revenue"
+        android:textSize="16sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.201"
+        app:layout_constraintHorizontal_bias="0.023"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.803" />
+        app:layout_constraintVertical_bias="0.805" />
 
     <TextView
         android:id="@+id/textView3"

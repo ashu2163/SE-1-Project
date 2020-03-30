@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    tools:context="com.squirrel.application.ViewManagerLocation"
     >
 
     <TextView
@@ -78,15 +79,15 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.173"
+        app:layout_constraintHorizontal_bias="0.146"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/LocationId"
-        app:layout_constraintVertical_bias="0.918" />
+        app:layout_constraintVertical_bias="0.967" />
 
     <ListView
         android:id="@+id/listview2"
-        android:layout_width="398dp"
-        android:layout_height="421dp"
+        android:layout_width="409dp"
+        android:layout_height="532dp"
         android:layout_marginStart="5dp"
         app:layout_constraintBottom_toTopOf="@+id/btn"
         app:layout_constraintEnd_toEndOf="parent"
