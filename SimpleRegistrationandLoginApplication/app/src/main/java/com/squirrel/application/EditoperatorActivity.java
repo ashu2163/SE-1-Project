@@ -1,6 +1,7 @@
 package com.squirrel.application;
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
@@ -34,7 +35,7 @@ public class EditoperatorActivity  extends AppCompatActivity{
     Spinner sp_vehicle;
     int vehid;
     BottomNavigationView bottomNavigationView;
-
+    Button btn_logout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -155,6 +156,22 @@ public class EditoperatorActivity  extends AppCompatActivity{
 
                 }
             });
+
+
+
+        btn_logout = (Button)findViewById(R.id.btn_logout);
+        btn_logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences sharedpreferences = getSharedPreferences(LoginActivity.MyPREFERENCES, Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.clear();
+                editor.commit();
+                Toast.makeText(getApplicationContext(), "Logout Successful", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(EditoperatorActivity.this, LoginActivity.class);
+                startActivity(intent);
+            }
+        });
 
             btn_delete.setOnClickListener(new View.OnClickListener() {
                 @Override

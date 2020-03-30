@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.squirrel.application.UpdateProfileActivity"></activity>
+
+
         <activity
             android:name="com.squirrel.application.LoginActivity"
             android:configChanges="orientation"
@@ -21,6 +22,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+
         <activity android:name="com.squirrel.application.ManagerHomeActivity" />
         <activity android:name="com.squirrel.application.UserHomeActivity" />
         <activity android:name="com.squirrel.application.OperatorHomeActivity" />
@@ -34,13 +37,14 @@
         <activity android:name="com.squirrel.application.ViewManagerVehicle" />
         <activity android:name="com.squirrel.application.OperatorActivity" />
         <activity android:name="com.squirrel.application.EditoperatorActivity" />
-
+        <activity android:name="com.squirrel.application.UpdateProfileActivity"></activity>
         <activity android:name="com.squirrel.application.ViewManagerLocation" />
         <activity android:name="com.squirrel.application.ViewManagerRevenue" />
         <activity android:name="com.squirrel.application.EditlocationActivity" />
 
-        <activity android:name="com.squirrel.application.PaymentCardInfo" />
 
+
+        <activity android:name="com.squirrel.application.PaymentCardInfo" />
         <activity android:name="com.squirrel.application.CheckOutActivity" />
     </application>
 

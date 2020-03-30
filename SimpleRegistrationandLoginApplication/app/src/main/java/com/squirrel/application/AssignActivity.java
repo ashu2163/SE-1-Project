@@ -43,7 +43,7 @@ public class AssignActivity extends AppCompatActivity {
     ArrayList<String> spSlotBeginList;
     ArrayAdapter<String> adapterSlotBegin;
     BottomNavigationView bottomNavigationView;
-
+    Button btn_logout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -269,6 +269,26 @@ public class AssignActivity extends AppCompatActivity {
 
             }
         });
+
+
+
+
+        btn_logout = (Button)findViewById(R.id.btn_logout);
+        btn_logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences sharedpreferences = getSharedPreferences(LoginActivity.MyPREFERENCES, Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.clear();
+                editor.commit();
+                Toast.makeText(getApplicationContext(), "Logout Successful", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(AssignActivity.this, LoginActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
+
 
         btn_assign.setOnClickListener(new View.OnClickListener() {
             @Override
