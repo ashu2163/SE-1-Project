@@ -118,6 +118,8 @@
         android:layout_marginTop="15dp"
         android:layout_marginRight="8dp"
         android:text="Assign"
+        android:background="@color/colorPrimary"
+        android:textColor="@android:color/background_light"
         app:layout_constraintHorizontal_bias="0.2"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
