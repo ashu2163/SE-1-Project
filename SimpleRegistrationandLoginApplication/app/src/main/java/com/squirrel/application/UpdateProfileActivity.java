@@ -79,6 +79,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
             cardno.setVisibility(View.VISIBLE);
             cvv.setVisibility(View.VISIBLE);
             expdate.setVisibility(View.VISIBLE);
+            role1.setText("Student/Staff");
         }
         else{
             bottomNavigationView.setVisibility(View.VISIBLE);
@@ -156,13 +157,16 @@ public class UpdateProfileActivity extends AppCompatActivity {
         Cursor userD=db.getUserDetails(uname);
         Cursor cardD=db.getCardDetails(userid);
 //        Toast.makeText(getApplicationContext(), "UserId"+userid , Toast.LENGTH_SHORT).show();
+        role1.setText(role);
         if(role.equals("other")){
             cardtype.setVisibility(View.VISIBLE);
             cardno.setVisibility(View.VISIBLE);
             cvv.setVisibility(View.VISIBLE);
             expdate.setVisibility(View.VISIBLE);
+            role1.setText("Student/Staff");
         }
         username.setText(uname);
+
         //username.setFocusable(false);
 
         if (userD.moveToFirst()) {
@@ -211,7 +215,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
 
             } while (cardD.moveToNext());
         }
-        role1.setText(role);
+
 
         btn_edit.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -187,16 +187,16 @@
 
     <TextView
         android:id="@+id/role"
-        android:layout_width="80dp"
-        android:layout_height="26dp"
+        android:layout_width="158dp"
+        android:layout_height="24dp"
         android:text="TextView"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.374"
+        app:layout_constraintHorizontal_bias="0.581"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.604" />
+        app:layout_constraintVertical_bias="0.603" />
 
     <Button
         android:id="@+id/update_profile"
