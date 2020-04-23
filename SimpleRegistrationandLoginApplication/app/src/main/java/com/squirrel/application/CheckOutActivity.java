@@ -25,7 +25,7 @@ import com.squirrel.dao.DatabaseHelper;
 
         DatabaseHelper db;
         BottomNavigationView bottomNavigationView;
-        TextView item_title, quantity_title, totalcost_title, checkout_title, drinks_text, drinks_quantity, sandwiches_quantity, snacks_quantity, total_price, sandwiches_title, snacks_title;
+        TextView  quantity_title, totalcost_title, checkout_title, drinks_quantity, sandwiches_quantity, snacks_quantity, total_price;
 
         Button btn_payment;
         Button btn_logout;
@@ -37,7 +37,19 @@ import com.squirrel.dao.DatabaseHelper;
 
             setContentView(R.layout.activity_checkout);
 
+            drinks_quantity=(TextView)findViewById(R.id.drinks_quantity);
+            sandwiches_quantity=(TextView)findViewById(R.id.sandwiches_quantity);
+            snacks_quantity=(TextView)findViewById(R.id.snacks_quantity);
+            total_price=(TextView)findViewById(R.id.total_price);
+            btn_payment = (Button) findViewById(R.id.btn_payment);
+            btn_logout = (Button) findViewById(R.id.btn_logout);
             bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
+
+
+//            SharedPreferences pref_cost = getSharedPreferences(CartDetailsActivity.SHARED_PREFS, MODE_PRIVATE);
+//            final String final_cost =pref_cost.getString("TotalCost",null);
+//            total_price.setText(String.valueOf(final_cost));
+
 
             bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
                 @Override
@@ -62,7 +74,32 @@ import com.squirrel.dao.DatabaseHelper;
             });
 
 
-            btn_payment = (Button) findViewById(R.id.btn_payment);
+
+            SharedPreferences pref = getSharedPreferences(LoginActivity.MyPREFERENCES, MODE_PRIVATE);
+            final String username=pref.getString("username",null);
+
+            db = new DatabaseHelper(this);
+
+
+
+
+
+
+            btn_logout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    SharedPreferences sharedpreferences = getSharedPreferences(LoginActivity.MyPREFERENCES, Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedpreferences.edit();
+                    editor.clear();
+                    editor.commit();
+                    Toast.makeText(getApplicationContext(), "Logout Successful", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(CheckOutActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                }
+            });
+
+
+
 
             btn_payment.setOnClickListener(new View.OnClickListener() {
                 @Override

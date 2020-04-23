@@ -136,7 +136,7 @@
         android:layout_marginStart="44dp"
         android:layout_marginTop="560dp"
         android:layout_marginEnd="110dp"
-        android:text="Modify Card"
+        android:text="Modify/ Add Card"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
