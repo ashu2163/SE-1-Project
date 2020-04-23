@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.squirrel.app.R;
@@ -18,7 +19,7 @@ import com.squirrel.app.R;
 public class Conformation extends AppCompatActivity {
     Button btn_logout;
     BottomNavigationView bottomNavigationView;
-
+    TextView conformation_num;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,6 +27,7 @@ public class Conformation extends AppCompatActivity {
         setContentView(R.layout.activity_conformation);
 
         btn_logout = (Button) findViewById(R.id.btn_logout);
+        conformation_num = (TextView) findViewById(R.id.conformation_num);
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
 
 

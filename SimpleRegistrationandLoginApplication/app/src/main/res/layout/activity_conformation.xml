@@ -88,11 +88,23 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="160dp"
-        android:stateListAnimator="@null"
-        android:layout_marginTop="300dp"
+        android:layout_marginTop="320dp"
         android:layout_marginEnd="160dp"
         android:background="@android:color/background_light"
         android:drawableTop="@drawable/ic_done"
+        android:stateListAnimator="@null"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/conformation_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="150dp"
+        android:layout_marginTop="270dp"
+        android:layout_marginEnd="150dp"
+        android:text="Conformation Number"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
