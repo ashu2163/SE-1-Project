@@ -763,9 +763,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return arrayListl;
     }
 
+    
+
+    public boolean deleteCartEntry (int userid){
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+        Cursor cursor = sqLiteDatabase.rawQuery("DELETE FROM cart WHERE userid =?",new String[]{String.valueOf(userid)});
+        if(cursor.getCount() > 0){
+            return false;
+        }else{
+            return true;
+        }
+
+    }
+
+
+
     public boolean deleteleLocation(String lid){
-
-
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         //long result = sqLiteDatabase.delete("user", userid+"="+userid, null);
         Cursor cursor = sqLiteDatabase.rawQuery("DELETE FROM location WHERE locid =?",new String[]{lid});

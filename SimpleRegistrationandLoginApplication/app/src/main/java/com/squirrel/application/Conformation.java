@@ -15,11 +15,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.squirrel.app.R;
+import com.squirrel.dao.DatabaseHelper;
 
 public class Conformation extends AppCompatActivity {
     Button btn_logout;
     BottomNavigationView bottomNavigationView;
     TextView conformation_num;
+
+    DatabaseHelper db;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,6 +34,11 @@ public class Conformation extends AppCompatActivity {
         btn_logout = (Button) findViewById(R.id.btn_logout);
         conformation_num = (TextView) findViewById(R.id.conformation_num);
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
+
+        SharedPreferences pref = getSharedPreferences(LoginActivity.MyPREFERENCES, MODE_PRIVATE);
+        final String username=pref.getString("username",null);
+
+        db = new DatabaseHelper(this);
 
 
 
@@ -69,6 +79,16 @@ public class Conformation extends AppCompatActivity {
                 });
 
 
+
+                //To Do
+        // Update Payment Table
+        // Update vehiD inventory
+
+
+
+        // CLear Cart
+        final int userId = db.getUserId(username);
+        Boolean query = db.deleteCartEntry(userId);
 
 
     }
