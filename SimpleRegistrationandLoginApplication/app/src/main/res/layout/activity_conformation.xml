@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -15,15 +14,15 @@
         android:layout_marginStart="100dp"
         android:layout_marginTop="220dp"
         android:layout_marginEnd="100dp"
-        android:text="Thank You For Your Purchase"
+        android:text="Thank You For Using Squirrel"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.02" />
 
     <TextView
         android:id="@+id/success_title"
@@ -41,7 +40,7 @@
         app:layout_constraintHorizontal_bias="0.555"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.034" />
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/bottom_navigation"
@@ -63,7 +62,6 @@
     </android.support.design.widget.BottomNavigationView>
 
 
-
     <Button
         android:id="@+id/btn_logout"
         android:layout_width="105dp"
@@ -83,20 +81,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
 
-    <Button
-        android:id="@+id/done"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="160dp"
-        android:layout_marginTop="320dp"
-        android:layout_marginEnd="160dp"
-        android:background="@android:color/background_light"
-        android:drawableTop="@drawable/ic_done"
-        android:stateListAnimator="@null"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <TextView
         android:id="@+id/conformation_num"
         android:layout_width="wrap_content"
@@ -105,9 +89,35 @@
         android:layout_marginTop="270dp"
         android:layout_marginEnd="150dp"
         android:text="Conformation Number"
+        android:textColor="@color/colorPrimary"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="132dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="72dp"
+        android:scaleX="-1"
+        app:layout_constraintEnd_toStartOf="@+id/success_title"
+        app:layout_constraintStart_toEndOf="@+id/success_title"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_squirrel_login" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="170dp"
+        android:layout_marginTop="330dp"
+        android:layout_marginEnd="170dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_done" />
 
 
 </android.support.constraint.ConstraintLayout>
