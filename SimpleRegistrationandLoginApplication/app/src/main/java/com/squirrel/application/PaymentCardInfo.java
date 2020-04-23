@@ -23,9 +23,9 @@ public class PaymentCardInfo extends AppCompatActivity {
 
     DatabaseHelper db;
     BottomNavigationView bottomNavigationView;
-//    TextView item_title, quantity_title, totalcost_title, checkout_title, drinks_text, drinks_quantity, sandwiches_quantity, snacks_quantity, total_price, sandwiches_title, snacks_title;
-//
-//    Button btn_payment;
+
+    Button btn_place_order;
+    Button btn_modify;
     Button btn_logout;
 
 
@@ -36,6 +36,9 @@ public class PaymentCardInfo extends AppCompatActivity {
         setContentView(R.layout.activity_card_info);
 
         btn_logout = (Button) findViewById(R.id.btn_logout);
+        btn_place_order = (Button) findViewById(R.id.place_order);
+        btn_modify = (Button) findViewById(R.id.btn_modify);
+
 
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
 
@@ -74,6 +77,26 @@ public class PaymentCardInfo extends AppCompatActivity {
             }
         });
 
+
+        btn_place_order.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(PaymentCardInfo.this, Conformation.class);
+                startActivity(intent);
+            }
+        });
+
+
+
+        btn_modify.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(PaymentCardInfo.this, UpdateProfileActivity.class);
+                startActivity(intent);
+            }
+        });
 
         Toast.makeText(getApplicationContext(), "Conformation Number will be given after place order on third iteration", Toast.LENGTH_SHORT).show();
     }

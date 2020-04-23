@@ -41,6 +41,8 @@
         <activity android:name="com.squirrel.application.ViewManagerLocation" />
         <activity android:name="com.squirrel.application.ViewManagerRevenue" />
         <activity android:name="com.squirrel.application.EditlocationActivity" />
+        <activity android:name="com.squirrel.application.Conformation" />
+
 
 
 

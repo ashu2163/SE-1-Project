@@ -22,10 +22,9 @@ import com.squirrel.dao.DatabaseHelper;
 
     public class CheckOutActivity extends AppCompatActivity {
 
-
         DatabaseHelper db;
         BottomNavigationView bottomNavigationView;
-        TextView  quantity_title, totalcost_title, checkout_title, drinks_quantity, sandwiches_quantity, snacks_quantity, total_price;
+        TextView  drinks_quantity, sandwiches_quantity, snacks_quantity, total_price;
 
         Button btn_payment;
         Button btn_logout;
@@ -34,7 +33,6 @@ import com.squirrel.dao.DatabaseHelper;
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-
             setContentView(R.layout.activity_checkout);
 
             drinks_quantity=(TextView)findViewById(R.id.drinks_quantity);
@@ -44,11 +42,6 @@ import com.squirrel.dao.DatabaseHelper;
             btn_payment = (Button) findViewById(R.id.btn_payment);
             btn_logout = (Button) findViewById(R.id.btn_logout);
             bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
-
-
-//            SharedPreferences pref_cost = getSharedPreferences(CartDetailsActivity.SHARED_PREFS, MODE_PRIVATE);
-//            final String final_cost =pref_cost.getString("TotalCost",null);
-//            total_price.setText(String.valueOf(final_cost));
 
 
             bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -73,17 +66,39 @@ import com.squirrel.dao.DatabaseHelper;
                 }
             });
 
-
-
             SharedPreferences pref = getSharedPreferences(LoginActivity.MyPREFERENCES, MODE_PRIVATE);
             final String username=pref.getString("username",null);
 
+
             db = new DatabaseHelper(this);
+            final int userId = db.getUserId(username);
+            Cursor c= db.getCartDetails(userId);
 
+        float count = 0;
+            if(c.moveToFirst()){
+                do{
+                    int itemid=c.getInt(c.getColumnIndex("itemid"));
+                    float cost=db.getCost(itemid);
+                    int buy_quantity=c.getInt(c.getColumnIndex("buy_quantity"));
+                    if(itemid==81){
+                        drinks_quantity.setText(String.valueOf(buy_quantity));
+                        cost = cost * buy_quantity;
+                        count = count + cost;
+                    }
+                    else if(itemid==82){
+                        sandwiches_quantity.setText(String.valueOf(buy_quantity));
+                        cost = cost* buy_quantity;
+                        count = count + cost;
+                    }
+                    else if(itemid==83){
+                        snacks_quantity.setText(String.valueOf(buy_quantity));
+                        cost = cost* buy_quantity;
+                        count = count + cost;
+                    }
+                }while(c.moveToNext());
+            }
 
-
-
-
+            total_price.setText(String.valueOf(count));
 
             btn_logout.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -99,13 +114,10 @@ import com.squirrel.dao.DatabaseHelper;
             });
 
 
-
-
             btn_payment.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 
-//                    Toast.makeText(getApplicationContext(), "Going to Checkout", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(CheckOutActivity.this, PaymentCardInfo.class);
                     startActivity(intent);
                 }
