@@ -1,10 +1,5 @@
 package com.squirrel.dao;
-import android.content.Intent;
-import android.database.SQLException;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 
 
 import android.content.ContentValues;
@@ -12,16 +7,11 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.widget.Toast;
 
 import com.squirrel.models.Location;
 import com.squirrel.models.User;
-import com.squirrel.models.Payments;
 
-import java.sql.Date;
-import java.sql.Time;
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Random;
@@ -450,7 +440,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
         Cursor cursor=sqLiteDatabase.rawQuery("select distinct c.itemtype,a.quantity from vehicle_inventory as a join vehicle as b on a.vehid=b.vehid\n" +
                 "join item as c on c.itemid= a.itemid\n" +
-                "where b.vehname=?", new String[]{vehname});
+                "where b.vehname=? and available_date=date ('now')", new String[]{vehname});
 
         return cursor;
     }
@@ -763,12 +753,42 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return arrayListl;
     }
 
-    
+
 
     public boolean deleteCartEntry (int userid){
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         Cursor cursor = sqLiteDatabase.rawQuery("DELETE FROM cart WHERE userid =?",new String[]{String.valueOf(userid)});
         if(cursor.getCount() > 0){
+            return false;
+        }else{
+            return true;
+        }
+
+    }
+
+
+    public int getQua_Payment(int vehId,int itemid) {
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        Cursor c =sqLiteDatabase.rawQuery("select quantity from vehicle_inventory where vehid=? and  itemid=? and available_date= date('now')",new String[]{String.valueOf(vehId),String.valueOf(itemid)});
+        if(c.getCount()>0){
+            if(c.moveToNext()){
+                return c.getInt(c.getColumnIndex("quantity"));
+            }
+        }
+    return -1;
+    }
+
+    public boolean payment_updateInventory(int qua,int count, int vehId, int itemid ){
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        ContentValues cv=new ContentValues();
+
+    cv.put("quantity", qua - count);
+        cv.put("vehid",vehId);
+        cv.put("itemid",itemid);
+        long r=sqLiteDatabase.update("vehicle_inventory",  cv,
+                "vehid=? and  itemid=? and available_date= date('now')",new String[]{String.valueOf(vehId),String.valueOf(itemid)});
+
+        if(r == -1){
             return false;
         }else{
             return true;
@@ -788,11 +808,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             return true;
         }
 
-//        if(result == -1){
-//            return false;
-//        }else{
-//            return true;
-//        }
     }
 
     public boolean editLocation(String locid,String locname,String duration){
@@ -876,7 +891,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
 
-    public Cursor getVehicleNames(){
+    public Cursor cleNames(){
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         Cursor cursor = sqLiteDatabase.rawQuery("Select vehname from vehicle",null);
         return cursor;

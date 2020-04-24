@@ -4,10 +4,13 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -39,8 +42,7 @@ public class Conformation extends AppCompatActivity {
         final String username=pref.getString("username",null);
 
         db = new DatabaseHelper(this);
-
-
+        final int userId = db.getUserId(username);
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -82,13 +84,59 @@ public class Conformation extends AppCompatActivity {
 
                 //To Do
         // Update Payment Table
-        // Update vehiD inventory
+
+
+
+/* Should we have a new page for fail process to
+ inside payment button we process the validation and present a toas if validation faild?*
+ */
+        // if card validation failed mention in other xml page. Nothing in java code. back button to navigate to checkout.
+
+
+
+
+        SharedPreferences prefs = getSharedPreferences(FoodCartFragment.MyPREFERENCES, MODE_PRIVATE);
+        String loadedString = prefs.getString("vehname", null);
+        int vehId=db.getVehIdUser(loadedString);
+
+        final Cursor c = db.getCartDetails(userId);
+
+
+        int count_Drinks = 0;
+        int count_Sandwiches = 0;
+        int count_Snacks = 0;
+
+
+        if(c.moveToFirst()){
+            do{
+
+                int itemid=c.getInt(c.getColumnIndex("itemid"));
+                int buy_quantity=c.getInt(c.getColumnIndex("buy_quantity"));
+                if(itemid==81){
+                    count_Drinks = buy_quantity;
+                    int qua = db.getQua_Payment(vehId,itemid);
+//                    Log.d("quantity","ELLLOOOOOOOOOOOO" + qua);
+                    db.payment_updateInventory(qua,count_Drinks,vehId,itemid);
+                }
+                else if(itemid==82){
+                    count_Sandwiches = buy_quantity;
+                    int qua = db.getQua_Payment(vehId,itemid);
+                    db.payment_updateInventory(qua,count_Sandwiches,vehId,itemid);
+                }
+                else if(itemid==83){
+                    count_Snacks = buy_quantity;
+                    int qua = db.getQua_Payment(vehId,itemid);
+                    db.payment_updateInventory(qua,count_Snacks,vehId,itemid);
+                }
+            }while(c.moveToNext());
+        }
 
 
 
         // CLear Cart
-        final int userId = db.getUserId(username);
         Boolean query = db.deleteCartEntry(userId);
+
+
 
 
     }
