@@ -10,24 +10,29 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.squirrel.app.R;
 import com.squirrel.dao.DatabaseHelper;
+import com.squirrel.models.PaymentsOptions;
 
+import java.util.Random;
 
 
 public class PaymentCardInfo extends AppCompatActivity {
 
 
     DatabaseHelper db;
+    PaymentsOptions p;
     BottomNavigationView bottomNavigationView;
-
+    public static final String MyPREFERENCES = "MyPrefs";
+    SharedPreferences sharedpreferences;
     Button btn_place_order;
     Button btn_modify;
     Button btn_logout;
-
+    EditText cvv,cardType,cardno,exp_date;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,10 +40,31 @@ public class PaymentCardInfo extends AppCompatActivity {
 
         setContentView(R.layout.activity_card_info);
 
+        cvv=(EditText)findViewById(R.id.cvv);
+        cardno=(EditText)findViewById(R.id.cardno);
+        cardType=(EditText)findViewById(R.id.cardType);
+        exp_date=(EditText)findViewById(R.id.exp_date);
         btn_logout = (Button) findViewById(R.id.btn_logout);
-        btn_place_order = (Button) findViewById(R.id.place_order);
+        btn_place_order = (Button) findViewById(R.id.placeorder);
         btn_modify = (Button) findViewById(R.id.btn_modify);
 
+        SharedPreferences pref = getSharedPreferences(LoginActivity.MyPREFERENCES, MODE_PRIVATE);
+        final String username=pref.getString("username",null);
+
+        db = new DatabaseHelper(this);
+        final int userId = db.getUserId(username);
+
+        Intent intent = getIntent();
+        final Float tcost = intent.getFloatExtra("tcost",0.0f);
+
+
+        p=db.getPaymentCardInfo(userId);
+        cardno.setText(p.getCc());
+        cardType.setText(p.getCardtype());
+        //cvv.setText(p.getCvv());
+        exp_date.setText(p.getExpiry());
+
+        //Toast.makeText(getApplicationContext(), "usename:"+username+"user id"+userId, Toast.LENGTH_SHORT).show();
 
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
 
@@ -82,8 +108,22 @@ public class PaymentCardInfo extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(PaymentCardInfo.this, Conformation.class);
-                startActivity(intent);
+                if( cvv.getText().toString().trim().equals("") ||cardno.getText().toString().trim().equals("") ||cardType.getText().toString().trim().equals("")||exp_date.getText().toString().trim().equals(""))
+                {
+                    Toast.makeText(getApplicationContext(), "Fill all the details", Toast.LENGTH_SHORT).show();
+                }
+                else if(!db.verifyPaymentDetails(userId,cardno.getText().toString(),cvv.getText().toString(),exp_date.getText().toString(),cardType.getText().toString())){
+                    Toast.makeText(getApplicationContext(), "Please input correct card details", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Random r = new Random();
+                    int randomNumber = r.nextInt(10000000);
+                    String orderid=Integer.toString(randomNumber);
+                    Intent intent = new Intent(PaymentCardInfo.this, Conformation.class);
+                    intent.putExtra("order_id",orderid);
+                    intent.putExtra("tcost",tcost);
+                    startActivity(intent);
+                }
             }
         });
 
@@ -98,6 +138,6 @@ public class PaymentCardInfo extends AppCompatActivity {
             }
         });
 
-        Toast.makeText(getApplicationContext(), "Conformation Number will be given after place order on third iteration", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(), "Conformation Number will be given after place order on third iteration", Toast.LENGTH_SHORT).show();
     }
 }

@@ -20,6 +20,11 @@ import android.widget.Toast;
 import com.squirrel.app.R;
 import com.squirrel.dao.DatabaseHelper;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import static com.squirrel.application.CartDetailsActivity.*;
+
 public class Conformation extends AppCompatActivity {
     Button btn_logout;
     BottomNavigationView bottomNavigationView;
@@ -40,7 +45,12 @@ public class Conformation extends AppCompatActivity {
 
         SharedPreferences pref = getSharedPreferences(LoginActivity.MyPREFERENCES, MODE_PRIVATE);
         final String username=pref.getString("username",null);
-
+        Intent intent = getIntent();
+        String oi = intent.getStringExtra("order_id");
+        int orderid=Integer.parseInt(oi);
+        Float tcost=intent.getFloatExtra("tcost",0.0f);
+//        Float tc=Float.parseFloat(tcost);
+        conformation_num.setText("Order ID: "+oi);
         db = new DatabaseHelper(this);
         final int userId = db.getUserId(username);
 
@@ -99,6 +109,7 @@ public class Conformation extends AppCompatActivity {
         String loadedString = prefs.getString("vehname", null);
         int vehId=db.getVehIdUser(loadedString);
 
+
         final Cursor c = db.getCartDetails(userId);
 
 
@@ -133,6 +144,8 @@ public class Conformation extends AppCompatActivity {
 
 
 
+        int opid=db.getOpId1(vehId);
+        db.insertPayment(orderid,userId,vehId,opid,tcost);
         // CLear Cart
         Boolean query = db.deleteCartEntry(userId);
 

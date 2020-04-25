@@ -29,6 +29,7 @@ import com.squirrel.dao.DatabaseHelper;
         Button btn_payment;
         Button btn_logout;
 
+        float count = 0;
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +75,6 @@ import com.squirrel.dao.DatabaseHelper;
             final int userId = db.getUserId(username);
             Cursor c= db.getCartDetails(userId);
 
-        float count = 0;
             if(c.moveToFirst()){
                 do{
                     int itemid=c.getInt(c.getColumnIndex("itemid"));
@@ -119,6 +119,8 @@ import com.squirrel.dao.DatabaseHelper;
                 public void onClick(View v) {
 
                     Intent intent = new Intent(CheckOutActivity.this, PaymentCardInfo.class);
+                   String tcost=  Float.toString(count);
+                    intent.putExtra("tcost",count);
                     startActivity(intent);
                 }
             });

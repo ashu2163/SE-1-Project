@@ -7,13 +7,19 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.widget.Toast;
 
 import com.squirrel.models.Location;
+import com.squirrel.models.PaymentsOptions;
 import com.squirrel.models.User;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 import java.util.Random;
 
 
@@ -951,4 +957,86 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         return -1;
     }
-}
+    //RUTU IT3#####
+    public PaymentsOptions getPaymentCardInfo(int userID)
+    {
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        PaymentsOptions p=null;
+        Cursor cursor = sqLiteDatabase.rawQuery("select * from paymentoptions where userid= ?",new String[]{String.valueOf(userID)});
+        if (cursor.moveToFirst()) {
+            int userid = cursor.getInt(cursor.getColumnIndex("userid"));
+            String cc = cursor.getString(cursor.getColumnIndex("cc"));
+            String expiry = cursor.getString(cursor.getColumnIndex("expiry"));
+            String  cvv=cursor.getString(cursor.getColumnIndex("cvv"));
+            String cardtype=cursor.getString(cursor.getColumnIndex("cardtype"));
+
+            p = new PaymentsOptions(userid,cc,expiry,cvv,cardtype);
+        } else {
+
+        }
+        return p;
+    }
+
+    public boolean verifyPaymentDetails(int userId, String cardno, String cv, String exp, String cardType) {
+
+        boolean r=false;
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        //PaymentsOptions p=null;
+        Cursor cursor = sqLiteDatabase.rawQuery("select * from paymentoptions where userid= ?", new String[]{String.valueOf(userId)});
+        if (cursor.moveToFirst()) {
+            int userid = cursor.getInt(cursor.getColumnIndex("userid"));
+            String cc = cursor.getString(cursor.getColumnIndex("cc"));
+            String expiry = cursor.getString(cursor.getColumnIndex("expiry"));
+            String cvv = cursor.getString(cursor.getColumnIndex("cvv"));
+            String cardtype = cursor.getString(cursor.getColumnIndex("cardtype"));
+
+            if(cardno.equals(cc) && cv.equals(cvv) && exp.equals(expiry) && cardType.equals(cardtype)){
+                r=true;
+            }
+
+        }
+
+        return r;
+    }
+
+    public boolean insertPayment(int orderid, int userid,int vehid,int opid, Float tc){
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+        //Float tc1=Float.parseFloat(tc);
+
+       //Date date;
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("payid", orderid);
+        contentValues.put("userid", userid);
+        contentValues.put("vehid",vehid);
+        contentValues.put("opid",opid);
+        contentValues.put("payment_date",getDateTime());
+        contentValues.put("total_cost",tc);
+
+
+        long r = sqLiteDatabase.insert("payments", null, contentValues);
+        if(r == -1){
+           return false;
+        }else{
+            return true;
+        }
+    }
+        public Integer getOpId1(int vehid){
+           int opid = 0;
+            SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+            Cursor cursor =sqLiteDatabase.rawQuery("select * from vehicle_schedule where vehid=?",new String[]{String.valueOf(vehid)});
+            if (cursor.moveToFirst()) {
+                  opid = cursor.getInt(cursor.getColumnIndex("opid"));
+                }
+
+            return opid;
+            }
+
+    private String getDateTime() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat(
+                "yyyy-MM-dd", Locale.getDefault());
+        Date date = new Date();
+        return dateFormat.format(date);
+    }
+
+    }
+    //RUTU IT3 ######

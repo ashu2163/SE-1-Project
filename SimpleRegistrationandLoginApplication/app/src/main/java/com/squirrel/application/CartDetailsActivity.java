@@ -24,6 +24,8 @@ public class CartDetailsActivity extends AppCompatActivity {
     Button btn_update,btn_logout;
     DatabaseHelper db;
     BottomNavigationView bottomNavigationView;
+    public static final String MyPREFERENCES = "MyPrefs";
+    SharedPreferences sharedpreferences;
 
     Button btn_checkout;
 
@@ -181,7 +183,9 @@ public class CartDetailsActivity extends AppCompatActivity {
 
                 float total_cost=Float.parseFloat(et_c_drinks.getText().toString()) + Float.parseFloat(et_c_snacks.getText().toString()) + Float.parseFloat(et_c_sandwich.getText().toString());
                 et_cost.setText(String.valueOf(total_cost));
-
+                SharedPreferences.Editor editor = sharedpreferences.edit();
+                editor.putString("total_cost", String.valueOf(total_cost));
+                editor.commit();
                 Toast.makeText(getApplicationContext(),str,Toast.LENGTH_LONG).show();
                 }
 
