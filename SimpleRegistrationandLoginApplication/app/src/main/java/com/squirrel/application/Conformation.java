@@ -92,19 +92,6 @@ public class Conformation extends AppCompatActivity {
 
 
 
-                //To Do
-        // Update Payment Table
-
-
-
-/* Should we have a new page for fail process to
- inside payment button we process the validation and present a toas if validation faild?*
- */
-        // if card validation failed mention in other xml page. Nothing in java code. back button to navigate to checkout.
-
-
-
-
         SharedPreferences prefs = getSharedPreferences(FoodCartFragment.MyPREFERENCES, MODE_PRIVATE);
         String loadedString = prefs.getString("vehname", null);
         int vehId=db.getVehIdUser(loadedString);

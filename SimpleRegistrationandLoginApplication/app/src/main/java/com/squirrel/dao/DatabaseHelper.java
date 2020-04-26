@@ -619,7 +619,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public Cursor getVehicleInventory(String vehname){
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
         Cursor cursor=sqLiteDatabase.rawQuery("select item.itemtype, vehicle_inventory.quantity, item.cost from item, vehicle_inventory, vehicle \n" +
-                "where item.itemid=vehicle_inventory.itemid and vehicle.vehid=vehicle_inventory.vehid and vehicle.vehname=?", new String[]{vehname});
+                "where item.itemid=vehicle_inventory.itemid and vehicle.vehid=vehicle_inventory.vehid and available_date = date ('now') and vehicle.vehname=?", new String[]{vehname});
 
         return cursor;
     }
@@ -1001,9 +1001,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public boolean insertPayment(int orderid, int userid,int vehid,int opid, Float tc){
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
-        //Float tc1=Float.parseFloat(tc);
 
-       //Date date;
+//        sqLiteDatabase.execSQL("" +
+//                "INSERT INTO payments(payid,userid,opid,vehid,payment_date,total_cost) VALUES\n" +
+//                "(9901000,1001000,1007000,51,date('now'),1523.26),\n" +
+//                "(9903000,1003000,1009000,53,date('now'),2028.10),\n" +
+//                "(9905000,1001000,1007000,51,date('now'),1222.50),\n" +
+//                "(9907000,1001000,1007000,57,date('now','-1 day'),1750.80)" +
+//                "");
+//        //Float tc1=Float.parseFloat(tc);
+//
+//       //Date date;
         ContentValues contentValues = new ContentValues();
         contentValues.put("payid", orderid);
         contentValues.put("userid", userid);
@@ -1032,10 +1040,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             }
 
     private String getDateTime() {
-        SimpleDateFormat dateFormat = new SimpleDateFormat(
-                "yyyy-MM-dd", Locale.getDefault());
-        Date date = new Date();
-        return dateFormat.format(date);
+        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+
+        Cursor cursor =sqLiteDatabase.rawQuery("select date('now')", new String[]{});
+        String date = null;
+        if (cursor.moveToFirst()) {
+           date = cursor.getString(cursor.getColumnIndex("date('now')"));
+        }
+
+        return date;
     }
 
     }
