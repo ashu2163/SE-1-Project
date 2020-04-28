@@ -30,7 +30,7 @@ public class EditoperatorActivity  extends AppCompatActivity{
 
     DatabaseHelper db;
     EditText uid,firstn,lastn, uname, ed_vehname,ed_locname,ed_slotend;
-    Button btn_vehupdate, btn_locupdate, btn_delete;
+    Button btn_vehupdate, btn_locupdate;
     String MY_PREFS_NAME="MyPrefs";
     Spinner sp_vehicle;
     int vehid;
@@ -84,7 +84,7 @@ public class EditoperatorActivity  extends AppCompatActivity{
 
         btn_vehupdate=(Button)findViewById(R.id.btn_vehicleupdate);
 
-        btn_delete=(Button)findViewById(R.id.btn_delete);
+        //btn_delete=(Button)findViewById(R.id.btn_delete);
 
         Cursor c=db.getAvailableVehcilesForNextDay();
         spVehicleList.add("select vehicle");
@@ -173,22 +173,22 @@ public class EditoperatorActivity  extends AppCompatActivity{
             }
         });
 
-            btn_delete.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    int opid = db.getOpId(fname, lname);
-                    //int vehid=db.getVehId(vehname);
-                    boolean b=db.deleteSchedule(opid,vehid,slotend);
-                    if(b==true){
-                        Toast.makeText(getApplicationContext(),"Schedule deleted successfully",Toast.LENGTH_LONG).show();
-                        Intent i=new Intent(  EditoperatorActivity.this,OperatorActivity.class);
-                        startActivity(i);
+//            btn_delete.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    int opid = db.getOpId(fname, lname);
+//                    //int vehid=db.getVehId(vehname);
+//                    boolean b=db.deleteSchedule(opid,vehid,slotend);
+//                    if(b==true){
+//                        Toast.makeText(getApplicationContext(),"Schedule deleted successfully",Toast.LENGTH_LONG).show();
+//                        Intent i=new Intent(  EditoperatorActivity.this,OperatorActivity.class);
+//                        startActivity(i);
+//
+//                    }
 
-                    }
 
-
-                }
-                });
+//                }
+//                });
             
 
 

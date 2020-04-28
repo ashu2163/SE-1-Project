@@ -128,7 +128,7 @@ public class CartDetailsActivity extends AppCompatActivity {
                 }
                 else if(db.findItemInCart(userId,81)) {
                     if (db.updateCart(userId, 81, drinks)) {
-                        str += "Quantity of Drinks updated successfully";
+                            str += "Quantity of Drinks updated successfully";
                     }
                 }
 
@@ -183,6 +183,7 @@ public class CartDetailsActivity extends AppCompatActivity {
 
                 float total_cost=Float.parseFloat(et_c_drinks.getText().toString()) + Float.parseFloat(et_c_snacks.getText().toString()) + Float.parseFloat(et_c_sandwich.getText().toString());
                 et_cost.setText(String.valueOf(total_cost));
+                sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedpreferences.edit();
                 editor.putString("total_cost", String.valueOf(total_cost));
                 editor.commit();
