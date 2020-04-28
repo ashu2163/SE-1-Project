@@ -100,10 +100,13 @@ public class CartDetailsActivity extends AppCompatActivity {
         et_c_snacks=(TextView)findViewById(R.id.et_c_snacks);
         et_c_sandwich=(TextView)findViewById(R.id.et_c_sandwich);
 
-        float total_cost=Float.parseFloat(et_c_drinks.getText().toString()) + Float.parseFloat(et_c_snacks.getText().toString()) + Float.parseFloat(et_c_sandwich.getText().toString());
+        final float total_cost =Float.parseFloat(et_c_drinks.getText().toString()) + Float.parseFloat(et_c_snacks.getText().toString()) + Float.parseFloat(et_c_sandwich.getText().toString());
         et_cost.setText(String.valueOf(total_cost));
 
         btn_update=(Button) findViewById(R.id.btn_update);
+
+        final float saveNormalCost = total_cost;
+        final float[] saveCost = new float[1];
 
         btn_update.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -183,6 +186,7 @@ public class CartDetailsActivity extends AppCompatActivity {
 
                 float total_cost=Float.parseFloat(et_c_drinks.getText().toString()) + Float.parseFloat(et_c_snacks.getText().toString()) + Float.parseFloat(et_c_sandwich.getText().toString());
                 et_cost.setText(String.valueOf(total_cost));
+                saveCost[0] = total_cost;
                 sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedpreferences.edit();
                 editor.putString("total_cost", String.valueOf(total_cost));
@@ -210,6 +214,14 @@ public class CartDetailsActivity extends AppCompatActivity {
         btn_checkout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                    if ( saveNormalCost == 0 &&
+                        saveCost[0] == 0)
+                    {
+                        Toast.makeText(getApplicationContext(), "No Item to Checkout", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+
 
                 Toast.makeText(getApplicationContext(), "Going to Checkout", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(CartDetailsActivity.this, CheckOutActivity.class);
