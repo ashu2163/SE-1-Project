@@ -20,6 +20,9 @@ import com.squirrel.models.PaymentsOptions;
 
 import java.util.Random;
 
+import static android.view.View.INVISIBLE;
+import static android.view.View.VISIBLE;
+
 
 public class PaymentCardInfo extends AppCompatActivity {
 
@@ -33,6 +36,7 @@ public class PaymentCardInfo extends AppCompatActivity {
     Button btn_modify;
     Button btn_logout;
     EditText cvv,cardType,cardno,exp_date;
+    TextView error;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +51,7 @@ public class PaymentCardInfo extends AppCompatActivity {
         btn_logout = (Button) findViewById(R.id.btn_logout);
         btn_place_order = (Button) findViewById(R.id.placeorder);
         btn_modify = (Button) findViewById(R.id.btn_modify);
+        error=(TextView)findViewById(R.id.error);
 
         SharedPreferences pref = getSharedPreferences(LoginActivity.MyPREFERENCES, MODE_PRIVATE);
         final String username=pref.getString("username",null);
@@ -59,11 +64,21 @@ public class PaymentCardInfo extends AppCompatActivity {
 
 
         p=db.getPaymentCardInfo(userId);
-        cardno.setText(p.getCc());
-        cardType.setText(p.getCardtype());
-        //cvv.setText(p.getCvv());
-        exp_date.setText(p.getExpiry());
-
+        if(p==null){
+           error.setVisibility(VISIBLE);
+           error.setText("No Card Information available. Please click on ADD/MODIFY BUTTON to add card details");
+        }
+        else {
+            cardno.setText(p.getCc());
+            cardType.setText(p.getCardtype());
+            //cvv.setText(p.getCvv());
+            exp_date.setText(p.getExpiry());
+            cardno.setVisibility(VISIBLE);
+            cardType.setVisibility(VISIBLE);
+            exp_date.setVisibility(VISIBLE);
+            cvv.setVisibility(VISIBLE);
+            error.setVisibility(INVISIBLE);
+        }
         //Toast.makeText(getApplicationContext(), "usename:"+username+"user id"+userId, Toast.LENGTH_SHORT).show();
 
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);

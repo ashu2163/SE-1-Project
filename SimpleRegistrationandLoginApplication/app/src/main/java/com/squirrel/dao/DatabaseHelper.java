@@ -7,19 +7,14 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.widget.Toast;
 
 import com.squirrel.models.Location;
 import com.squirrel.models.PaymentsOptions;
 import com.squirrel.models.User;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
 import java.util.Random;
 
 
@@ -584,6 +579,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return -1;
 
     }
+
+
     public Cursor getUserDetails(String uname){
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
         Cursor cursor = sqLiteDatabase.rawQuery("select * from user where uname= ?",new String[]{uname});
@@ -691,18 +688,40 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public boolean updateCardDetails(int userid, String cc,String cvv, String cardType, String expdate){
-        SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
-        ContentValues cv = new ContentValues();
-        cv.put("cc", cc);
-        cv.put("cvv", cvv);
-        cv.put("cardtype",cardType);
-        cv.put("expiry",expdate);
-        long r = sqLiteDatabase.update("paymentoptions", cv, "userid=?", new String[]{String.valueOf(userid)});
 
-        if (r == -1) {
-            return false;
-        } else {
-            return true;
+
+        Cursor c=getCardDetails(userid);
+        if(c.getCount()>0) {
+            SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+            ContentValues cv = new ContentValues();
+            cv.put("cc", cc);
+            cv.put("cvv", cvv);
+            cv.put("cardtype", cardType);
+            cv.put("expiry", expdate);
+            long u = sqLiteDatabase.update("paymentoptions", cv, "userid=?", new String[]{String.valueOf(userid)});
+
+            if (u == -1) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+        else{
+            SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
+            ContentValues cv = new ContentValues();
+            cv.put("userid",userid);
+            cv.put("cc", cc);
+            cv.put("cvv", cvv);
+            cv.put("cardtype", cardType);
+            cv.put("expiry", expdate);
+
+
+            long r = sqLiteDatabase.insert("paymentoptions", null, cv);
+            if(r == -1){
+                return false;
+            }else{
+                return true;
+            }
         }
 
     }

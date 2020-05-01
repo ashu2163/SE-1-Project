@@ -270,7 +270,9 @@ public class UpdateProfileActivity extends AppCompatActivity {
                     // System.out.println(selectedId);
                     rb=(RadioButton)findViewById(selectedId);
                     String cardType=rb.getText().toString();
+
                     db.updateCardDetails(userid,cardno.getText().toString(),cvv.getText().toString(),cardType,expdate.getText().toString());
+
                 }
 
                 if (db.updateProfile(userid,fname.getText().toString(),lname.getText().toString(),username.getText().toString(),email.getText().toString(),phone.getText().toString(),street_add.getText().toString(),city.getText().toString(),state.getText().toString(),zipcode.getText().toString())) {
