@@ -102,10 +102,6 @@ public class ManagerHomeActivity extends AppCompatActivity {
         btn_vehicle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPreferences sharedpreferences = getSharedPreferences(LoginActivity.MyPREFERENCES, Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedpreferences.edit();
-                editor.clear();
-                editor.commit();
                 Intent intent = new Intent(ManagerHomeActivity.this, ViewManagerVehicle.class);
                 startActivity(intent);
             }
