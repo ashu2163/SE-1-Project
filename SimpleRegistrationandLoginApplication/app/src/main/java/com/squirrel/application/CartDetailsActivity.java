@@ -29,7 +29,6 @@ public class CartDetailsActivity extends AppCompatActivity {
 
     Button btn_checkout;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -101,6 +100,7 @@ public class CartDetailsActivity extends AppCompatActivity {
         et_c_sandwich=(TextView)findViewById(R.id.et_c_sandwich);
 
         float total_cost=Float.parseFloat(et_c_drinks.getText().toString()) + Float.parseFloat(et_c_snacks.getText().toString()) + Float.parseFloat(et_c_sandwich.getText().toString());
+
         et_cost.setText(String.valueOf(total_cost));
 
         btn_update=(Button) findViewById(R.id.btn_update);
@@ -210,10 +210,9 @@ public class CartDetailsActivity extends AppCompatActivity {
         btn_checkout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Toast.makeText(getApplicationContext(), "Going to Checkout", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(CartDetailsActivity.this, CheckOutActivity.class);
-                startActivity(intent);
+                    Toast.makeText(getApplicationContext(), "Going to Checkout", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(CartDetailsActivity.this, CheckOutActivity.class);
+                    startActivity(intent);
             }
         });
 
