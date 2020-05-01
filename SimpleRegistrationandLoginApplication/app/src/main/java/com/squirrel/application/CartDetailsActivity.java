@@ -106,7 +106,9 @@ public class CartDetailsActivity extends AppCompatActivity {
         btn_update=(Button) findViewById(R.id.btn_update);
 
         final float saveNormalCost = total_cost;
-        final float[] saveCost = new float[1];
+
+//        final float saveCost = 0;
+//        final float[] saveCost = new float[2];
 
         btn_update.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -186,13 +188,18 @@ public class CartDetailsActivity extends AppCompatActivity {
 
                 float total_cost=Float.parseFloat(et_c_drinks.getText().toString()) + Float.parseFloat(et_c_snacks.getText().toString()) + Float.parseFloat(et_c_sandwich.getText().toString());
                 et_cost.setText(String.valueOf(total_cost));
-                saveCost[0] = total_cost;
+//               saveCost = total_cost;
+//                saveCost[0] = total_cost;
+
                 sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedpreferences.edit();
                 editor.putString("total_cost", String.valueOf(total_cost));
                 editor.commit();
                 Toast.makeText(getApplicationContext(),str,Toast.LENGTH_LONG).show();
-                }
+
+                Intent intent = new Intent(CartDetailsActivity.this, CartDetailsActivity.class);
+               startActivity(intent);
+            }
 
         });
 
@@ -215,8 +222,8 @@ public class CartDetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                    if ( saveNormalCost == 0 &&
-                        saveCost[0] == 0)
+                    if ( saveNormalCost == 0 )
+
                     {
                         Toast.makeText(getApplicationContext(), "No Item to Checkout", Toast.LENGTH_SHORT).show();
                         return;
