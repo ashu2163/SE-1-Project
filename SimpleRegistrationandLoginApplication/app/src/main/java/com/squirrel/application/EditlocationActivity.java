@@ -38,6 +38,7 @@ public class EditlocationActivity extends AppCompatActivity {
         name = (EditText) findViewById(R.id.ln);
         dur = (EditText) findViewById(R.id.ld);
 //
+       id.setEnabled(false);
 
         for (int i = 0; i < MyAdapterlocation.arrayList.size(); i++){
             if(MyAdapterlocation.arrayList.get(i).getSelected()) {
