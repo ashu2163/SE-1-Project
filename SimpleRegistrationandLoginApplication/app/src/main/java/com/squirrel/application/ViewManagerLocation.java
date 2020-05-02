@@ -110,7 +110,7 @@ public class ViewManagerLocation extends AppCompatActivity {
             public void onClick(View v) {
 
 
-                Toast.makeText(getApplicationContext(), "clicked", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), "clicked", Toast.LENGTH_SHORT).show();
                 Intent intent1 = new Intent(ViewManagerLocation.this,EditlocationActivity.class);
                 startActivity(intent1);
 
@@ -126,7 +126,7 @@ public class ViewManagerLocation extends AppCompatActivity {
         btnop_del.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), " delete clicked", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), " delete clicked", Toast.LENGTH_SHORT).show();
 
 
 

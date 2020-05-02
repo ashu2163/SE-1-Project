@@ -67,7 +67,7 @@ public class MyAdapterlocation extends BaseAdapter {
 
 
                 Integer pos = (Integer) radioButton.getTag();
-                Toast.makeText(context, "radio button  "+pos+" clicked!", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(context, "radio button  "+pos+" clicked!", Toast.LENGTH_SHORT).show();
 
                 if(arrayList.get(pos).getSelected()){
                     arrayList.get(pos).setSelected(false);

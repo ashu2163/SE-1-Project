@@ -101,6 +101,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Delete"
+        android:visibility="gone"
         android:background="@color/colorPrimary"
         android:textColor="@android:color/background_light"
         android:textStyle="bold"
