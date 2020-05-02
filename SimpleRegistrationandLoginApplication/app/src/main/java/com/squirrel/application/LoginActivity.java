@@ -79,7 +79,7 @@ public class LoginActivity extends AppCompatActivity {
                             editor.putString("password", password);
                             editor.putString("role",role.getString(0) );
                             editor.commit();
-                            Toast.makeText(getApplicationContext(), "LoginActivity" , Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(getApplicationContext(), "LoginActivity" , Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(LoginActivity.this, OperatorHomeActivity.class);
                             startActivity(intent);
                         }
