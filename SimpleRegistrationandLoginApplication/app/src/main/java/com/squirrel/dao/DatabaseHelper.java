@@ -57,8 +57,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "(1005000,'Heather','Peterson','heatherapeterson','$y6.jZXe\"?','other','HeatherAPeterson@uta.mavs.edu','7084540101','3660 Joy Lane','Calabasas','CA',91302),\n" +
                 "(1006000,'Thomas','Murphy','thomaslmurphy','uS@*,Vz{9>','other','ThomasLMurphy@uta.mavs.edu','5088263769','1579 Woodbridge Lane','Detroit','MI',48202),\n" +
                 "(1007000,'Gary','Watson','abco','abco','operator','GaryEWatson@uta.edu','5617391409','3444 Maloy Court','Salina','KS',67401),\n" +
+                "(1001300,'Aary','Batson','abco2','abco2','operator','BaryEWatson@uta.edu','4617391409','4444 Maloy Court','Malina','VS',77401),\n" +
                 "(1008000,'Gene','Bookman','genembookman','2V/J36=8+b~wA$$','other','GeneMBookman@uta.mavs.edu','9704280507','3291 Coplin Avenue','Phoenix','AZ',85003),\n" +
-                "(1009000,'Eleanor','Peoples','eleanorgpeoples','&zr=#9%hUW9S[KC','operator','EleanorGPeoples@uta.edu','6067911291','4768 Horizon Circle','Federal Way','WA',98003),\n" +
+                "(1009000,'Eleanor','Peoples','abco1','abco1','operator','EleanorGPeoples@uta.edu','6067911291','4768 Horizon Circle','Federal Way','WA',98003),\n" +
                 "(1001001,'James','West','jamesswest','{=uux8^qZtrbL\\q','other','JamesSWest@uta.mavs.edu','2704997441','1213 Chicago Avenue','Fresno','CA',93721),\n" +
                 "(1001100,'Helen','Baker','helenabaker','bQT%cZe$8P8mTW8','other','HelenABaker@uta.mavs.edu','2037962739','3446 Michigan Avenue','Bridgeville','PA',15017),\n" +
                 "(1001200,'George','Sisk','georgecsisk','vf*p!22JqxPCT5','other','GeorgeCSisk@uta.mavs.edu','2034240092','2460 Stratford Park','Bloomington','IN',47408)" +
@@ -193,17 +194,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         db.execSQL("" +
                 "INSERT INTO vehicle_schedule(vehid,locid,opid,slotbegin,slotend,scheduled_date) VALUES\n" +
-                "(53,'Loc_1',1007000,8,10,date('now')),\n" +
+                "(53,'Loc_1',1007000,8,17,date('now')),\n" +
+                "(54,'Loc_3',1001300,8,17,date('now')),\n" +
                 "(51,'Loc_2',1009000,10,11,date('now')),\n" +
-                "(53,'Loc_3',1007000,11,13,date('now')),\n" +
                 "(51,'Loc_4',1009000,11,14,date('now')),\n" +
                 "(51,'Loc_4',1009000,14,17,date('now')),\n" +
-                "(53,'Loc_7',1007000,15,17,date('now')),\n" +
                 "(57,'Loc_1',1007000,8,10,date('now','+1 day')),\n" +
-                "(53,'Loc_2',1009000,10,11,date('now','+1 day')),\n" +
+                "(53,'Loc_2',1009000,8,17,date('now','+1 day')),\n" +
                 "(57,'Loc_3',1007000,11,13,date('now','+1 day')),\n" +
-                "(53,'Loc_4',1009000,11,14,date('now','+1 day')),\n" +
-                "(53,'Loc_4',1009000,14,17,date('now','+1 day')),\n" +
                 "(57,'Loc_7',1007000,15,17,date('now','+1 day'))" +
                 "");
 
