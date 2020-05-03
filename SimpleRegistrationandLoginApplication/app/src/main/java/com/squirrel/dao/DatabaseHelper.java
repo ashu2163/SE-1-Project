@@ -62,6 +62,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "(1009000,'Eleanor','Peoples','abco1','abco1','operator','EleanorGPeoples@uta.edu','6067911291','4768 Horizon Circle','Federal Way','WA',98003),\n" +
                 "(1001001,'James','West','jamesswest','{=uux8^qZtrbL\\q','other','JamesSWest@uta.mavs.edu','2704997441','1213 Chicago Avenue','Fresno','CA',93721),\n" +
                 "(1001100,'Helen','Baker','helenabaker','bQT%cZe$8P8mTW8','other','HelenABaker@uta.mavs.edu','2037962739','3446 Michigan Avenue','Bridgeville','PA',15017),\n" +
+                "(2001100,'Susan','Queen','SuzieQ','Password$34','operator','SuzieQ@mavs.uta.edu','817-777-2345','5678 Straight Dr','Arlington','Tx',76019),\n" +
+                "(2002200,'Sam','Johnson','SammyJ','Password12$','manager','sammyJ@mavs.uta.edu','817-777-2000','1234 Anywhere Ln','Arlington','Tx',76019),\n" +
                 "(1001200,'George','Sisk','georgecsisk','vf*p!22JqxPCT5','other','GeorgeCSisk@uta.mavs.edu','2034240092','2460 Stratford Park','Bloomington','IN',47408)" +
                 "");
 
@@ -196,9 +198,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "INSERT INTO vehicle_schedule(vehid,locid,opid,slotbegin,slotend,scheduled_date) VALUES\n" +
                 "(53,'Loc_1',1007000,8,17,date('now')),\n" +
                 "(54,'Loc_3',1001300,8,17,date('now')),\n" +
-                "(51,'Loc_2',1009000,10,11,date('now')),\n" +
-                "(51,'Loc_4',1009000,11,14,date('now')),\n" +
-                "(51,'Loc_4',1009000,14,17,date('now')),\n" +
+                "(51,'Loc_1',2001100,11,13,date('now')),\n" +
                 "(57,'Loc_1',1007000,8,10,date('now','+1 day')),\n" +
                 "(53,'Loc_2',1009000,8,17,date('now','+1 day')),\n" +
                 "(57,'Loc_3',1007000,11,13,date('now','+1 day')),\n" +
@@ -259,6 +259,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("" +
                 "INSERT INTO payments(payid,userid,opid,vehid,payment_date,total_cost) VALUES\n" +
                 "(9901000,1001000,1007000,51,date('now'),1523.26),\n" +
+                "(9902000,1001000,2001100,51,date('now'),17),\n" +
                 "(9903000,1003000,1009000,53,date('now'),2028.10),\n" +
                 "(9905000,1001000,1007000,51,date('now'),1222.50),\n" +
                 "(9907000,1001000,1007000,57,date('now','-1 day'),1750.80)" +
