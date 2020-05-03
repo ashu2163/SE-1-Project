@@ -230,13 +230,13 @@ public class AssignActivity extends AppCompatActivity {
                     spSlotBeginList.add("select start time");
                     sp_slotbegin.setAdapter(adapterSlotBegin);
                     //for(int i=SquirrelConstants.shiftBegin;i<=SquirrelConstants.shiftEnd-duration;i=i+duration){
-                    if(vehtype.equals("cart")){
-                        spSlotBeginList.add(String.valueOf(SquirrelConstants.shiftBegin));
-                    } else {
+//                    if(vehtype.equals("cart")){
+//                        spSlotBeginList.add(String.valueOf(SquirrelConstants.shiftBegin));
+//                    } else {
                         for (int i = SquirrelConstants.shiftBegin; i <= SquirrelConstants.shiftEnd - duration; i = i + 1) {
                             spSlotBeginList.add(String.valueOf(i));
                         }
-                    }
+                    //}
                     sp_slotbegin.setAdapter(adapterSlotBegin);
                 }
             }
@@ -252,11 +252,11 @@ public class AssignActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if(position!=0){
                     slotbegin=Integer.valueOf(parent.getItemAtPosition(position).toString());
-                    if(vehtype.equals("cart")){
-                        slotend=SquirrelConstants.shiftEnd;
-                    } else {
+//                    if(vehtype.equals("cart")){
+//                        slotend=SquirrelConstants.shiftEnd;
+//                    } else {
                         slotend=slotbegin+duration;
-                    }
+                    //}
                     tv_slotend.setText("end time:"+slotend);
                     btn_assign.setEnabled(true);
                     btn_assign.setTextColor(getResources().getColor(R.color.colorCream));
