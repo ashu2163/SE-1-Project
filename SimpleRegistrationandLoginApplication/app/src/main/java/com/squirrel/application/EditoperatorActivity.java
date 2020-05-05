@@ -48,7 +48,7 @@ public class EditoperatorActivity  extends AppCompatActivity{
         final String fname=arr[1].split(" ")[0];
         final String lname=arr[2].split(" ")[0];
         final String vehname=arr[3].split(" ")[0];
-        String locname=arr[4].split("S")[0].trim();
+        String locname=arr[4].split("Slot_End")[0].trim();
         final String slotend=arr[5];
         final ArrayList<String> spVehicleList=new ArrayList<String>();
         final ArrayAdapter<String> adapterVehicle=new ArrayAdapter<String>(getApplicationContext(),android.R.layout.simple_spinner_item,spVehicleList);
